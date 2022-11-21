@@ -7,11 +7,12 @@ Robot getRobot() {
     Robot robot;
 
     robot.drive.reset(new Drive(
-        {-11, 12, -14, 15},
-        {17, 18, -19, 20},
+        {-11, 12, -14, 15}, // left motor ports
+        {17, 18, -19, 20}, // right motor ports
         pros::E_MOTOR_GEAR_600, // internal gear ratio
         4.0/3.0, // external gear ratio
-        2.75 // wheel diameter in inches
+        2.75, // wheel diameter in inches
+        10 // track width in inches
     ));
 
     robot.localizer.reset(new Odometry(
