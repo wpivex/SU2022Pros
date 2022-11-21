@@ -16,7 +16,7 @@ private:
 
 public:
 
-    TBHFlywheel(std::initializer_list<pros::Motor> flywheelMotors, double tbhConstant, std::vector<DataPoint> voltRpmData, double startSpeed = 0):
+    TBHFlywheel(std::initializer_list<int8_t> flywheelMotors, double tbhConstant, std::vector<DataPoint> voltRpmData, double startSpeed = 0):
         motors(flywheelMotors),
         tbh(tbhConstant, startSpeed, voltRpmData)
     {}

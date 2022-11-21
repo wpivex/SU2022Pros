@@ -8,4 +8,5 @@ public:
     virtual double getHeading() = 0; // radians
     
     virtual void updatePositionTask() = 0; // blocking task used to update (x, y, heading)
+    virtual void init() {}
 };

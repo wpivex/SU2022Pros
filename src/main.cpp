@@ -1,11 +1,16 @@
 #include "main.h"
 
+#include "Subsystems/RobotBuilder.h"
+#include "Programs/Driver.h"
+
+Robot robot = getRobot();
+Driver driver(robot);
 
 #define RUN_AUTON
 using namespace pros;
 
 void initialize() {
-	printf("init\n");
+	if (robot.localizer) robot.localizer->init();
 }
 
 void disabled() {}
@@ -26,5 +31,5 @@ void opcontrol() {
 	return;
 	#endif
 
-	printf("teleop\n");
+	driver.runDriver();
 }

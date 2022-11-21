@@ -12,7 +12,7 @@ private:
 
 public:
 
-    Drive(std::initializer_list<pros::Motor> left, std::initializer_list<pros::Motor> right,
+    Drive(std::initializer_list<int8_t> left, std::initializer_list<int8_t> right,
     pros::motor_gearset_e_t internalGearRatio, double externalGearRatio, double wheelDiameterInches):
         leftMotors(left),
         rightMotors(right)

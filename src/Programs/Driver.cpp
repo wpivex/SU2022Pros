@@ -34,20 +34,20 @@ void Driver::handleSecondaryActions() {
 
     // Indexer is set to R2 state. R2: Intake forward with 0.25s delay, R1: intake reverse
     if (buttonSM.pressed(DIGITAL_R2)) {
-        robot.indexer.set_value(true);
+        robot.indexer->set_value(true);
         indexerOn = true;
         indexerTimer = pros::millis();
     } else if (buttonSM.released(DIGITAL_R2)) {
-        robot.indexer.set_value(false);
+        robot.indexer->set_value(false);
         indexerOn = false;
     }
 
     // Actually set the intake velocity
     if (indexerOn && pros::millis() - 250 > indexerTimer) {
-        robot.intake.move_voltage(-12000);
+        robot.intake->move_voltage(-12000);
     } else if (buttonSM.pressing(DIGITAL_R1)) {
-        robot.intake.move_voltage(12000);
+        robot.intake->move_voltage(12000);
     } else {
-        robot.intake.brake();
+        robot.intake->brake();
     }
 }
