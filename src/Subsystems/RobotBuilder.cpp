@@ -1,4 +1,5 @@
 #include "Subsystems/RobotBuilder.h"
+#include "Subsystems/Localizer/Odometry.h"
 #include "Subsystems/Flywheel/TBHFlywheel.h"
 
 Robot getRobot() {
@@ -11,6 +12,15 @@ Robot getRobot() {
         pros::E_MOTOR_GEAR_600, // internal gear ratio
         4.0/3.0, // external gear ratio
         2.75 // wheel diameter in inches
+    ));
+
+    robot.localizer.reset(new Odometry(
+        7, // imu port
+        {'E','F'}, // left encoder port
+        {'C', 'D'}, // right encoder port
+        {'A', 'B'}, // back encoder port
+        1.625, // odom wheel diameter in inches
+        5.5 // distance from center of rotation to back encoder in inches
     ));
 
     robot.flywheel.reset(new TBHFlywheel(
