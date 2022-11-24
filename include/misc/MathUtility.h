@@ -29,3 +29,16 @@ inline int sign(double x) {
     if (x >= 0) return 1;
     return -1;
 }
+
+// Bound angle to between -pi and pi, preferring the smaller magnitude
+inline float boundAngleRadians(float angle) {
+    angle = fmod(angle, M_PI*2);
+    if (angle < -M_PI) angle += 2*M_PI;
+    if (angle > M_PI) angle -= 2*M_PI;
+    return angle;
+}
+
+// Find the closest angle between two universal angles
+inline float deltaInHeading(float targetHeading, float currentHeading) {
+  return boundAngleRadians(targetHeading - currentHeading);
+}

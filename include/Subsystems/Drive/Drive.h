@@ -63,4 +63,10 @@ public:
         double rotations = average(rightMotors.get_positions());
         return rotations * MOTOR_ROT_TO_LINEAR_INCHES;
     }
+
+    // Get average distance travelled by the left and right wheels in linear inches
+    double getDistance() {
+        return (getLeftDistance() + getRightDistance()) / 2.0;
+    }
+
 };

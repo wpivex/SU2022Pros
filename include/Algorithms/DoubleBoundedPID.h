@@ -3,8 +3,8 @@
 #include "EndablePID.h"
 
 /*
-A PID controller which is bounded with a one-sided threshold. This means that when the threshold is crossed,
-the controller terminates
+A PID controller which is bounded with an interval. If the error falls between an interval for some number
+of times in a row, then the controller terminates
 */
 class DoubleBoundedPID : public EndablePID {
 
