@@ -1,11 +1,7 @@
 #pragma once
 #include <vector>
 #include "Subsystems/Robot.h"
-
-typedef struct Waypoint {
-    double x, y;
-} Waypoint;
-
+#include "Waypoint.h"
 
 class Controller {
 
