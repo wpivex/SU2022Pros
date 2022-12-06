@@ -10,3 +10,7 @@ double distance(const Waypoint& a, const Waypoint& b) {
     double y = b.y - a.y
     return math.sqrt(x*x + y*y);
 }
+
+double thetaBetweenWaypoints(const Waypoint& a, const Waypoint& b) {
+    return math.atan2(b.y - a.y, b.x - a.x);
+}
