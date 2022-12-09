@@ -93,10 +93,49 @@ void goToY(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float
 // Go as close to some line (defined by two points) as possible
 // Essentially goForwardU but with ending control from odom
 // Line defined by (x1, y1) to (x2, y2) in inches
+
+/*
+LEAVING THIS HERE UNTIL FUNCTION IS BUG FREE
+
+find equation for line
+find equation for robot movement
+find where they intersect
+calculate distance to point
+drive to point while controlling heading
+
+slope = (y2-y1)/(x2-x1)
+
+y - y1 = slope(x - x1)
+roboSlope= tan(robot.localizer->getHeading());
+y - robot.localizer->getY() = roboSlope(x - robot.localizer->getX())
+
+slope(x - x1) + y1 = roboSlope(x - robot.localizer->getX()) + robot.localizer->getY()
+slope*x - slope*x1 + y1 = roboSlope*x - roboSlope*robot.localizer->getX()) + robot.localizer->getY()
+slope*x -  roboSlope*x  = - roboSlope*robot.localizer->getX()) + robot.localizer->getY() + slope*x1 - y1
+x  = (-roboSlope*robot.localizer->getX()) + robot.localizer->getY() + slope*x1 - y1)/ (slope - roboSlope)
+*/
 void goForwardToLineU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading,
         float x1, float y1, float x2, float y2, float targetHeading) {
     
     setHeading(robot, targetHeading);
+
+    while(!pidDistance.isCompleted()){
+        float lineSlope = (y2-y1)/(x2-x1);
+        float roboSlope= tan(robot.localizer->getHeading());
+
+        float desX = ((-roboSlope*robot.localizer->getX()) + robot.localizer->getY() + (lineSlope*x1) - y1)/ (lineSlope - roboSlope);
+        float desY = (lineSlope*(desX - x1)) + y1;
+
+        float distance = sqrtf(pow((desX-robot.localizer->getX()),2)+pow((desY-robot.localizer->getY()),2));
+
+        float baseVelocity = pidDistance.tick(distance - robot.drive->getDistance());
+        float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
+        float deltaVelocity = pidHeading.tick(headingError);
+
+        float left = baseVelocity + deltaVelocity;
+        float right = baseVelocity - deltaVelocity;
+        robot.drive->setVelocity(left, right);
+    }
     // TODO
 }
 
