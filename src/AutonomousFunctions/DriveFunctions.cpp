@@ -1,4 +1,5 @@
 #include "AutonomousFunctions/DriveFunctions.h"
+#include "pros/rtos.hpp"
 
 // Check if targetHeading was set to default, in which case maintain the current heading and update targetHeading value
 inline void setHeading(Robot& robot, float& targetHeading) {
@@ -6,9 +7,22 @@ inline void setHeading(Robot& robot, float& targetHeading) {
 }
 
 // Go forwards for some time while maintaining heading
-void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, float timeSeconds, float targetHeading) {
+void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, float timeSeconds, float targetHeading, float targetVelocity) {
     setHeading(robot, targetHeading);
-    // TODO
+
+    float startTime = pros::millis()/1000;
+
+    while((pros::millis()/1000)>(startTime + timeSeconds)){
+        float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
+        float deltaVelocity = pidHeading.tick(headingError);
+        
+        float left = targetVelocity + deltaVelocity;
+        float right = targetVelocity - deltaVelocity;
+        robot.drive->setEffort(left, right);
+
+        pros::delay(10);
+    }
+    robot.drive->setEffort(0, 0);
 }
 
 // Go forwards some distance while maintaining heading
