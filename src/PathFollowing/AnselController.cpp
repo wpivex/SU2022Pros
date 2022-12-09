@@ -8,15 +8,15 @@
 #define BASE_EFFORT 0.2 // base speed (0-1)
 #define HEADING_KP 7 // how much to compensate for heading error to target
 
-Waypoint AnselController::getTargetWaypoint(int& closestIndex, const Waypoint& currentPosition) {
+Waypoint AnselController::getTargetWaypoint(std::vector<Waypoint>& path, int& closestIndex, Waypoint& currentPosition) {
 
     double closestDistance = distance(currentPosition, path[closestIndex]);
     int maxIndex = closestIndex + LOOKAHEAD_SEARCH_RANGE;
-    for (int i = closestIndex + 1, i < path.size() && i < maxIndex; i++) {
-        double distance = distance(currentPosition, path[i]);
-        if (distance < closestDistance) {
+    for (int i = closestIndex + 1; i < path.size() && i < maxIndex; i++) {
+        double dist = distance(currentPosition, path[i]);
+        if (dist < closestDistance) {
             closestIndex = i;
-            closestDistance = distance;
+            closestDistance = dist;
         }
     }
     int targetIndex = fmin(closestIndex + LOOKAHEAD_DELTA, path.size() - 1);
@@ -33,10 +33,10 @@ void AnselController::runSegment(std::vector<Waypoint>& path) {
     Waypoint targetPosition;
     while (true) {
 
-        Waypoint currentPosition(robot.localizer->getX(), robot.localizer->getY());
-        double currentHeading = robot.localizer->getHeading();
+        Waypoint currentPosition = {robot->localizer->getX(), robot->localizer->getY()};
+        double currentHeading = robot->localizer->getHeading();
 
-        targetPosition = getTargetWaypoint(closestIndex, currentPosition);
+        targetPosition = getTargetWaypoint(path, closestIndex, currentPosition);
 
         if (closestIndex == path.size() - 1) break;
 
@@ -46,11 +46,11 @@ void AnselController::runSegment(std::vector<Waypoint>& path) {
         double leftEffort = BASE_EFFORT + HEADING_KP * headingError;
         double rightEffort = BASE_EFFORT - HEADING_KP * headingError;
 
-        robot.drive->setEffort(leftEffort, rightEffort);
+        robot->drive->setEffort(leftEffort, rightEffort);
 
         pros::delay(10);
     }
     
     // go directly to last point once lookahead target becomes the last waypoint
-    void goToPoint(robot, SingleBoundedPID({1,0,0}), SimplePID({1,0,0}), targetPosition.x, targetPosition.y);
+    goToPoint(*robot, SingleBoundedPID({1,0,0}), SimplePID({1,0,0}), targetPosition.x, targetPosition.y);
 }

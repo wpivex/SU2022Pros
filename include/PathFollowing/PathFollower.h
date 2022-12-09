@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include "Controller.h"
+#include "Subsystems/Robot.h"
 
 class PathFollower {
 
@@ -10,12 +11,17 @@ private:
 
     std::vector<std::vector<Waypoint>> path;
     std::unique_ptr<Controller> controller;
+    Robot& robot;
 
 public:
 
-    PathFollower(Controller* controllerP):
+    PathFollower(Robot& r, Controller* controllerP):
+        robot(r),
         controller(controllerP)
-    {} // generate path from reading from file
+    {
+        controller->initRobot(&robot);
+
+    } // generate path from reading from file
 
     void runSegment(int index);
 

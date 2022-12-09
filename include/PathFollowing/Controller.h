@@ -9,5 +9,5 @@ protected:
     Robot* robot;
 public:
     void initRobot(Robot* robotP) {robot = robotP; }
-    virtual void runSegment(std::vector<const Waypoint>& path) = 0;
+    virtual void runSegment(std::vector<Waypoint>& path) = 0;
 };

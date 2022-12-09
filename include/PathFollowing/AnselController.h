@@ -4,10 +4,10 @@
 class AnselController : public Controller {
 
 public:
-    void runSegment(std::vector<const Waypoint>& path) override;
+    void runSegment(std::vector<Waypoint>& path) override;
 
 private:
-    Waypoint getTargetWaypoint();
+    Waypoint getTargetWaypoint(std::vector<Waypoint>& path, int& closestIndex, Waypoint& currentPosition);
 
 
 };
