@@ -5,7 +5,6 @@ inline void setHeading(Robot& robot, float& targetHeading) {
     if (targetHeading == MAINTAIN_CURRENT_HEADING) targetHeading = robot.localizer->getHeading();
 }
 
-
 // Go forwards for some time while maintaining heading
 void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, float timeSeconds, float targetHeading) {
     setHeading(robot, targetHeading);
@@ -27,10 +26,11 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
 
         float left = baseVelocity + deltaVelocity;
         float right = baseVelocity - deltaVelocity;
-        robot.drive->setVelocity(left, right);
+        robot.drive->setEffort(left, right);
 
         pros::delay(10);
     }
+    robot.drive->setEffort(0, 0);
 }
 
 // Turn to some given heading: left is positive
@@ -41,10 +41,11 @@ void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
 
         float left = turnVelocity;
         float right = -turnVelocity;
-        robot.drive->setVelocity(left, right);
+        robot.drive->setEffort(left, right);
         //written out in variables for ease of debugging. can shorten later
         // also I'm pretty sure the signs should be flipped but I'm keeping it consistent for now.
     }
+    robot.drive->setEffort(0, 0);
 }
 
 // Go to some x position by driving forwards or backwards. Works best when roughly perpendicular to x axis
@@ -63,16 +64,15 @@ void goToX(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float
 
         float left = baseVelocity + deltaVelocity;
         float right = baseVelocity - deltaVelocity;
-        robot.drive->setVelocity(left, right);
+        robot.drive->setEffort(left, right);
 
         pros::delay(10);
     }
+    robot.drive->setEffort(0, 0);
 }
 
 // Go to some y position by driving forwards or backwards. Works best when roughly perpendicular to y axis
 void goToY(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float ycoord, float targetHeading) {
-    setHeading(robot, targetHeading);
-
     robot.drive->resetDistance();
 
     while (!pidDistance.isCompleted()) {
@@ -84,10 +84,11 @@ void goToY(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float
 
         float left = baseVelocity + deltaVelocity;
         float right = baseVelocity - deltaVelocity;
-        robot.drive->setVelocity(left, right);
+        robot.drive->setEffort(left, right);
 
         pros::delay(10);
     }
+    robot.drive->setEffort(0, 0);
 }
 
 // Go as close to some line (defined by two points) as possible
@@ -134,11 +135,10 @@ void goForwardToLineU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHea
 
         float left = baseVelocity + deltaVelocity;
         float right = baseVelocity - deltaVelocity;
-        robot.drive->setVelocity(left, right);
+        robot.drive->setEffort(left, right);
     }
-    // TODO
+    robot.drive->setEffort(0, 0);
 }
-
 
 // go to (x,y) through concurrently aiming at (x,y) and getting as close to it as possible
 void goToPoint(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float xcoord, float ycoord) {
@@ -155,8 +155,9 @@ void goToPoint(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, f
 
         float left = baseVelocity + deltaVelocity;
         float right = baseVelocity - deltaVelocity;
-        robot.drive->setVelocity(left, right);
+        robot.drive->setEffort(left, right);
 
         pros::delay(10);
     }
+    robot.drive->setEffort(0, 0);
 }
