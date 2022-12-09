@@ -33,21 +33,64 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
     }
 }
 
-// Turn to some given heading
-void goTurnU(Robot& robot, SimplePID&& pidHeading, float absoluteHeading) {
+// Turn to some given heading: left is positive
+void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
     // TODO
+    while(!pidHeading.isCompleted()){
+        float headingError = deltaInHeading(absoluteHeading, robot.localizer->getHeading());
+        float turnVelocity = pidHeading.tick(headingError);
+
+        float left = turnVelocity;
+        float right = -turnVelocity;
+        robot.drive->setVelocity(left, right);
+        //written out in variables for ease of debugging. can shorten later
+        // also I'm pretty sure the signs should be flipped but I'm keeping it consistent for now.
+    }
 }
 
 // Go to some x position by driving forwards or backwards. Works best when roughly perpendicular to x axis
-void goToX(Robot& robot, EndablePID&& pidDistance, float xcoord, float targetHeading) {
-    setHeading(robot, targetHeading);
-    // TODO
+void goToX(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float xcoord) {
+    float targetHeading = robot.localizer->getHeading();
+
+    robot.drive->resetDistance();
+
+    // FULL EXAMPLE FUNCTION
+    while (!pidDistance.isCompleted()) {
+        float distance = (xcoord-robot.localizer->getY())*cosf((targetHeading+(robot.localizer->getHeading()))/2);
+        // something is off but my brain stopped going brr when my stomach decided i was hungry. shall return
+
+        float baseVelocity = pidDistance.tick(distance - robot.drive->getDistance());
+        float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
+        float deltaVelocity = pidHeading.tick(headingError);
+
+        float left = baseVelocity + deltaVelocity;
+        float right = baseVelocity - deltaVelocity;
+        robot.drive->setVelocity(left, right);
+
+        pros::delay(10);
+    }
 }
 
 // Go to some y position by driving forwards or backwards. Works best when roughly perpendicular to y axis
-void goToY(Robot& robot, EndablePID&& pidDistance, float ycoord, float targetHeading) {
+void goToY(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float ycoord, float targetHeading) {
     setHeading(robot, targetHeading);
-    // TODO
+
+    robot.drive->resetDistance();
+
+    // FULL EXAMPLE FUNCTION
+    while (!pidDistance.isCompleted()) {
+        float distance = (ycoord-robot.localizer->getY())*cosf((targetHeading+(robot.localizer->getHeading()))/2);
+        
+        float baseVelocity = pidDistance.tick(distance - robot.drive->getDistance());
+        float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
+        float deltaVelocity = pidHeading.tick(headingError);
+
+        float left = baseVelocity + deltaVelocity;
+        float right = baseVelocity - deltaVelocity;
+        robot.drive->setVelocity(left, right);
+
+        pros::delay(10);
+    }
 }
 
 // Go as close to some line (defined by two points) as possible
@@ -64,4 +107,21 @@ void goForwardToLineU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHea
 // go to (x,y) through concurrently aiming at (x,y) and getting as close to it as possible
 void goToPoint(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float xcoord, float ycoord) {
     // TODO
+    robot.drive->resetDistance();
+
+    while(!pidDistance.isCompleted()){
+        float targetHeading = (atan2f((ycoord-robot.localizer->getY()), (xcoord-robot.localizer->getX())))*180/M_PI;
+
+        float distance = sqrtf(pow((xcoord-robot.localizer->getX()),2)+pow((ycoord-robot.localizer->getY()),2));
+        
+        float baseVelocity = pidDistance.tick(distance - robot.drive->getDistance());
+        float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
+        float deltaVelocity = pidHeading.tick(headingError);
+
+        float left = baseVelocity + deltaVelocity;
+        float right = baseVelocity - deltaVelocity;
+        robot.drive->setVelocity(left, right);
+
+        pros::delay(10);
+    }
 }
