@@ -1,24 +1,30 @@
-#include "misc/ButtonSM.h"
+#include "misc/ControllerSM.h"
+#include "pros/misc.h"
 
-void ButtonSM::updateButtonState() {
+double ControllerSM::getAxis(pros::controller_analog_e_t axis) {
+    int32_t raw = controller.get_analog(axis); // from -127 to 127
+    return raw / 127.0;
+}
+
+void ControllerSM::updateButtonState() {
     for (int i = 0; i < NUM_BUTTONS; i++) {
         prevButtonState[i] = pressing(buttons[i]); 
     }
 }
 
-bool ButtonSM::pressing(pros::controller_digital_e_t button) {
+bool ControllerSM::pressing(pros::controller_digital_e_t button) {
     return controller.get_digital(button);
 }
 
-bool ButtonSM::pressed(pros::controller_digital_e_t button) {
+bool ControllerSM::pressed(pros::controller_digital_e_t button) {
     return pressing(button) && !prevButtonState[get(button)];
 }
 
-bool ButtonSM::released(pros::controller_digital_e_t button) {
+bool ControllerSM::released(pros::controller_digital_e_t button) {
     return !pressing(button) && prevButtonState[get(button)];
 }
 
-int ButtonSM::get(pros::controller_digital_e_t button) {
+int ControllerSM::get(pros::controller_digital_e_t button) {
     switch (button) {
         case DIGITAL_A:
             return 0;

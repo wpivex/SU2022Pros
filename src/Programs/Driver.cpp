@@ -1,4 +1,6 @@
 #include "Programs/Driver.h"
+#include "misc/ProsUtility.h"
+#include "pros/rtos.hpp"
 
 void Driver::runDriver() {
 
@@ -11,43 +13,60 @@ void Driver::runDriver() {
         handleSecondaryActions();
         
         // Update button state machine for rising and falling edges
-        buttonSM.updateButtonState();
+        controller.updateButtonState();
 
         // Enforce minimum polling cycle rate
         pros::delay(10);
     }
 }
 
+void Driver::handleDrivetrain() {
+
+    float leftX = controller.getAxis(ANALOG_LEFT_X);
+    float rightX = controller.getAxis(ANALOG_RIGHT_X);
+    float rightY = controller.getAxis(ANALOG_RIGHT_Y);
+
+    if (drive == ARCADE_DRIVE) {
+        float drive = leftX;
+        float turn = rightY;
+        float max = fmax(1.0, fmax(fabs(drive+turn), fabs(drive-turn)));
+
+        float leftEffort = (drive + turn) / max;
+        float rightEffort = (drive - turn) / max;
+        robot.drive->setEffort(leftEffort, rightEffort);
+    } else {
+        robot.drive->setEffort(leftX, rightX);
+    }
+
+}
+
 void Driver::handleSecondaryActions() {
 
-    const float INCREMENT = 200;
-
-    // update flywheel speed with L1 and L2
-    if (buttonSM.pressed(DIGITAL_L1)) {
-        double target = fmin(4000, robot.flywheel->getVelocity() + INCREMENT);
-        robot.flywheel->setVelocity(target);
-    } else if (buttonSM.pressed(DIGITAL_L2)) {
-        double target = fmax(0, robot.flywheel->getVelocity() - INCREMENT);
-        robot.flywheel->setVelocity(target);
+    if (controller.pressed(DIGITAL_L1)) {
+        if (speed < 3600) speed = fmin(speed + 200, 3600);
     }
-
-
-    // Indexer is set to R2 state. R2: Intake forward with 0.25s delay, R1: intake reverse
-    if (buttonSM.pressed(DIGITAL_R2)) {
-        robot.indexer->set_value(true);
+    else if (controller.pressed(DIGITAL_L2)) {
+        if (speed > 0) speed = fmax(speed - 200, 0);
+    }
+    else if (controller.pressed(DIGITAL_R2)) {
+        robot.indexer->set_value(false);
         indexerOn = true;
         indexerTimer = pros::millis();
-    } else if (buttonSM.released(DIGITAL_R2)) {
-        robot.indexer->set_value(false);
+    }
+    else if (controller.released(DIGITAL_R2)) {
+        robot.indexer->set_value(true);
         indexerOn = false;
+        indexerOffTimer = pros::millis();
     }
 
-    // Actually set the intake velocity
-    if (indexerOn && pros::millis() - 250 > indexerTimer) {
-        robot.intake->move_voltage(-12000);
-    } else if (buttonSM.pressing(DIGITAL_R1)) {
-        robot.intake->move_voltage(12000);
+    if (indexerOn && pros::millis() - 250 > indexerTimer || (!indexerOn && pros::millis() - 300 < indexerOffTimer)) {
+        setEffort(*robot.intake, -1);
+    } else if (controller.pressing(DIGITAL_R1)) {
+        setEffort(*robot.intake, 1);
     } else {
         robot.intake->brake();
     }
+
+    robot.flywheel->setVelocity(speed);
+
 }
