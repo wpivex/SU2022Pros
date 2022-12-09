@@ -41,6 +41,11 @@ public:
         rightMotors.move_velocity(right / MOTOR_ROT_TO_LINEAR_INCHES * 60);
     }
 
+    void stop() {
+        leftMotors.brake();
+        rightMotors.brake();
+    }
+
     void setBrakeMode(pros::motor_brake_mode_e_t mode) {
         leftMotors.set_brake_modes(mode);
         rightMotors.set_brake_modes(mode);

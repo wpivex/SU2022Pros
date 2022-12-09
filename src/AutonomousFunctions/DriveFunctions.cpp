@@ -27,10 +27,14 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
 
         float left = baseVelocity + deltaVelocity;
         float right = baseVelocity - deltaVelocity;
-        robot.drive->setVelocity(left, right);
+        robot.drive->setEffort(left, right);
+        pros::lcd::print(0, "%f", left);
+        pros::lcd::print(1, "%f", right);
 
         pros::delay(10);
     }
+
+    robot.drive->stop();
 }
 
 // Turn to some given heading
