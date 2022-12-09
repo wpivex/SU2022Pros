@@ -35,7 +35,6 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
 
 // Turn to some given heading: left is positive
 void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
-    // TODO
     while(!pidHeading.isCompleted()){
         float headingError = deltaInHeading(absoluteHeading, robot.localizer->getHeading());
         float turnVelocity = pidHeading.tick(headingError);
@@ -54,7 +53,6 @@ void goToX(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float
 
     robot.drive->resetDistance();
 
-    // FULL EXAMPLE FUNCTION
     while (!pidDistance.isCompleted()) {
         float distance = (xcoord-robot.localizer->getY())*cosf((targetHeading+(robot.localizer->getHeading()))/2);
         // something is off but my brain stopped going brr when my stomach decided i was hungry. shall return
@@ -77,7 +75,6 @@ void goToY(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float
 
     robot.drive->resetDistance();
 
-    // FULL EXAMPLE FUNCTION
     while (!pidDistance.isCompleted()) {
         float distance = (ycoord-robot.localizer->getY())*cosf((targetHeading+(robot.localizer->getHeading()))/2);
         
@@ -106,7 +103,6 @@ void goForwardToLineU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHea
 
 // go to (x,y) through concurrently aiming at (x,y) and getting as close to it as possible
 void goToPoint(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float xcoord, float ycoord) {
-    // TODO
     robot.drive->resetDistance();
 
     while(!pidDistance.isCompleted()){
