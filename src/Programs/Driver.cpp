@@ -4,6 +4,19 @@
 
 void Driver::runDriver() {
     pros::lcd::initialize();
+
+    if (robot.flywheel) {
+        pros::Task taskFlywheel([&] {
+            robot.flywheel->maintainVelocityTask();
+        });
+    }
+
+    if (robot.localizer) {
+        pros::Task taskLocalizer([&] {
+            robot.localizer->updatePositionTask();
+        });
+    }
+
     while (true) {
         pros::lcd::print(0, "%d", speed);
 

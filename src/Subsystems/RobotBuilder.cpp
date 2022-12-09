@@ -40,7 +40,7 @@ Robot getRobot() {
         0 // start speed
     ));
 
-    robot.intake.reset(new pros::MotorGroup({13, -16}));
+    robot.intake.reset(new pros::MotorGroup({-13, 16}));
 
     robot.indexer.reset(new pros::ADIDigitalOut('G'));
 
