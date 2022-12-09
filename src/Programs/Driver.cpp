@@ -3,8 +3,9 @@
 #include "pros/rtos.hpp"
 
 void Driver::runDriver() {
-
+    pros::lcd::initialize();
     while (true) {
+        pros::lcd::print(0, "%d", speed);
 
         // Handle drivetrain locomotion from joysticks (tank, arcade, etc.)
         handleDrivetrain();
@@ -23,19 +24,20 @@ void Driver::runDriver() {
 void Driver::handleDrivetrain() {
 
     float leftX = controller.getAxis(ANALOG_LEFT_X);
+    float leftY = controller.getAxis(ANALOG_LEFT_Y);
     float rightX = controller.getAxis(ANALOG_RIGHT_X);
     float rightY = controller.getAxis(ANALOG_RIGHT_Y);
 
     if (drive == ARCADE_DRIVE) {
-        float drive = leftX;
-        float turn = rightY;
+        float drive = leftY;
+        float turn = rightX;
         float max = fmax(1.0, fmax(fabs(drive+turn), fabs(drive-turn)));
 
         float leftEffort = (drive + turn) / max;
         float rightEffort = (drive - turn) / max;
         robot.drive->setEffort(leftEffort, rightEffort);
     } else {
-        robot.drive->setEffort(leftX, rightX);
+        robot.drive->setEffort(leftY, rightY);
     }
 
 }

@@ -4,9 +4,10 @@
 #include "Programs/Driver.h"
 
 Robot robot = getRobot();
-Driver driver(robot);
+Driver driver(robot, TANK_DRIVE);
 
-#define RUN_AUTON
+//#define RUN_AUTON
+
 using namespace pros;
 
 void initialize() {

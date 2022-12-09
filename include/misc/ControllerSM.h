@@ -17,7 +17,15 @@ private:
 
     int get(pros::controller_digital_e_t button);
 
+    pros::Controller controller;
+    
+
 public:
+
+    ControllerSM():
+        controller(pros::E_CONTROLLER_MASTER)
+    {}
+
     void updateButtonState();
 
     bool pressing(pros::controller_digital_e_t button);
@@ -26,3 +34,4 @@ public:
 
     double getAxis(pros::controller_analog_e_t axis);
 };
+
