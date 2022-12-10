@@ -37,6 +37,7 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
 
         float baseVelocity = pidDistance.tick(distance - robot.drive->getDistance());
         float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
+        pros::lcd::print(0, "%f", headingError);
         float deltaVelocity = pidHeading.tick(headingError);
 
         float left = baseVelocity + deltaVelocity;
@@ -60,6 +61,8 @@ void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
         robot.drive->setEffort(left, right);
         //written out in variables for ease of debugging. can shorten later
         // also I'm pretty sure the signs should be flipped but I'm keeping it consistent for now.
+
+        pros::delay(10);
     }
     
     robot.drive->stop();
