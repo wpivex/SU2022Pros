@@ -46,3 +46,7 @@ inline double deltaInHeading(double targetHeading, double currentHeading) {
 constexpr double getRadians(double degrees) {
     return degrees / 180.0 * M_PI;
 }
+
+constexpr double getDegrees(double radians) {
+    return radians * 180.0 / M_PI;
+}

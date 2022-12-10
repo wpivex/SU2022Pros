@@ -4,6 +4,7 @@
 #include "Algorithms/SingleBoundedPID.h"
 #include "Algorithms/SimplePID.h"
 #include "Algorithms/DoubleBoundedPID.h"
+#include "misc/ProsUtility.h"
 
 #define GFU_DIST(maxSpeed) SingleBoundedPID({0.1, 0, 0, 0.1, maxSpeed})
 #define GFU_DIST_PRECISE(maxSpeed) DoubleBoundedPID({0.1, 0, 0, 0.1, maxSpeed}, 0.2, 3)
@@ -12,13 +13,21 @@
 
 void matchAutonIMUOnly(Robot& robot) {
 
-	robot.localizer->setPosition(0, 0, 0);
+	robot.localizer->setPosition(0, 0, getRadians(334.3));
 	robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
-	robot.flywheel->setVelocity(3600);
+	robot.flywheel->setVelocity(3000);
 
-	//goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 24);
+    setEffort(*robot.intake, 1);
+	goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 14);
+    pros::delay(1000);
 
-	goTurnU(robot, GTU_TURN, getRadians(180));
+    setEffort(*robot.intake, -1);
+    pros::delay(1000);
+
+    setEffort(*robot.intake, 0);
+
+
+	//goTurnU(robot, GTU_TURN, getRadians(180));
 
 
 	pros::lcd::print(0, "done");
