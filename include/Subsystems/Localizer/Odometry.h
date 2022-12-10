@@ -10,6 +10,8 @@ private:
     pros::ADIEncoder left, right, back;
     double diameter, backDistance;
 
+    double currentX, currentY, currentHeading;
+
 public:
 
     Odometry(uint8_t imuPort, pros::ADIEncoder leftEncoder, pros::ADIEncoder rightEncoder, pros::ADIEncoder backEncoder,
@@ -28,5 +30,7 @@ public:
     
     void updatePositionTask() override; // blocking task used to update (x, y, heading)
     void init() override; // init imu
+
+    void setPosition(double x, double y, double headingRadians) override;
 
 };

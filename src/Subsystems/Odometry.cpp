@@ -21,4 +21,11 @@ void Odometry::updatePositionTask() { // blocking task used to update (x, y, hea
 void Odometry::init() {
     imu.reset(true);
     pros::delay(1000);
+
+}
+
+void Odometry::setPosition(double x, double y, double headingRadians) {
+    currentX = x;
+    currentY = y;
+    currentHeading = headingRadians;
 }
