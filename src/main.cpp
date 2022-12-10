@@ -5,6 +5,7 @@
 #include "AutonomousFunctions/DriveFunctions.h"
 #include "Algorithms/SingleBoundedPID.h"
 #include "Algorithms/SimplePID.h"
+#include "Algorithms/DoubleBoundedPID.h"
 
 Robot robot = getRobot();
 Driver driver(robot, TANK_DRIVE);
@@ -24,13 +25,14 @@ void competition_initialize() {}
 
 
 void autonomous() {
-	#define PID_DISTANCE SingleBoundedPID({0.1,0,0})
-	#define PID_TURN SimplePID({1,0,0})
+	#define GFU_DISTANCE SingleBoundedPID({0.1, 0, 0, 0.1, 1})
+	#define GFU_TURN SimplePID({1, 0, 0, 0.1, 1})
+	#define GTU_Turn DoubleBoundedPID({1, 0, 0}, getRadians(2), 1)
 
 	robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
 
 	pros::lcd::initialize();
-	goForwardU(robot, PID_DISTANCE, PID_TURN, 24);
+	goForwardU(robot, GFU_DISTANCE, GFU_TURN, 24);
 
 	pros::lcd::print(0, "done");
 

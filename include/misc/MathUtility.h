@@ -21,7 +21,7 @@ inline double average(const std::vector<double>& nums) {
     return sum / nums.size();
 }
 
-inline float clamp(float value, float min, float max) {
+inline double clamp(double value, double min, double max) {
     return fmin(max, fmax(min, value));
 }
 
@@ -31,7 +31,7 @@ inline int sign(double x) {
 }
 
 // Bound angle to between -pi and pi, preferring the smaller magnitude
-inline float boundAngleRadians(float angle) {
+inline double boundAngleRadians(double angle) {
     angle = fmod(angle, M_PI*2);
     if (angle < -M_PI) angle += 2*M_PI;
     if (angle > M_PI) angle -= 2*M_PI;
@@ -39,6 +39,10 @@ inline float boundAngleRadians(float angle) {
 }
 
 // Find the closest angle between two universal angles
-inline float deltaInHeading(float targetHeading, float currentHeading) {
+inline double deltaInHeading(double targetHeading, double currentHeading) {
   return boundAngleRadians(targetHeading - currentHeading);
+}
+
+constexpr double getRadians(double degrees) {
+    return degrees / 180.0 * M_PI;
 }
