@@ -1,4 +1,5 @@
 #include "AutonomousFunctions/DriveFunctions.h"
+#include "misc/MathUtility.h"
 #include "pros/rtos.hpp"
 
 // Check if targetHeading was set to default, in which case maintain the current heading and update targetHeading value
@@ -68,9 +69,12 @@ void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
     robot.drive->stop();
 }
 
-
-void goCurve(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, double theta, double radius, bool clockwise) {
-    double totalDistance = theta * radius;
+// Have the robot move in a curve starting from startTheta to endTheta given the radius of curvature about a point that the robot's center would travel around
+void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, double startTheta, double endTheta, double radius) {
+    
+    double deltaTheta = deltaInHeading(endTheta, startTheta);
+    
+    double totalDistance = fabs(deltaTheta) * radius;
     double HTW = robot.drive->TRACK_WIDTH / 2.0;
     float slowerWheelRatio = (radius - HTW) / (radius + HTW);
 
@@ -79,9 +83,29 @@ void goCurve(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doubl
     while (!pidDistance.isCompleted()) {
         double distanceError = totalDistance - robot.drive->getDistance();
         double fasterWheelSpeed = pidDistance.tick(distanceError);
-        //double slowerWheelSpeed
-    }
+        double slowerWheelSpeed = fasterWheelSpeed * slowerWheelRatio;
 
+        double targetTheta = startTheta + deltaTheta * (robot.drive->getDistance() / totalDistance);
+        double headingError = deltaInHeading(endTheta, robot.localizer->getHeading());
+        double headingCorrection = pidCurve.tick(headingError);
+
+        double left, right;
+        if (deltaTheta > 0) {
+            left = fasterWheelSpeed;
+            right = slowerWheelSpeed;
+        } else {
+            left = slowerWheelSpeed;
+            right = fasterWheelSpeed;
+        }
+
+        left += headingCorrection;
+        right -= headingCorrection;
+
+        robot.drive->setEffort(left, right);
+
+        pros::delay(10);
+
+    }
 }
 
 // Go to some x position by driving forwards or backwards. Works best when roughly perpendicular to x axis

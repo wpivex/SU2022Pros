@@ -15,7 +15,8 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
 // Turn to some given heading
 void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading);
 
-void goCurve(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, double theta, double radius, bool clockwise);
+// Have the robot move in a curve starting from startTheta to endTheta given the radius of curvature about a point that the robot's center would travel around
+void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, double startTheta, double endTheta, double radius);
 
 // Go to some x position by driving forwards or backwards. Works best when roughly perpendicular to x axis
 void goToX(Robot& robot, EndablePID&& pidDistance, float xcoord, float targetHeading = MAINTAIN_CURRENT_HEADING);
