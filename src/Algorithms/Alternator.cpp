@@ -1,9 +1,10 @@
 #include "Algorithms/Alternator.h"
 
-Alternator::Alternator(int numberOfTimes, int onPeriod, int offPeriod):
+Alternator::Alternator(int numberOfTimes, int onPeriod, int offPeriod, int endPeriod):
     N(numberOfTimes),
     A(onPeriod),
-    B(offPeriod)
+    B(offPeriod),
+    end(endPeriod)
 {
     reset();
 }
@@ -12,11 +13,16 @@ void Alternator::reset() {
     i = 0;
     isA = true;
     currentPeriod = 0;
+    endCount = 0;
 }
 
 bool Alternator::tick() {
 
-    if (currentPeriod >= N - 1) return true;
+
+    if (currentPeriod >= N - 1) {
+        endCount++;
+        return true;
+    }
 
     bool result = isA;
 
@@ -31,4 +37,8 @@ bool Alternator::tick() {
     }
 
     return result;
+}
+
+bool Alternator::isDone() {
+    return endCount >= end;
 }

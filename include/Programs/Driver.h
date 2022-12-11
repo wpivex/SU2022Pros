@@ -14,7 +14,7 @@ public:
     Driver(Robot& robotReference, DRIVE_TYPE driveType):
         robot(robotReference),
         drive(driveType),
-        shootAlternator(3, 7, 10) // 70ms on / 70ms off
+        shootAlternator(3, 11, 7) // 70ms on / 70ms off
     {}
 
     void runDriver();

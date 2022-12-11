@@ -11,9 +11,13 @@ private:
     int i;
     bool isA;
 
+    int end;
+    int endCount = 0;
+
 public:
 
-    Alternator(int numberOfTimes, int onPeriod, int offPeriod);
+    Alternator(int numberOfTimes, int onPeriod, int offPeriod, int endPeriod = -1);
     void reset();
     bool tick();
+    bool isDone();
 };
