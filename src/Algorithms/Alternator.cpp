@@ -12,14 +12,14 @@ Alternator::Alternator(int numberOfTimes, int onPeriod, int offPeriod, int endPe
 void Alternator::reset() {
     i = 0;
     isA = true;
-    currentPeriod = 0;
+    currentPeriod = 1;
     endCount = 0;
 }
 
 bool Alternator::tick() {
 
 
-    if (currentPeriod >= N - 1) {
+    if (currentPeriod >= N) {
         endCount++;
         return true;
     }
@@ -30,10 +30,10 @@ bool Alternator::tick() {
     if (isA && i == A) {
         i = 0;
         isA = false;
-        currentPeriod++;
     } else if (!isA && i == B) {
         i = 0;
         isA = true;
+        currentPeriod++;
     }
 
     return result;

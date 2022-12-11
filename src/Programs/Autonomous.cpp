@@ -20,7 +20,7 @@ void startIntake(Robot& robot) {
 
 // shoot a 3-burst round. First two rounds are short burst (110ms with 220ms break), third is longer (300ms)
 void shoot(Robot& robot) {
-    Alternator alternator(3, 11, 20, 30);
+    Alternator alternator(3, 16, 23, 30);
     while (!alternator.isDone()) {
         if (alternator.tick()) setEffort(*robot.intake, -1);
         else robot.intake->brake();
