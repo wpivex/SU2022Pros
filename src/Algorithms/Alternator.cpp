@@ -5,11 +5,7 @@ Alternator::Alternator(int numberOfTimes, int onPeriod, int offPeriod):
     A(onPeriod),
     B(offPeriod)
 {
-
-    currentPeriod = 0;
-    i = 0;
-    isA = true;
-
+    reset();
 }
 
 void Alternator::reset() {
@@ -20,7 +16,7 @@ void Alternator::reset() {
 
 bool Alternator::tick() {
 
-    if (currentPeriod >= N) return false;
+    if (currentPeriod >= N - 1) return true;
 
     bool result = isA;
 

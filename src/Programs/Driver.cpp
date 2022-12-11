@@ -71,8 +71,8 @@ void Driver::handleSecondaryActions() {
         setEffort(*robot.intake, 1);
     } else if (controller.pressing(DIGITAL_R1)) {
         // shoot
-        int effort = shootAlternator.tick() ? -1 : 0;
-        setEffort(*robot.intake, effort);
+        if (shootAlternator.tick()) setEffort(*robot.intake, -1);
+        else robot.intake->brake();
     } else {
         robot.intake->brake();
     }

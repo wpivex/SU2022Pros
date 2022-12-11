@@ -1,6 +1,7 @@
 #include "Subsystems/RobotBuilder.h"
 #include "Subsystems/Localizer/Odometry.h"
 #include "Subsystems/Flywheel/TBHFlywheel.h"
+#include "pros/motors.h"
 
 Robot getRobot() {
 
@@ -41,6 +42,7 @@ Robot getRobot() {
     ));
 
     robot.intake.reset(new pros::MotorGroup({-13, 16}));
+    robot.intake->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
 
     robot.indexer.reset(new pros::ADIDigitalOut('G'));
 
