@@ -15,7 +15,7 @@ void matchAutonIMUOnly(Robot& robot) {
 
 	robot.localizer->setPosition(0, 0, getRadians(334.3));
 	robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
-	robot.flywheel->setVelocity(3000);
+	robot.flywheel->setVelocity(3300);
 
     setEffort(*robot.intake, 1);
 	goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 14);
@@ -26,7 +26,7 @@ void matchAutonIMUOnly(Robot& robot) {
 
     // wait for spinup
     setEffort(*robot.intake, 0);
-    pros::delay(2000);
+    while (!robot.flywheel->atTargetVelocity()) pros::delay(10);
 
     // shoot
     setEffort(*robot.intake, -0.5);

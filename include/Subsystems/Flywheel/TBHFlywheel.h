@@ -25,6 +25,8 @@ public:
     double getTargetVelocity() override;
     double getCurrentVelocity() override;
     void maintainVelocityTask() override;
+    
+    bool atTargetVelocity() override;
 
 
 };

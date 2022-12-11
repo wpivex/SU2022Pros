@@ -14,6 +14,10 @@ double TBHFlywheel::getCurrentVelocity() {
     return average(motors.get_actual_velocities()) * ratio;
 }
 
+bool TBHFlywheel::atTargetVelocity() {
+    return fabs(getTargetVelocity() - getCurrentVelocity()) < 40;
+}
+
 void TBHFlywheel::maintainVelocityTask() {
     
     while (true) {
