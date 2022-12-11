@@ -63,12 +63,16 @@ void Driver::handleSecondaryActions() {
         robot.indexer->set_value(true);
         indexerOn = false;
         indexerOffTimer = pros::millis();
+    } else if (controller.pressed(DIGITAL_R1)) {
+        shootAlternator.reset();
     }
 
     if (indexerOn && pros::millis() - 250 > indexerTimer || (!indexerOn && pros::millis() - 300 < indexerOffTimer)) {
         setEffort(*robot.intake, 1);
     } else if (controller.pressing(DIGITAL_R1)) {
-        setEffort(*robot.intake, -0.5);
+        // shoot
+        int effort = shootAlternator.tick() ? -1 : 0;
+        setEffort(*robot.intake, effort);
     } else {
         robot.intake->brake();
     }

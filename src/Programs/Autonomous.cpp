@@ -23,10 +23,12 @@ void matchAutonIMUOnly(Robot& robot) {
 	robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
 	robot.flywheel->setVelocity(3300);
 
+    // initial goal rush
     pros::Task([&] { startIntake(robot); }); // start intake 300ms after goForwardU
-	goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 14);
+	goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, 14);
     pros::delay(1000);
 
+    // cock the gun
     robot.indexer->set_value(true);
     pros::delay(500);
 
@@ -35,7 +37,7 @@ void matchAutonIMUOnly(Robot& robot) {
     while (!robot.flywheel->atTargetVelocity()) pros::delay(10);
 
     // shoot
-    setEffort(*robot.intake, -0.5);
+    setEffort(*robot.intake, -1);
     pros::delay(2000);
     setEffort(*robot.intake, 0);
 

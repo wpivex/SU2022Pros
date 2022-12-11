@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Algorithms/Alternator.h"
 #include "misc/ControllerSM.h"
 #include "Subsystems/Robot.h"
 #include "pros/misc.h"
@@ -13,7 +13,8 @@ public:
 
     Driver(Robot& robotReference, DRIVE_TYPE driveType):
         robot(robotReference),
-        drive(driveType)
+        drive(driveType),
+        shootAlternator(3, 25, 25) // 250ms on / 250ms off
     {}
 
     void runDriver();
@@ -27,6 +28,8 @@ private:
     Robot& robot;
 
     DRIVE_TYPE drive;
+
+    Alternator shootAlternator;
 
     bool indexerOn;
     int indexerTimer, indexerOffTimer;
