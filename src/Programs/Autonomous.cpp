@@ -21,9 +21,16 @@ void matchAutonIMUOnly(Robot& robot) {
 	goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 14);
     pros::delay(1000);
 
-    setEffort(*robot.intake, -1);
-    pros::delay(1000);
+    robot.indexer->set_value(true);
+    pros::delay(500);
 
+    // wait for spinup
+    setEffort(*robot.intake, 0);
+    pros::delay(2000);
+
+    // shoot
+    setEffort(*robot.intake, -0.5);
+    pros::delay(2000);
     setEffort(*robot.intake, 0);
 
 

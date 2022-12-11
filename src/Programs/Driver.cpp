@@ -1,12 +1,15 @@
 #include "Programs/Driver.h"
 #include "misc/ProsUtility.h"
+#include "pros/llemu.hpp"
 #include "pros/rtos.hpp"
 
 void Driver::runDriver() {
     pros::lcd::initialize();
 
     while (true) {
-        pros::lcd::print(0, "%d", speed);
+        pros::lcd::clear();
+        pros::lcd::print(0, "Target: %f", robot.flywheel->getTargetVelocity());
+        pros::lcd::print(1, "Current: %f", robot.flywheel->getCurrentVelocity());
 
         // Handle drivetrain locomotion from joysticks (tank, arcade, etc.)
         handleDrivetrain();
@@ -63,9 +66,9 @@ void Driver::handleSecondaryActions() {
     }
 
     if (indexerOn && pros::millis() - 250 > indexerTimer || (!indexerOn && pros::millis() - 300 < indexerOffTimer)) {
-        setEffort(*robot.intake, -1);
-    } else if (controller.pressing(DIGITAL_R1)) {
         setEffort(*robot.intake, 1);
+    } else if (controller.pressing(DIGITAL_R1)) {
+        setEffort(*robot.intake, -0.5);
     } else {
         robot.intake->brake();
     }

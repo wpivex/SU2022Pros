@@ -68,6 +68,22 @@ void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
     robot.drive->stop();
 }
 
+
+void goCurve(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, double theta, double radius, bool clockwise) {
+    double totalDistance = theta * radius;
+    double HTW = robot.drive->TRACK_WIDTH / 2.0;
+    float slowerWheelRatio = (radius - HTW) / (radius + HTW);
+
+    robot.drive->resetDistance();
+
+    while (!pidDistance.isCompleted()) {
+        double distanceError = totalDistance - robot.drive->getDistance();
+        double fasterWheelSpeed = pidDistance.tick(distanceError);
+        //double slowerWheelSpeed
+    }
+
+}
+
 // Go to some x position by driving forwards or backwards. Works best when roughly perpendicular to x axis
 void goToX(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float xcoord) {
     float targetHeading = robot.localizer->getHeading();

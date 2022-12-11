@@ -6,8 +6,12 @@ void TBHFlywheel::setVelocity(double velocity) {
     if (velocity == 0) hasSetStopped = false;
 }
 
-double TBHFlywheel::getVelocity() {
+double TBHFlywheel::getTargetVelocity() {
     return tbh.getTargetRPM();
+}
+
+double TBHFlywheel::getCurrentVelocity() {
+    return average(motors.get_actual_velocities()) * ratio;
 }
 
 void TBHFlywheel::maintainVelocityTask() {
@@ -18,7 +22,7 @@ void TBHFlywheel::maintainVelocityTask() {
             motors.brake();
             hasSetStopped = true;
         } else if (tbh.getTargetRPM() != 0) {
-            float currentSpeed = average(motors.get_actual_velocities()) * ratio;
+            float currentSpeed = getCurrentVelocity();
             float motorInputVolts = tbh.getNextMotorVoltage(currentSpeed);
             motors.move_voltage(motorInputVolts * 1000); // millivolts
         }

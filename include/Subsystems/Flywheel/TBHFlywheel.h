@@ -22,7 +22,8 @@ public:
     {}
 
     void setVelocity(double velocity) override;
-    double getVelocity() override;
+    double getTargetVelocity() override;
+    double getCurrentVelocity() override;
     void maintainVelocityTask() override;
 
 
