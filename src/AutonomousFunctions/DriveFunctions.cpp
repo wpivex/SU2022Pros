@@ -9,11 +9,13 @@ inline void setHeading(Robot& robot, float& targetHeading) {
 
 // Go forwards for some time while maintaining heading
 void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, float timeSeconds, float targetHeading, float targetVelocity) {
+    
     setHeading(robot, targetHeading);
 
-    float startTime = pros::millis()/1000;
+    uint32_t endTime = pros::millis() + timeSeconds * 1000;
 
-    while((pros::millis()/1000)>(startTime + timeSeconds)){
+    while (pros::millis() < endTime) {
+
         float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
         float deltaVelocity = pidHeading.tick(headingError);
         
@@ -29,6 +31,7 @@ void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, float timeSeconds, fl
 
 // Go forwards some distance while maintaining heading
 void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float distance, float targetHeading) {
+    
     setHeading(robot, targetHeading);
 
     robot.drive->resetDistance();
@@ -104,8 +107,8 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
         robot.drive->setEffort(left, right);
 
         pros::delay(10);
-
     }
+    robot.drive->stop();
 }
 
 // Go to some x position by driving forwards or backwards. Works best when roughly perpendicular to x axis
