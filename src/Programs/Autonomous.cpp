@@ -20,12 +20,20 @@ void startIntake(Robot& robot) {
 
 // shoot a 3-burst round. First two rounds are short burst (110ms with 220ms break), third is longer (300ms)
 void shoot(Robot& robot) {
-    Alternator alternator(3, 16, 23, 30);
-    while (!alternator.isDone()) {
-        if (alternator.tick()) setEffort(*robot.intake, -1);
-        else robot.intake->brake();
-        pros::delay(10);
-    }
+
+    setEffort(*robot.intake, -1);
+    pros::delay(110);
+    robot.intake->brake();
+    robot.flywheel->setVelocity(3300);
+    pros::delay(280);
+
+    setEffort(*robot.intake, -1);
+    pros::delay(110);
+    robot.intake->brake();
+    pros::delay(280);
+
+    setEffort(*robot.intake, -1);
+    pros::delay(300);
     robot.intake->brake();
 }
 
@@ -33,11 +41,16 @@ void matchAutonIMUOnly(Robot& robot) {
 
 	robot.localizer->setPosition(0, 0, getRadians(334.3));
 	robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
-	robot.flywheel->setVelocity(3300);
+	robot.flywheel->setVelocity(3250);
 
     // initial goal rush
-    pros::Task([&] { startIntake(robot); }); // start intake 300ms after goForwardU
-	goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, 14);
+    //pros::Task([&] { startIntake(robot); }); // start intake 300ms after goForwardU
+	//goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, 14);
+
+    // testing only
+    setEffort(*robot.intake, 1);
+    pros::delay(500);
+
     pros::delay(1000);
 
     // cock the gun

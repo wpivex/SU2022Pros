@@ -1,4 +1,5 @@
 #include "Subsystems/Flywheel/TBHFlywheel.h"
+#include "pros/llemu.hpp"
 
 
 void TBHFlywheel::setVelocity(double velocity) {
@@ -15,7 +16,7 @@ double TBHFlywheel::getCurrentVelocity() {
 }
 
 bool TBHFlywheel::atTargetVelocity() {
-    return fabs(getTargetVelocity() - getCurrentVelocity()) < 40;
+    return fabs(getTargetVelocity() - getCurrentVelocity()) < 20;
 }
 
 void TBHFlywheel::maintainVelocityTask() {
@@ -27,6 +28,7 @@ void TBHFlywheel::maintainVelocityTask() {
             hasSetStopped = true;
         } else if (tbh.getTargetRPM() != 0) {
             float currentSpeed = getCurrentVelocity();
+            pros::lcd::print(0, "flywheel: %f", currentSpeed);
             float motorInputVolts = tbh.getNextMotorVoltage(currentSpeed);
             motors.move_voltage(motorInputVolts * 1000); // millivolts
         }

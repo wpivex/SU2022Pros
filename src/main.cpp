@@ -8,13 +8,13 @@
 Robot robot = getRobot();
 Driver driver(robot, TANK_DRIVE);
 
-//#define RUN_AUTON
+#define RUN_AUTON
 
 using namespace pros;
 
 void initialize() {
 	pros::lcd::initialize();
-	if (robot.localizer) robot.localizer->init();
+	//if (robot.localizer) robot.localizer->init();
 	pros::lcd::print(0, "initialized");
 }
 
