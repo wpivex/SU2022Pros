@@ -50,6 +50,7 @@ void shoot(Robot& robot) {
     setEffort(*robot.intake, -1);
     pros::delay(300);
     robot.intake->brake();
+    robot.indexer->set_value(false);
 }
 
 void testCurve(Robot& robot) {
