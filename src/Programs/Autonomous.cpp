@@ -110,7 +110,7 @@ void matchAutonIMUOnly(Robot& robot) {
     // Shoot two discs
     goTurnU(robot, GTU_TURN_PRECISE, getRadians(-5));
     shoot(robot);
-    robot.flywheel->setVelocity(3200);
+    robot.flywheel->setVelocity(3150);
 
     // Collect preloads
     goTurnU(robot, GTU_TURN, getRadians(75));
@@ -119,11 +119,11 @@ void matchAutonIMUOnly(Robot& robot) {
 
     // Get closer to goal and shoot preloads
     goTurnU(robot, GTU_TURN_PRECISE, getRadians(-20));
-    goForwardU(robot, GFU_DIST(0.8), GFU_TURN, 20, getRadians(20));
+    goForwardU(robot, GFU_DIST(0.8), GFU_TURN, 20, getRadians(-20));
     shoot(robot);
     
 
-	pros::lcd::print(0, "done");
+	pros::lcd::print(0, "Final theta: %f", getDegrees(robot.localizer->getHeading()));
 
 }
 
