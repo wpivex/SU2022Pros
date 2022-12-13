@@ -98,26 +98,28 @@ void matchAutonIMUOnly(Robot& robot) {
 
     // Collect disc at (1,1)
     setEffort(*robot.intake, 1);
-    goCurveU(robot, GFU_DIST_PRECISE(0.5), GCU_CURVE, 0, getRadians(-30), 16);
+    goCurveU(robot, GFU_DIST_PRECISE(0.5), GCU_CURVE, 0, getRadians(-40), 16);
     pros::delay(500); // wait to pickup disc
 
     // Collect disc at (0.5, 0.5)
-    goForwardU(robot, GFU_DIST(0.8), GFU_TURN, -8, getRadians(-30));
-    goTurnU(robot, GTU_TURN, getRadians(-90));
-    goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 10, getRadians(-90));
+    goForwardU(robot, GFU_DIST(0.8), GFU_TURN, -6.5, getRadians(-40));
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(-93));
+    goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 14, getRadians(-93));
     pros::delay(500); // wait to pickup disc
 
     // Shoot two discs
     goTurnU(robot, GTU_TURN_PRECISE, getRadians(-5));
     shoot(robot);
+    robot.flywheel->setVelocity(3200);
 
     // Collect preloads
-    goTurnU(robot, GTU_TURN, getRadians(80));
+    goTurnU(robot, GTU_TURN, getRadians(75));
     setEffort(*robot.intake, 1);
-    goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 24, getRadians(80));
+    goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 24, getRadians(75));
 
-    // Shoot preloads
+    // Get closer to goal and shoot preloads
     goTurnU(robot, GTU_TURN_PRECISE, getRadians(-20));
+    goForwardU(robot, GFU_DIST(0.8), GFU_TURN, 20, getRadians(20));
     shoot(robot);
     
 
