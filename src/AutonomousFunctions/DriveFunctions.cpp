@@ -73,20 +73,25 @@ void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
 }
 
 // Have the robot move in a curve starting from startTheta to endTheta given the radius of curvature about a point that the robot's center would travel around
+// A negative radius means moving backwards
 void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, double startTheta, double endTheta, double radius) {
     
+    bool reverse = radius < 0;
+    radius = fabs(radius);
+
     double deltaTheta = deltaInHeading(endTheta, startTheta);
     
     double totalDistance = fabs(deltaTheta) * radius;
     double HTW = robot.drive->TRACK_WIDTH / 2.0;
-    float slowerWheelRatio = (radius - HTW) / (radius + HTW);
+    double slowerWheelRatio = (radius - HTW) / (radius + HTW);
 
-    double largerDistanceTotal = (radius + HTW) * deltaTheta;
+    double largerDistanceTotal = (radius + HTW) * fabs(deltaTheta);
 
     robot.drive->resetDistance();
 
     while (!pidDistance.isCompleted()) {
-        double largerDistanceCurrent = (deltaTheta > 0) ? robot.drive->getLeftDistance() : robot.drive->getRightDistance();
+        double largerDistanceCurrent = (deltaTheta > 0 != reverse) ? robot.drive->getLeftDistance() : robot.drive->getRightDistance();
+        largerDistanceCurrent = fabs(largerDistanceCurrent);
         double distanceError = largerDistanceTotal - largerDistanceCurrent;
 
         double fasterWheelSpeed = pidDistance.tick(distanceError);
@@ -98,12 +103,17 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
         double headingCorrection = pidCurve.tick(headingError);
 
         double left, right;
-        if (deltaTheta > 0) {
+        if (deltaTheta > 0 != reverse) {
             left = fasterWheelSpeed;
             right = slowerWheelSpeed;
         } else {
             left = slowerWheelSpeed;
             right = fasterWheelSpeed;
+        }
+
+        if (reverse) {
+            left *= -1;
+            right *= -1;
         }
 
         left += headingCorrection;

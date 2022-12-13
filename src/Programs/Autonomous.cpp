@@ -12,7 +12,7 @@
 #define GFU_DIST_PRECISE(maxSpeed) DoubleBoundedPID({0.1, 0, 0, 0.1, maxSpeed}, 0.2, 3)
 #define GFU_TURN SimplePID({1, 0, 0.1, 0.0, 1})
 #define GTU_TURN DoubleBoundedPID({1, 0, 0.1}, getRadians(1.5), 3)
-#define GCU_CURVE SimplePID({1, 0, 0})
+#define GCU_CURVE SimplePID({1.7, 0, 0})
 
 
 void startIntake(Robot& robot) {
@@ -43,6 +43,9 @@ void testCurve(Robot& robot) {
     robot.flywheel->setVelocity(0);
     robot.localizer->setPosition(0, 0, getRadians(0));
     goCurveU(robot, GFU_DIST_PRECISE(0.5), GCU_CURVE, getRadians(0), getRadians(90), 24);
+    goCurveU(robot, GFU_DIST_PRECISE(0.5), GCU_CURVE, getRadians(90), getRadians(0), 24);
+    goCurveU(robot, GFU_DIST_PRECISE(0.5), GCU_CURVE, getRadians(0), getRadians(90), -24);
+    goCurveU(robot, GFU_DIST_PRECISE(0.5), GCU_CURVE, getRadians(90), getRadians(0), -24);
 }
 
 void matchAutonIMUOnly(Robot& robot) {
