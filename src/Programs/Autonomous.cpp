@@ -8,6 +8,7 @@
 #include "misc/MathUtility.h"
 #include "misc/ProsUtility.h"
 #include "pros/llemu.hpp"
+#include "pros/rtos.hpp"
 
 #define GFU_DIST(maxSpeed) SingleBoundedPID({0.1, 0, 0, 0.1, maxSpeed})
 #define GFU_DIST_PRECISE(maxSpeed) DoubleBoundedPID({0.1, 0, 0, 0.1, maxSpeed}, 0.2, 3)
@@ -22,6 +23,11 @@ void startIntake(Robot& robot) {
     setEffort(*robot.intake, 1);
 }
 
+void delayResetIndexer(Robot& robot) {
+    pros::delay(500);
+    robot.indexer->set_value(false);
+}
+
 // shoot a 3-burst round. First two rounds are short burst (110ms with 220ms break), third is longer (300ms)
 void shoot(Robot& robot) {
 
@@ -32,25 +38,36 @@ void shoot(Robot& robot) {
 
     // wait for spinup
     if (!robot.flywheel->atTargetVelocity()) {
+
+        constexpr int32_t TIMEOUT_MS = 5000; // maximum time to wait for spinup to proper velocity
+
         setEffort(*robot.intake, 0);
-        while (!robot.flywheel->atTargetVelocity()) pros::delay(10);
+        int32_t start = pros::millis();
+        while (!robot.flywheel->atTargetVelocity() && pros::millis() - start < TIMEOUT_MS) {
+            pros::delay(10);
+        }
     }
 
+    // first shot
     setEffort(*robot.intake, -1);
     pros::delay(110);
     robot.intake->brake();
     robot.flywheel->setVelocity(3300);
     pros::delay(280);
 
+    // second shot
     setEffort(*robot.intake, -1);
     pros::delay(110);
     robot.intake->brake();
     pros::delay(280);
 
+    // third shot (longer)
     setEffort(*robot.intake, -1);
     pros::delay(300);
     robot.intake->brake();
-    robot.indexer->set_value(false);
+
+    // reset indexer after 500ms, nonblocking
+    pros::Task([&] {delayResetIndexer(robot); });
 }
 
 void testCurve(Robot& robot) {
@@ -88,15 +105,15 @@ void matchAutonIMUOnly(Robot& robot) {
     // Collect disc at (1,1)
     setEffort(*robot.intake, 1);
     goCurveU(robot, GFU_DIST_PRECISE(0.5), GCU_CURVE, 0, getRadians(-55), 14);
-    pros::delay(500);
+    pros::delay(500); // wait to pickup disc
 
     // Collect disc at (0.5, 0.5)
     goTurnU(robot, GTU_TURN, getRadians(-115));
-    goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 16, getRadians(-115));
-    pros::delay(500);
+    goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 12, getRadians(-115));
+    pros::delay(500); // wait to pickup disc
 
     // Shoot two discs
-    goTurnU(robot, GTU_TURN_PRECISE, 0);
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(-5));
     shoot(robot);
 
     // Collect preloads
