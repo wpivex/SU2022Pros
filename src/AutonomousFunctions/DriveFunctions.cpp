@@ -81,15 +81,20 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
     double HTW = robot.drive->TRACK_WIDTH / 2.0;
     float slowerWheelRatio = (radius - HTW) / (radius + HTW);
 
+    double largerDistanceTotal = (radius + HTW) * deltaTheta;
+
     robot.drive->resetDistance();
 
     while (!pidDistance.isCompleted()) {
-        double distanceError = totalDistance - robot.drive->getDistance();
+        double largerDistanceCurrent = (deltaTheta > 0) ? robot.drive->getLeftDistance() : robot.drive->getRightDistance();
+        double distanceError = largerDistanceTotal - largerDistanceCurrent;
+
         double fasterWheelSpeed = pidDistance.tick(distanceError);
         double slowerWheelSpeed = fasterWheelSpeed * slowerWheelRatio;
 
-        double targetTheta = startTheta + deltaTheta * (robot.drive->getDistance() / totalDistance);
-        double headingError = deltaInHeading(endTheta, robot.localizer->getHeading());
+        double targetTheta = startTheta + deltaTheta * (largerDistanceCurrent / largerDistanceTotal);
+        pros::lcd::print(0, "Target degrees %f", getDegrees(targetTheta));
+        double headingError = deltaInHeading(targetTheta, robot.localizer->getHeading());
         double headingCorrection = pidCurve.tick(headingError);
 
         double left, right;

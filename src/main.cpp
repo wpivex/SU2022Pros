@@ -14,7 +14,7 @@ using namespace pros;
 
 void initialize() {
 	pros::lcd::initialize();
-	//if (robot.localizer) robot.localizer->init();
+	if (robot.localizer) robot.localizer->init();
 	pros::lcd::print(0, "initialized");
 }
 
