@@ -24,9 +24,12 @@ void Odometry::init() {
 
 }
 
-void Odometry::setPosition(double x, double y, double headingRadians) {
+void Odometry::setPosition(double x, double y) {
     currentX = x;
     currentY = y;
-    currentHeading = headingRadians;
+    
+}
+
+void Odometry::setHeading(double headingRadians) {
     imu.set_heading(getDegrees(headingRadians));
 }

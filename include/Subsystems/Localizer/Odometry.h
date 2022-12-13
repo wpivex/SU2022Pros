@@ -31,6 +31,6 @@ public:
     void updatePositionTask() override; // blocking task used to update (x, y, heading)
     void init() override; // init imu
 
-    void setPosition(double x, double y, double headingRadians) override;
-
+    void setPosition(double x, double y) override;
+    void setHeading(double headingRadians) override;
 };

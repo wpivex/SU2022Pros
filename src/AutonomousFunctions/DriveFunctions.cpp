@@ -8,7 +8,7 @@ inline void setHeading(Robot& robot, float& targetHeading) {
 }
 
 // Go forwards for some time while maintaining heading
-void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, float timeSeconds, float targetHeading, float targetVelocity) {
+void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, float timeSeconds, float targetEffort, float targetHeading) {
     
     setHeading(robot, targetHeading);
 
@@ -19,8 +19,8 @@ void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, float timeSeconds, fl
         float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
         float deltaVelocity = pidHeading.tick(headingError);
         
-        float left = targetVelocity + deltaVelocity;
-        float right = targetVelocity - deltaVelocity;
+        float left = targetEffort + deltaVelocity;
+        float right = targetEffort - deltaVelocity;
         robot.drive->setEffort(left, right);
 
         pros::delay(10);
@@ -73,7 +73,7 @@ void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
 }
 
 // Have the robot move in a curve starting from startTheta to endTheta given the radius of curvature about a point that the robot's center would travel around
-// A negative radius means moving backwards
+// A negative radius reverse
 void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, double startTheta, double endTheta, double radius) {
     
     bool reverse = radius < 0;

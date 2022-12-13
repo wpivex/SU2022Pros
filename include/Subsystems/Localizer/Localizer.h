@@ -9,5 +9,6 @@ public:
     
     virtual void updatePositionTask() = 0; // blocking task used to update (x, y, heading)
     virtual void init() = 0;
-    virtual void setPosition(double x, double y, double headingRadians) = 0;
+    virtual void setPosition(double x, double y) = 0;
+    virtual void setHeading(double headingRadians) = 0;
 };

@@ -12,10 +12,24 @@ Driver driver(robot, TANK_DRIVE);
 
 using namespace pros;
 
+bool centerButtonReady = false;
+
+void ready() {
+    centerButtonReady = true;
+}
+
 void initialize() {
-	pros::lcd::initialize();
+
+    pros::lcd::initialize();
+    pros::lcd::register_btn1_cb (ready);
+
+	
 	if (robot.localizer) robot.localizer->init();
-	pros::lcd::print(0, "initialized");
+    robot.localizer->setHeading(getRadians(0));
+	pros::lcd::print(0, "initialized.");
+
+    while (!centerButtonReady) pros::delay(10);
+
 }
 
 void disabled() {}

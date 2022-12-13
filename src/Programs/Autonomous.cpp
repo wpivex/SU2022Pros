@@ -5,6 +5,7 @@
 #include "Algorithms/SimplePID.h"
 #include "Algorithms/DoubleBoundedPID.h"
 #include "Algorithms/Alternator.h"
+#include "misc/MathUtility.h"
 #include "misc/ProsUtility.h"
 #include "pros/llemu.hpp"
 
@@ -41,7 +42,6 @@ void shoot(Robot& robot) {
 
 void testCurve(Robot& robot) {
     robot.flywheel->setVelocity(0);
-    robot.localizer->setPosition(0, 0, getRadians(0));
     goCurveU(robot, GFU_DIST_PRECISE(0.5), GCU_CURVE, getRadians(0), getRadians(90), 24);
     goCurveU(robot, GFU_DIST_PRECISE(0.5), GCU_CURVE, getRadians(90), getRadians(0), 24);
     goCurveU(robot, GFU_DIST_PRECISE(0.5), GCU_CURVE, getRadians(0), getRadians(90), -24);
@@ -52,21 +52,14 @@ void matchAutonIMUOnly(Robot& robot) {
 
 	
 	robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
-
-    testCurve(robot);
-    pros::lcd::print(1, "Done curve");
-    return;
-
-    robot.localizer->setPosition(0, 0, getRadians(334.3));
+    robot.localizer->setPosition(0, 0);
 	robot.flywheel->setVelocity(3250);
 
-    // initial goal rush
-    //pros::Task([&] { startIntake(robot); }); // start intake 300ms after goForwardU
-	//goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, 14);
+    double startTheta = getRadians(346);
 
-    // testing only
-    setEffort(*robot.intake, 1);
-    pros::delay(500);
+    // initial goal rush
+    pros::Task([&] { startIntake(robot); }); // start intake 300ms after goForwardU
+	goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, 14, startTheta);
 
     pros::delay(1000);
 
@@ -81,9 +74,38 @@ void matchAutonIMUOnly(Robot& robot) {
     // shoot
     shoot(robot);
 
+    // Get to roller
+    goCurveU(robot, GFU_DIST_PRECISE(0.5), GCU_CURVE, startTheta, getRadians(67), -15);
+    goTurnU(robot, GTU_TURN, 0);
+    goForwardTimedU(robot, GFU_TURN, 1, -0.5, 0);
 
-	//goTurnU(robot, GTU_TURN, getRadians(180));
+    // Collect two discs at corner
+    setEffort(*robot.intake, 1);
+    goCurveU(robot, GFU_DIST_PRECISE(0.5), GCU_CURVE, 0, getRadians(-45), 10);
+    goTurnU(robot, GTU_TURN, getRadians(-90));
+    goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 8);
 
+    // Shoot two discs
+    goTurnU(robot, GTU_TURN, 0);
+    shoot(robot);
+
+    // Collect preloads
+    goTurnU(robot, GTU_TURN, getRadians(80));
+    setEffort(*robot.intake, 1);
+    goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 24, getRadians(80));
+
+    // Shoot preloads
+    goTurnU(robot, GTU_TURN, getRadians(-15));
+    shoot(robot);
+
+
+
+
+    // Do roller [TODO]
+
+
+
+    
 
 	pros::lcd::print(0, "done");
 

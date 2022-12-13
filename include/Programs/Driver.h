@@ -18,13 +18,14 @@ public:
     {}
 
     void runDriver();
+
+    ControllerSM controller;
         
 private:
 
     void handleDrivetrain();
     void handleSecondaryActions();
 
-    ControllerSM controller;
     Robot& robot;
 
     DRIVE_TYPE drive;

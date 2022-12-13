@@ -7,7 +7,7 @@
 #define MAINTAIN_CURRENT_HEADING 12345 // by default, target heading is simply the current heading the robot is at
 
 // Go forwards for some time while maintaining heading
-void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, float timeSeconds, float targetHeading = MAINTAIN_CURRENT_HEADING);
+void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, float timeSeconds, float targetEffort, float targetHeading = MAINTAIN_CURRENT_HEADING);
 
 // Go forwards some distance while maintaining heading
 void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float distance, float targetHeading = MAINTAIN_CURRENT_HEADING);
