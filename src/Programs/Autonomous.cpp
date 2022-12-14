@@ -89,37 +89,40 @@ void matchAutonIMUOnly(Robot& robot) {
     shoot(robot);
     robot.flywheel->setVelocity(3350); // next shot is a bit further away
 
-    // Get to roller
-    goCurveU(robot, GFU_DIST_PRECISE(0.5), GCU_CURVE, startTheta, getRadians(75), -12);
-    goTurnU(robot, GTU_TURN, 0);
-    goForwardTimedU(robot, GFU_TURN, 1, -0.5, 0); // back up till pressed with roller
+    // get disc at (1,1)
+    goCurveU(robot, GFU_DIST(0.5), GCU_CURVE, startTheta, getRadians(-80), -12);
+    goForwardU(robot, GFU_DIST(0.8), GFU_TURN, 5, getRadians(-80));
+    pros::delay(500);
 
-    // Do roller [TODO]
+    // get disc at (0.5,0,5)
+    goCurveU(robot, GFU_DIST(0.5), GCU_CURVE, getRadians(-80), getRadians(-30), -8);
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(-90));
+    goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 10, getRadians(-90));
+    pros::delay(500);
 
-    // Collect disc at (1,1)
-    setEffort(*robot.intake, 1);
-    goCurveU(robot, GFU_DIST_PRECISE(0.5), GCU_CURVE, 0, getRadians(-40), 16);
-    pros::delay(500); // wait to pickup disc
-
-    // Collect disc at (0.5, 0.5)
-    goForwardU(robot, GFU_DIST(0.8), GFU_TURN, -6.5, getRadians(-40));
-    goTurnU(robot, GTU_TURN_PRECISE, getRadians(-93));
-    goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 14, getRadians(-93));
-    pros::delay(500); // wait to pickup disc
-
-    // Shoot two discs
-    goTurnU(robot, GTU_TURN_PRECISE, getRadians(-5));
+    // Shoot disc and align to roller
+    goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, -5, getRadians(-90));
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(-2));
     shoot(robot);
-    robot.flywheel->setVelocity(3150);
+
+    // back up till pressed with roller
+    goForwardTimedU(robot, GFU_TURN, 1, -0.5, 0);
 
     // Collect preloads
-    goTurnU(robot, GTU_TURN, getRadians(75));
-    setEffort(*robot.intake, 1);
-    goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 24, getRadians(75));
+    goCurveU(robot, GFU_DIST(0.8), GCU_CURVE, getRadians(0), getRadians(90), 22);
+    pros::delay(500);
 
-    // Get closer to goal and shoot preloads
-    goTurnU(robot, GTU_TURN_PRECISE, getRadians(-20));
-    goForwardU(robot, GFU_DIST(0.8), GFU_TURN, 20, getRadians(-20));
+    // Shoot preloads
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(-5));
+    shoot(robot);
+
+    // Get other triple stack
+    goTurnU(robot, GTU_TURN, getRadians(55));
+    goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 16, getRadians(55));
+    pros::delay(500);
+
+    // Shoot triple stack
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(-15));
     shoot(robot);
     
 
