@@ -16,6 +16,6 @@ public:
         stopMotors = false;
     }
 
-    float tick(float error) override;
+    float tick(float error);
 
 };

@@ -25,8 +25,6 @@ public:
 protected:
   virtual void handleEndCondition(float error) {}
 
-private:
-
   float prevError = 0;
   float prevIntegral = 0;
   
