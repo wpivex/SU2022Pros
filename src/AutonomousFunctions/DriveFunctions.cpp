@@ -103,7 +103,7 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
         double headingCorrection = pidCurve.tick(headingError);
 
         double left, right;
-        if (deltaTheta > 0 != reverse) {
+        if (deltaTheta < 0 != reverse) {
             left = fasterWheelSpeed;
             right = slowerWheelSpeed;
         } else {
@@ -116,8 +116,8 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
             right *= -1;
         }
 
-        left += headingCorrection;
-        right -= headingCorrection;
+        left -= headingCorrection;
+        right += headingCorrection;
 
         robot.drive->setEffort(left, right);
 
