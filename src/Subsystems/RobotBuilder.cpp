@@ -13,7 +13,7 @@ Robot getRobot() {
         pros::E_MOTOR_GEAR_600, // internal gear ratio
         3.0/4.0, // external gear ratio
         2.75, // wheel diameter in inches
-        10 // track width in inches
+        12 // track width in inches
     ));
 
     robot.localizer.reset(new Odometry(

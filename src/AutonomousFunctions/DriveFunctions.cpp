@@ -116,8 +116,8 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
             right *= -1;
         }
 
-        left = 0
-        right = 0
+        left = 0;
+        right = 0;
 
         left -= headingCorrection;
         right += headingCorrection;
