@@ -56,7 +56,7 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
 
 // Turn to some given heading: left is positive
 void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
-    while(!pidHeading.isCompleted()){
+    while(!pidHeading.isCompleted()) {
         float headingError = deltaInHeading(absoluteHeading, robot.localizer->getHeading());
         float turnVelocity = pidHeading.tick(headingError);
 
@@ -115,6 +115,9 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
             left *= -1;
             right *= -1;
         }
+
+        left = 0
+        right = 0
 
         left -= headingCorrection;
         right += headingCorrection;

@@ -11,7 +11,7 @@ double Odometry::getY() { // inches
 }
 
 double Odometry::getHeading() { // radians
-    return getRadians(imu.get_heading());
+    return -getRadians(imu.get_heading());
 }
     
 void Odometry::updatePositionTask() { // blocking task used to update (x, y, heading)
@@ -31,5 +31,5 @@ void Odometry::setPosition(double x, double y) {
 }
 
 void Odometry::setHeading(double headingRadians) {
-    imu.set_heading(getDegrees(headingRadians));
+    imu.set_heading(getDegrees(-headingRadians));
 }
