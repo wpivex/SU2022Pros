@@ -50,8 +50,7 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
 
         pros::delay(10);
     }
-
-    robot.drive->stop();
+    if (pidDistance.stopMotors) robot.drive->stop();
 }
 
 // Turn to some given heading: left is positive
@@ -126,7 +125,8 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
 
         pros::delay(10);
     }
-    robot.drive->stop();
+
+    if (pidDistance.stopMotors) robot.drive->stop();
 }
 
 // Go to some x position by driving forwards or backwards. Works best when roughly perpendicular to x axis

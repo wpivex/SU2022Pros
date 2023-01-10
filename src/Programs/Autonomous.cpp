@@ -4,6 +4,7 @@
 #include "Algorithms/SingleBoundedPID.h"
 #include "Algorithms/SimplePID.h"
 #include "Algorithms/DoubleBoundedPID.h"
+#include "Algorithms/NoPID.h"
 #include "Algorithms/Alternator.h"
 #include "misc/MathUtility.h"
 #include "misc/ProsUtility.h"
@@ -17,6 +18,8 @@
 #define GTU_TURN_PRECISE DoubleBoundedPID({1.25, 0, 0.1, 0.12, 1}, getRadians(0.75), 3)
 #define GCU_CURVE SimplePID({1.7, 0, 0})
 
+// don't stop motors at end
+#define NO_SLOWDOWN(maxSpeed) NoPID(maxSpeed)
 
 void startIntake(Robot& robot) {
     pros::delay(300);

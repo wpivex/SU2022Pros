@@ -10,4 +10,5 @@ class EndablePID : public SimplePID {
 
 public:
     virtual bool isCompleted() = 0;
+    bool stopMotors = true;
 };
