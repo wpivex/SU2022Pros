@@ -106,7 +106,7 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
     robot.drive->resetDistance();
 
     while (!pidDistance.isCompleted()) {
-        double largerDistanceCurrent = (deltaTheta > 0 != reverse) ? robot.drive->getLeftDistance() : robot.drive->getRightDistance();
+        double largerDistanceCurrent = (deltaTheta > 0 != reverse) ? robot.drive->getRightDistance() : robot.drive->getLeftDistance();
         largerDistanceCurrent = fabs(largerDistanceCurrent);
         double distanceError = largerDistanceTotal - largerDistanceCurrent;
 
@@ -132,8 +132,6 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
             right *= -1;
         }
 
-        left = 0;
-        right = 0;
 
         left -= headingCorrection;
         right += headingCorrection;

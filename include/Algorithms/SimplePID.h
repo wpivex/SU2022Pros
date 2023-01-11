@@ -20,7 +20,7 @@ class SimplePID {
 public:
 
   SimplePID(PIDParameters params): K(params) {}
-  float tick(float error);
+  virtual float tick(float error);
   void setNewParam(float kp, float ki, float kd);
 protected:
   virtual void handleEndCondition(float error) {}

@@ -8,6 +8,7 @@ Instead, it's a binary step controller that outputs max power until target reach
 */
 class NoPID : public SingleBoundedPID {
 
+
 public:
 
     NoPID(float speed):
@@ -16,6 +17,6 @@ public:
         stopMotors = false;
     }
 
-    float tick(float error);
+    float tick(float error) override;
 
 };
