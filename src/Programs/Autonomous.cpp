@@ -82,8 +82,8 @@ void matchAutonIMUOnly(Robot& robot) {
 	robot.flywheel->setVelocity(3250);
 
     //goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 72, 0);
-    goForwardU(robot, NO_SLOWDOWN(0.4), GFU_TURN, 24, 0);
-    goCurveU(robot, GFU_DIST_PRECISE(0.4), GCU_CURVE, getRadians(0), getRadians(90), 24);
+    goForwardU(robot, NO_SLOWDOWN(0.4), GFU_TURN, -24, 0);
+    goCurveU(robot, GFU_DIST_PRECISE(0.4), GCU_CURVE, getRadians(0), getRadians(90), -24);
 
 }
 

@@ -5,5 +5,5 @@ float NoPID::tick(float error) {
 
     handleEndCondition(error);
     
-    return K.P;
+    return goingUp ? (-K.P) : K.P;
 }
