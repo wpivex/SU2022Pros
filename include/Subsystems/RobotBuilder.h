@@ -2,4 +2,5 @@
 
 #include "Robot.h"
 
-Robot getRobot();
+Robot getRobot15();
+Robot getRobot18();

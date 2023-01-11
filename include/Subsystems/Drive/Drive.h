@@ -59,14 +59,38 @@ public:
 
     // Get distance travelled by the left wheels in linear inches
     double getLeftDistance() {
-        double rotations = average(leftMotors.get_positions());
-        return rotations * MOTOR_ROT_TO_LINEAR_INCHES;
+
+        double sum = 0;
+        int size = 0;
+        for (int i = 0; i < leftMotors.size(); i++) {
+            double pos = leftMotors[i].get_position();
+            if (pos != PROS_ERR_F) {
+                size++;
+                sum += pos;
+            }
+        }
+
+        if (size == 0) return 0;
+
+        return sum / size * MOTOR_ROT_TO_LINEAR_INCHES;
     }
 
     // Get distance travelled by the right wheels in linear inches
     double getRightDistance() {
-        double rotations = average(rightMotors.get_positions());
-        return rotations * MOTOR_ROT_TO_LINEAR_INCHES;
+        
+        double sum = 0;
+        int size = 0;
+        for (int i = 0; i < rightMotors.size(); i++) {
+            double pos = rightMotors[i].get_position();
+            if (pos != PROS_ERR_F) {
+                size++;
+                sum += pos;
+            }
+        }
+
+        if (size == 0) return 0;
+
+        return sum / size * MOTOR_ROT_TO_LINEAR_INCHES;
     }
 
     // Get average distance travelled by the left and right wheels in linear inches
