@@ -5,7 +5,7 @@
 #include "Programs/Autonomous.h"
 
 
-Robot robot = getRobot18();
+Robot robot = getRobot15();
 Driver driver(robot, TANK_DRIVE);
 
 #define RUN_AUTON
@@ -40,15 +40,7 @@ void competition_initialize() {}
 
 void autonomous() {
 
-	//matchAutonIMUOnly(robot);
-    robot.drive->resetDistance();
-    robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
-    while (true) {
-        
-        pros::lcd::print(0, "left %f", robot.drive->getLeftDistance());
-        pros::lcd::print(1, "right %f", robot.drive->getRightDistance());
-        pros::delay(10);
-    }
+	matchAutonIMUOnly(robot);
 
 }
 

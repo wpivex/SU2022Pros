@@ -15,6 +15,8 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
 // Turn to some given heading
 void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading);
 
+void goTurnEncoder(Robot& robot, EndablePID&& pidDistance, float theta);
+
 // Have the robot move in a curve starting from startTheta to endTheta given the radius of curvature about a point that the robot's center would travel around
 // A negative radius means moving backwards
 void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, double startTheta, double endTheta, double radius);
