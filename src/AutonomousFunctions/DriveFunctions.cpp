@@ -19,8 +19,8 @@ void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, float timeSeconds, fl
         float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
         float deltaVelocity = pidHeading.tick(headingError);
         
-        float left = targetEffort + deltaVelocity;
-        float right = targetEffort - deltaVelocity;
+        float left = targetEffort - deltaVelocity;
+        float right = targetEffort + deltaVelocity;
         robot.drive->setEffort(left, right);
 
         pros::delay(10);

@@ -31,5 +31,7 @@ void Odometry::setPosition(double x, double y) {
 }
 
 void Odometry::setHeading(double headingRadians) {
-    imu.set_heading(getDegrees(-headingRadians));
+    double d = getDegrees(-headingRadians);
+    d = fmod(fmod(d, 360) + 360, 360);
+    imu.set_heading(d);
 }
