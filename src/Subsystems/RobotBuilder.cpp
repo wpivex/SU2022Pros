@@ -17,7 +17,7 @@ Robot getRobot15() {
     ));
 
     robot.localizer.reset(new Odometry(
-        7, // imu port
+        8, // imu port
         {'E','F'}, // left encoder port
         {'C', 'D'}, // right encoder port
         {'A', 'B'}, // back encoder port
