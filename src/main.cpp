@@ -28,10 +28,13 @@ void initialize() {
     robot.localizer->setHeading(getRadians(0));
 	pros::lcd::print(0, "initialized.");
 
+    #ifdef RUN_AUTON
     while (!centerButtonReady) pros::delay(10);
+    #endif
 
 }
 
+  
 void disabled() {}
 
 

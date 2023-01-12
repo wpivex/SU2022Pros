@@ -132,8 +132,8 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
             right *= -1;
         }
 
-
-        left -= headingCorrection;
+        // IMU PID Correction:
+        left -= headingCorrection; 
         right += headingCorrection;
 
         robot.drive->setEffort(left, right);
