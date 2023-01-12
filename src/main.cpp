@@ -5,7 +5,7 @@
 #include "Programs/Autonomous.h"
 
 
-Robot robot = getRobot15();
+Robot robot = getRobot18();
 Driver driver(robot, TANK_DRIVE);
 
 #define RUN_AUTON
