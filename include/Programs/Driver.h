@@ -35,4 +35,6 @@ private:
     bool indexerOn;
     int indexerTimer, indexerOffTimer;
     int speed = 3000;
+
+    double shootSpeed = 1;
 };

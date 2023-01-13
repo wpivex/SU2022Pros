@@ -5,10 +5,10 @@
 #include "Programs/Autonomous.h"
 
 
-Robot robot = getRobot18();
+Robot robot = getRobot15();
 Driver driver(robot, TANK_DRIVE);
 
-#define RUN_AUTON
+//#define RUN_AUTON
 
 using namespace pros;
 

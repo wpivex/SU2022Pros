@@ -48,6 +48,11 @@ void Driver::handleDrivetrain() {
 
 void Driver::handleSecondaryActions() {
 
+    if (controller.pressing(DIGITAL_X)) shootSpeed = 1;
+    else if (controller.pressing(DIGITAL_A)) shootSpeed = 0.75;
+    else if (controller.pressing(DIGITAL_B)) shootSpeed = 0.5;
+    else if (controller.pressing(DIGITAL_Y)) shootSpeed = 0.25;
+
     if (controller.pressed(DIGITAL_L1)) {
         if (speed < 3600) speed = fmin(speed + 200, 3600);
     }
@@ -64,15 +69,17 @@ void Driver::handleSecondaryActions() {
         indexerOn = false;
         indexerOffTimer = pros::millis();
     } else if (controller.pressed(DIGITAL_R1)) {
-        shootAlternator.reset();
+        //shootAlternator.reset();
     }
 
     if (indexerOn && pros::millis() - 250 > indexerTimer || (!indexerOn && pros::millis() - 300 < indexerOffTimer)) {
         setEffort(*robot.intake, 1);
     } else if (controller.pressing(DIGITAL_R1)) {
         // shoot
-        if (shootAlternator.tick()) setEffort(*robot.intake, -1);
-        else robot.intake->brake();
+        //if (shootAlternator.tick()) setEffort(*robot.intake, -1);
+        //else robot.intake->brake();
+        setEffort(*robot.intake, -shootSpeed);
+
     } else {
         robot.intake->brake();
     }
