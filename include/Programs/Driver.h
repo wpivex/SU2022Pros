@@ -36,5 +36,5 @@ private:
     int indexerTimer, indexerOffTimer;
     int speed = 3000;
 
-    double shootSpeed = 0.25;
+    double shootSpeed = 0.5;
 };
