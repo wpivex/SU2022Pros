@@ -34,7 +34,7 @@ void delayResetIndexer(Robot& robot) {
 
 // shoot a 3-burst round. First two rounds are short burst (110ms with 220ms break), third is longer (300ms)
 void shoot(Robot& robot) {
-/*
+
     // cock gun
     setEffort(*robot.intake, 1);
     robot.indexer->set_value(true);
@@ -72,7 +72,7 @@ void shoot(Robot& robot) {
 
     // reset indexer after 500ms, nonblocking
     pros::Task([&] {delayResetIndexer(robot); });
-*/}
+}
 
 void simple18Auton(Robot& robot) {
     // GENERATED C++ CODE FROM PathGen 3.4.1
@@ -198,6 +198,48 @@ void twoTileAuton(Robot& robot){
     goForwardU(robot, GFU_DIST_PRECISE(0.5), GFU_TURN, 24, getRadians(0));
 }
 
+void redOnBlueSkillsAuton(Robot& robot){
+        
+    // Robot assumes a starting position of (16.5,66.4) at heading of 359.66 degrees.
+    // GENERATED C++ CODE FROM PathGen 3.4.2
+
+    // Robot assumes a starting position of (16.5,66.4) at heading of 359.66 degrees.
+    robot.flywheel->setVelocity(2800); // Preemptively set speed for next shot
+    robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);       
+
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(270.0));        
+    goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 8.59, getRadians(270.0));
+
+    shoot(robot);
+    robot.flywheel->setVelocity(2800); // Preemptively set speed for next shot
+
+    goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -26.83, getRadians(269.99));
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(360.0));        
+    setEffort(*robot.intake, 1);
+    goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 18.55, getRadians(360.0));
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(270.0));        
+    goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 19.98, getRadians(270.0));
+    setEffort(*robot.intake, 0);
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(-108.83));      
+
+    shoot(robot);
+    robot.flywheel->setVelocity(2800); // Preemptively set speed for next shot
+
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(350.46));       
+    setEffort(*robot.intake, 1);
+    goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 24.62, getRadians(350.46));
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(315.25));       
+    goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 34.18, getRadians(315.25));
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(221.6));        
+    setEffort(*robot.intake, 0);
+    goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 35.92, getRadians(221.6));
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(181.43));       
+
+    shoot(robot);
+
+    // ================================================
+
+}
 
 void topSideSkillsAuto(Robot& robot){
         
@@ -216,13 +258,13 @@ void topSideSkillsAuto(Robot& robot){
     goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, 17.15, getRadians(66.76));
     goTurnU(robot, GTU_TURN_PRECISE, getRadians(359.54));       
     setEffort(*robot.intake, 0);
-    goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, -17.7, getRadians(359.54));
+    goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, -16.7, getRadians(359.54));
 
 
     // [run roller for 180 distance at 1 speed]
 
 
-    goForwardU(robot, GFU_DIST_PRECISE(0.6), GFU_TURN, 20.43, getRadians(359.53));
+    goForwardU(robot, GFU_DIST_PRECISE(0.6), GFU_TURN, 19.43, getRadians(359.53));
     goTurnU(robot, GTU_TURN_PRECISE, getRadians(270.07));       
     goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, -17.35, getRadians(270.07));
 
@@ -290,6 +332,9 @@ void topSideSkillsAuto(Robot& robot){
     setEffort(*robot.intake, 0);
 
     shoot(robot);
+
+    pros::delay(260);
+    pros::lcd::print(2, "heading =  ", robot.localizer->getHeading());
 
     // ================================================
 
