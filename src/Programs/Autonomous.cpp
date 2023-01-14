@@ -106,3 +106,105 @@ void matchAutonIMUOnly(Robot& robot) {
 void skillsAutonIMUOnly(Robot& robot) {
 
 }
+
+void twoTileAuton(Robot& robot){
+    goForwardU(robot, GFU_DIST_PRECISE(0.5), GFU_TURN, 24, getRadians(0));
+}
+
+
+void topSideSkillsAuto(Robot& robot){
+        
+    // GENERATED C++ CODE FROM PathGen 3.4.2
+
+    // Robot assumes a starting position of (16.6,104.8) at heading of 0.0 degrees.
+    // GENERATED C++ CODE FROM PathGen 3.4.2
+
+    // Robot assumes a starting position of (16.6,104.8) at heading of 0.0 degrees.
+    robot.flywheel->setVelocity(3000); // Preemptively set speed for next shot
+    robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);       
+
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(66.76));        
+    setEffort(*robot.intake, 1);
+    pros::delay(260);
+    goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, 17.15, getRadians(66.76));
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(359.54));       
+    setEffort(*robot.intake, 0);
+    goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, -17.7, getRadians(359.54));
+
+
+    // [run roller for 180 distance at 1 speed]
+
+
+    goForwardU(robot, GFU_DIST_PRECISE(0.6), GFU_TURN, 20.43, getRadians(359.53));
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(270.07));       
+    goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, -17.35, getRadians(270.07));
+
+
+    // [run roller for 180 distance at 1 speed]
+
+
+    goForwardU(robot, GFU_DIST_PRECISE(0.78), GFU_TURN, 9.4, getRadians(270.06));
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(0.56));
+    goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, 13.96, getRadians(0.56));
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(2.09));
+
+    shoot(robot);
+    robot.flywheel->setVelocity(3000); // Preemptively set speed for next shot
+
+    setEffort(*robot.intake, 1);
+    pros::delay(260);
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(314.45));       
+    goForwardU(robot, GFU_DIST_PRECISE(0.6), GFU_TURN, 79.0, getRadians(314.45));
+    setEffort(*robot.intake, 0);
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(58.51));        
+
+    shoot(robot);
+    robot.flywheel->setVelocity(3000); // Preemptively set speed for next shot
+
+    setEffort(*robot.intake, 1);
+    pros::delay(260);
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(314.44));       
+    goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, 17.66, getRadians(314.44));
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(71.48));        
+    setEffort(*robot.intake, 0);
+
+    shoot(robot);
+    robot.flywheel->setVelocity(3000); // Preemptively set speed for next shot
+
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(177.79));       
+    setEffort(*robot.intake, 1);
+    pros::delay(260);
+    goForwardU(robot, GFU_DIST_PRECISE(0.6), GFU_TURN, 24.12, getRadians(177.79));
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(314.87));       
+    goForwardU(robot, GFU_DIST_PRECISE(0.6), GFU_TURN, 68.21, getRadians(314.87));
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(89.68));        
+    setEffort(*robot.intake, 0);
+    goForwardU(robot, GFU_DIST_PRECISE(0.6), GFU_TURN, 75.63, getRadians(89.68));
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(90.28));        
+
+    shoot(robot);
+    robot.flywheel->setVelocity(3000); // Preemptively set speed for next shot
+
+    setEffort(*robot.intake, 1);
+    pros::delay(260);
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(180.01));       
+    goForwardU(robot, GFU_DIST_PRECISE(0.6), GFU_TURN, 76.91, getRadians(180.01));
+    setEffort(*robot.intake, 0);
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(-119.29));      
+
+    shoot(robot);
+    robot.flywheel->setVelocity(3000); // Preemptively set speed for next shot
+
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(270.0));        
+    setEffort(*robot.intake, 1);
+    pros::delay(260);
+    goForwardU(robot, GFU_DIST_PRECISE(0.6), GFU_TURN, 76.91, getRadians(270.0));
+    goTurnU(robot, GTU_TURN_PRECISE, getRadians(173.81));       
+    setEffort(*robot.intake, 0);
+
+    shoot(robot);
+
+    // ================================================
+
+
+}

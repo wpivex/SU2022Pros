@@ -55,8 +55,8 @@ Robot getRobot18() {
     Robot robot;
 
     robot.drive.reset(new Drive(
-        {11, -12, 13,-14}, // left motor ports
-        {-1, 2, -3, 4}, // right motor ports
+        {1, 3, -4,-5}, // left motor ports
+        {-16, -17, 18, 19}, // right motor ports
         pros::E_MOTOR_GEAR_600, // internal gear ratio
         3.0/4.0, // external gear ratio
         2.74, // wheel diameter in inches
@@ -64,7 +64,7 @@ Robot getRobot18() {
     ));
 
     robot.localizer.reset(new Odometry(
-        15, // imu port
+        2, // imu port
         {'E','F'}, // left encoder port
         {'C', 'D'}, // right encoder port
         {'A', 'B'}, // back encoder port
