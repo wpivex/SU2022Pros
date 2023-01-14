@@ -64,8 +64,8 @@ void shoot(Robot& robot) {
     pros::Task([&] {delayResetIndexer(robot); });
 }
 
-void twoTileAuton(Robot& robot) {
-
+void threeTileAuton(Robot& robot) {
+    setEffort(*robot.intake, 1);
 }
 
 void twoTileAuton(Robot& robot) {
