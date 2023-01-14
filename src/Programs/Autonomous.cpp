@@ -6,6 +6,7 @@
 #include "Algorithms/DoubleBoundedPID.h"
 #include "Algorithms/NoPID.h"
 #include "Algorithms/Alternator.h"
+#include "Algorithms/Shooter.h"
 #include "misc/MathUtility.h"
 #include "misc/ProsUtility.h"
 #include "pros/llemu.hpp"
@@ -52,12 +53,9 @@ void shoot(Robot& robot) {
     }
 
     uint32_t start = pros::millis();
+    Shooter shooter;
     while (pros::millis() - start < 4000) {
-        if (robot.flywheel->getTargetVelocity() - robot.flywheel->getCurrentVelocity() > 75) {
-            setEffort(*robot.intake, 0);
-        } else {
-            setEffort(*robot.intake, -0.75);
-        }
+        setEffort(*robot.intake, shooter.tickIntakeShootingSpeed(robot));
     }
 
     // reset indexer after 500ms, nonblocking

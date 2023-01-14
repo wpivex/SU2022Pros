@@ -70,21 +70,13 @@ void Driver::handleSecondaryActions() {
         indexerOn = false;
         indexerOffTimer = pros::millis();
     } else if (controller.pressed(DIGITAL_R1)) {
-        //shootAlternator.reset();
+        //shooter.reset();
     }
 
     if (indexerOn && pros::millis() - 250 > indexerTimer || (!indexerOn && pros::millis() - 300 < indexerOffTimer)) {
         setEffort(*robot.intake, 1);
     } else if (controller.pressing(DIGITAL_R1)) {
-        // shoot
-        //if (shootAlternator.tick()) setEffort(*robot.intake, -1);
-        //else robot.intake->brake();
-        if (robot.flywheel->getTargetVelocity() - robot.flywheel->getCurrentVelocity() > 75) {
-            setEffort(*robot.intake, 0);
-        } else {
-            setEffort(*robot.intake, -shootSpeed);
-        }
-
+        setEffort(*robot.intake, -1);
     } else {
         robot.intake->brake();
     }

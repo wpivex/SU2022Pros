@@ -3,7 +3,7 @@
 #include "misc/ControllerSM.h"
 #include "Subsystems/Robot.h"
 #include "pros/misc.h"
-
+#include "Algorithms/Shooter.h"
 
 enum DRIVE_TYPE {TANK_DRIVE, ARCADE_DRIVE};
 
@@ -32,9 +32,12 @@ private:
 
     Alternator shootAlternator;
 
+    Shooter shooter;
+
     bool indexerOn;
     int indexerTimer, indexerOffTimer;
     int speed = 3000;
 
     double shootSpeed = 0.5;
+
 };
