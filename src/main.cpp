@@ -46,7 +46,8 @@ void autonomous() {
 	//matchAutonIMUOnly(robot);
     //twoTileAuton(robot);
     //topSideSkillsAuto(robot);
-    threeTileAuton(robot);
+    //threeTileAuton(robot);
+    threeTile(robot);
 }
 
 
