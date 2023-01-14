@@ -10,7 +10,7 @@ Robot robot = getRobot15();
 Driver driver(robot, TANK_DRIVE);
 
 #define RUN_AUTON // uncomment to run auton, comment to run teleop
-#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
+//#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
 
 using namespace pros;
 
@@ -31,7 +31,9 @@ void initialize() {
 	pros::lcd::print(0, "initialized.");
 
     #ifdef RUN_AUTON
+    #ifndef TUNE_FLYWHEEL
     while (!centerButtonReady) pros::delay(10);
+    #endif
     #endif
 
 }

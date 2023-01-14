@@ -28,6 +28,8 @@ bool RingQueue::push(float value) {
 float RingQueue::getAverage() {
 
   if (size == 0) return 0; 
+
+  
   
   return sum / size;
 }
