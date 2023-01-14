@@ -8,7 +8,7 @@
 Robot robot = getRobot15();
 Driver driver(robot, TANK_DRIVE);
 
-//#define RUN_AUTON
+#define RUN_AUTON
 
 using namespace pros;
 
@@ -43,8 +43,9 @@ void competition_initialize() {}
 
 void autonomous() {
 
-	matchAutonIMUOnly(robot);
-
+	//matchAutonIMUOnly(robot);
+    //twoTileAuton(robot);
+    topSideSkillsAuto(robot);
 }
 
 
