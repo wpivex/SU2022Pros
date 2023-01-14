@@ -35,3 +35,7 @@ void TBHFlywheel::maintainVelocityTask() {
         pros::delay(10);
     }
 }
+
+void TBHFlywheel::setRawVoltage(double volts) {
+    motors.move_voltage(volts * 1000);
+}

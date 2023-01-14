@@ -3,12 +3,14 @@
 #include "Subsystems/RobotBuilder.h"
 #include "Programs/Driver.h"
 #include "Programs/Autonomous.h"
+#include "TuneFlywheel.h"
 
 
 Robot robot = getRobot15();
 Driver driver(robot, TANK_DRIVE);
 
-#define RUN_AUTON
+#define RUN_AUTON // uncomment to run auton, comment to run teleop
+#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
 
 using namespace pros;
 
@@ -44,14 +46,21 @@ void competition_initialize() {}
 void autonomous() {
 
 	//matchAutonIMUOnly(robot);
-    //twoTileAuton(robot);
+    twoTileAuton(robot);
     //topSideSkillsAuto(robot);
     //threeTileAuton(robot);
-    threeTile(robot);
+    //threeTile(robot);
 }
 
 
+
+
 void opcontrol() {
+
+    #ifdef TUNE_FLYWHEEL
+    tuneFlywheel(robot, driver.controller);
+    return;
+    #endif
 
 	
     if (true && robot.flywheel) {

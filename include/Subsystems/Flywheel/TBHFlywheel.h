@@ -28,5 +28,7 @@ public:
     
     bool atTargetVelocity() override;
 
+    void setRawVoltage(double volts) override;
+
 
 };
