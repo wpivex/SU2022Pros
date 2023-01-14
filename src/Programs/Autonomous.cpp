@@ -11,12 +11,12 @@
 #include "pros/llemu.hpp"
 #include "pros/rtos.hpp"
 
-#define GFU_DIST(maxSpeed) SingleBoundedPID({0.1, 0, 0, 0.1, maxSpeed})
-#define GFU_DIST_PRECISE(maxSpeed) DoubleBoundedPID({0.1, 0, 0, 0.1, maxSpeed}, 0.2, 3)
+#define GFU_DIST(maxSpeed) SingleBoundedPID({0.1, 0, 0, 0.12, maxSpeed})
+#define GFU_DIST_PRECISE(maxSpeed) DoubleBoundedPID({0.1, 0, 0, 0.12, maxSpeed}, 0.1, 3)
 #define GFU_TURN SimplePID({1, 0, 0.1, 0.0, 1})
-#define GTU_TURN DoubleBoundedPID({1.4, 0, 0.1, 0.14, 1}, getRadians(1.5), 3)
-#define GTU_TURN_PRECISE DoubleBoundedPID({1.4, 0, 0.1, 0.14, 1}, getRadians(0.75), 3)
-#define GCU_CURVE SimplePID({2.25, 0, 0})
+#define GTU_TURN DoubleBoundedPID({1.25, 0, 0.09, 0.14, 1}, getRadians(1.5), 3)
+#define GTU_TURN_PRECISE DoubleBoundedPID({1.25, 0, 0.09, 0.14, 1}, getRadians(0.75), 3)
+#define GCU_CURVE SimplePID({2.5/*2.25*//*1.7*/, 0, 0})
 
 // don't stop motors at end
 #define NO_SLOWDOWN(maxSpeed) NoPID(maxSpeed)
@@ -74,14 +74,101 @@ void shoot(Robot& robot) {
     pros::Task([&] {delayResetIndexer(robot); });
 */}
 
+void simple18Auton(Robot& robot) {
+    // GENERATED C++ CODE FROM PathGen 3.4.1
+
+    // Robot assumes a starting position of (88.0,15.9) at heading of 42.48 degrees.
+    // GENERATED C++ CODE FROM PathGen 3.4.1
+
+    // Robot assumes a starting position of (88.0,15.9) at heading of 42.48 degrees.
+    //robot.flywheel->setVelocity(3300); // Preemptively set speed for next shot
+    //robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
+    //robot.intake->move_voltage(12000);
+    //robot.localizer->setPosition(88, 15.9);
+
+// ================================================
+
+// GENERATED C++ CODE FROM PathGen 3.4.1
+
+// Robot assumes a starting position of (88.0,15.9) at heading of 42.48 degrees.
+// GENERATED C++ CODE FROM PathGen 3.4.1
+
+// Robot assumes a starting position of (88.0,15.9) at heading of 42.48 degrees.
+//robot.flywheel->setVelocity(3300); // Preemptively set speed for next shot
+//robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
+//Saved as saves/save7_v3_4_1.pg3!
+// GENERATED C++ CODE FROM PathGen 3.4.1
+
+// Robot assumes a starting position of (88.0,15.9) at heading of 42.48 degrees.
+// GENERATED C++ CODE FROM PathGen 3.4.1
+
+// Robot assumes a starting position of (88.0,15.9) at heading of 42.48 degrees.
+//robot.flywheel->setVelocity(3300); // Preemptively set speed for next shot
+//robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
+
+//Saved as saves/save7_v3_4_1.pg3!
+// GENERATED C++ CODE FROM PathGen 3.4.1
+
+// Robot assumes a starting position of (88.0,15.9) at heading of 42.48 degrees.
+// GENERATED C++ CODE FROM PathGen 3.4.1
+
+// Robot assumes a starting position of (88.0,15.9) at heading of 42.48 degrees.
+//robot.flywheel->setVelocity(3300); // Preemptively set speed for next shot
+robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
+
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 20.68, getRadians(42.48));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(476.85));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -19.5, getRadians(476.85));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(141.57));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 25.23, getRadians(141.57));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(69.06));
+
+shoot(robot);
+//robot.flywheel->setVelocity(3300); // Preemptively set speed for next shot
+
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(135.66));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 39.73, getRadians(135.66));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(48.15));
+
+shoot(robot);
+//robot.flywheel->setVelocity(3300); // Preemptively set speed for next shot
+
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(6.38));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 13.03, getRadians(6.38));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(474.62));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -17.02, getRadians(474.62));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(30.96));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 5.01, getRadians(30.96));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(63.41));
+
+shoot(robot);
+//robot.flywheel->setVelocity(3300); // Preemptively set speed for next shot
+
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(206.73));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 32.0, getRadians(206.73));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(224.34));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -13.22, getRadians(224.34));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(189.65));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 10.24, getRadians(189.65));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(223.73));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -13.68, getRadians(223.73));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(183.81));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 9.69, getRadians(183.81));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(52.2));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 15.77, getRadians(52.2));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(49.19));
+
+shoot(robot);
+}
+
 void matchAutonIMUOnly(Robot& robot) {
 
-	
 	robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
-    robot.localizer->setPosition(0, 0);
+    simple18Auton(robot);
+
 	//robot.flywheel->setVelocity(3250);
-    robot.localizer->setHeading(0);
-    goCurveU(robot, GFU_DIST_PRECISE(0.4), GCU_CURVE, getRadians(0), getRadians(90), 72);
+    //robot.localizer->setHeading(0);
+    //goCurveU(robot, GFU_DIST_PRECISE(0.4), GCU_CURVE, getRadians(0), getRadians(180), 12);
 
     // GENERATED C++ CODE FROM PathGen 3.0
 
