@@ -35,7 +35,6 @@ void delayResetIndexer(Robot& robot) {
 // shoot a 3-burst round. First two rounds are short burst (110ms with 220ms break), third is longer (300ms)
 void shoot(Robot& robot) {
 
-    // cock gun
     setEffort(*robot.intake, 1);
     robot.indexer->set_value(true);
     pros::delay(500);
@@ -52,23 +51,14 @@ void shoot(Robot& robot) {
         }
     }
 
-    // first shot
-    setEffort(*robot.intake, -1);
-    pros::delay(110);
-    robot.intake->brake();
-    robot.flywheel->setVelocity(3300);
-    pros::delay(280);
-
-    // second shot
-    setEffort(*robot.intake, -1);
-    pros::delay(110);
-    robot.intake->brake();
-    pros::delay(280);
-
-    // third shot (longer)
-    setEffort(*robot.intake, -1);
-    pros::delay(300);
-    robot.intake->brake();
+    uint32_t start = pros::millis();
+    while (pros::millis() - start < 3000) {
+        if (robot.flywheel->getTargetVelocity() - robot.flywheel->getCurrentVelocity() > 75) {
+            setEffort(*robot.intake, 0);
+        } else {
+            setEffort(*robot.intake, -0.5);
+        }
+    }
 
     // reset indexer after 500ms, nonblocking
     pros::Task([&] {delayResetIndexer(robot); });

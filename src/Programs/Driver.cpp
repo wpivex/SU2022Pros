@@ -10,6 +10,7 @@ void Driver::runDriver() {
         pros::lcd::clear();
         pros::lcd::print(0, "Target: %f", robot.flywheel->getTargetVelocity());
         pros::lcd::print(1, "Current: %f", robot.flywheel->getCurrentVelocity());
+        pros::lcd::print(2, "Intake speed: %f", shootSpeed);
 
         // Handle drivetrain locomotion from joysticks (tank, arcade, etc.)
         handleDrivetrain();
@@ -54,10 +55,10 @@ void Driver::handleSecondaryActions() {
     else if (controller.pressing(DIGITAL_Y)) shootSpeed = 0.25;
 
     if (controller.pressed(DIGITAL_L1)) {
-        if (speed < 3600) speed = fmin(speed + 200, 3600);
+        if (speed < 3600) speed = fmin(speed + 100, 3600);
     }
     else if (controller.pressed(DIGITAL_L2)) {
-        if (speed > 0) speed = fmax(speed - 200, 0);
+        if (speed > 0) speed = fmax(speed - 100, 0);
     }
     else if (controller.pressed(DIGITAL_R2)) {
         robot.indexer->set_value(false);
@@ -78,7 +79,11 @@ void Driver::handleSecondaryActions() {
         // shoot
         //if (shootAlternator.tick()) setEffort(*robot.intake, -1);
         //else robot.intake->brake();
-        setEffort(*robot.intake, -shootSpeed);
+        if (robot.flywheel->getTargetVelocity() - robot.flywheel->getCurrentVelocity() > 75) {
+            setEffort(*robot.intake, 0);
+        } else {
+            setEffort(*robot.intake, -shootSpeed);
+        }
 
     } else {
         robot.intake->brake();
