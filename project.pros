@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "tetrismachine",
+    "project_name": "twotile",
     "target": "v5",
     "templates": {
       "kernel": {
