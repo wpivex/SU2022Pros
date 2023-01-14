@@ -67,56 +67,64 @@ void shoot(Robot& robot) {
 void twoTileAuton(Robot& robot) {
 
 setEffort(*robot.intake, 1);
-robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
+// GENERATED C++ CODE FROM PathGen 3.4.2
+
 // Robot assumes a starting position of (88.0,15.9) at heading of 42.48 degrees.
-robot.flywheel->setVelocity(3300); // Preemptively set speed for next shot
+// GENERATED C++ CODE FROM PathGen 3.4.2
+
+// Robot assumes a starting position of (88.0,15.9) at heading of 42.48 degrees.
+robot.flywheel->setVelocity(3083); // Preemptively set speed for next shot
 robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
 
-goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 20.68, getRadians(42.48));
+goForwardU(robot, GFU_DIST_PRECISE(0.51), GFU_TURN, 20.68, getRadians(42.48));
+pros::delay(260);
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(485.77));
-goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, -18.01, getRadians(485.77));
+goForwardU(robot, GFU_DIST_PRECISE(0.51), GFU_TURN, -18.01, getRadians(485.77));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(149.04));
-goForwardU(robot, GFU_DIST_PRECISE(0.8), GFU_TURN, 25.06, getRadians(149.04));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(69.06));
+goForwardU(robot, GFU_DIST_PRECISE(0.52), GFU_TURN, 25.06, getRadians(149.04));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(69.6));
 
 shoot(robot);
 robot.flywheel->setVelocity(3300); // Preemptively set speed for next shot
-pros::lcd::print(5, "final heading: %f", robot.localizer->getHeading());
-/*
+
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(135.66));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 39.73, getRadians(135.66));
+goForwardU(robot, GFU_DIST_PRECISE(0.51), GFU_TURN, 39.73, getRadians(135.66));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(48.15));
 
 shoot(robot);
-robot.flywheel->setVelocity(3300); // Preemptively set speed for next shot
+robot.flywheel->setVelocity(3115); // Preemptively set speed for next shot
 
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(6.38));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 13.03, getRadians(6.38));
+goForwardU(robot, GFU_DIST_PRECISE(0.52), GFU_TURN, 13.03, getRadians(6.38));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(474.62));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -17.02, getRadians(474.62));
+goForwardU(robot, GFU_DIST_PRECISE(0.49), GFU_TURN, -17.02, getRadians(474.62));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(30.96));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 5.01, getRadians(30.96));
+goForwardU(robot, GFU_DIST_PRECISE(0.51), GFU_TURN, 5.01, getRadians(30.96));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(63.41));
 
 shoot(robot);
 robot.flywheel->setVelocity(3300); // Preemptively set speed for next shot
 
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(210.95));
-goForwardU(robot, GFU_DIST_PRECISE(0.75), GFU_TURN, 28.16, getRadians(210.95));
+goForwardU(robot, GFU_DIST_PRECISE(0.52), GFU_TURN, 28.16, getRadians(210.95));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(241.69));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -10.6, getRadians(241.69));
+goForwardU(robot, GFU_DIST_PRECISE(0.52), GFU_TURN, -10.6, getRadians(241.69));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(184.18));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 8.83, getRadians(184.18));
+goForwardU(robot, GFU_DIST_PRECISE(0.52), GFU_TURN, 8.83, getRadians(184.18));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(224.28));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -12.0, getRadians(224.28));
+goForwardU(robot, GFU_DIST_PRECISE(0.52), GFU_TURN, -12.0, getRadians(224.28));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(186.0));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 8.21, getRadians(186.0));
+goForwardU(robot, GFU_DIST_PRECISE(0.52), GFU_TURN, 8.21, getRadians(186.0));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(57.22));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 15.08, getRadians(57.22));
+goForwardU(robot, GFU_DIST_PRECISE(0.51), GFU_TURN, 15.08, getRadians(57.22));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(49.19));
 
 shoot(robot);
-*/}
+
+// ================================================
+
+
+}
 
 
 void topSideSkillsAuto(Robot& robot){
