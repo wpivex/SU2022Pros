@@ -9,7 +9,7 @@
 Robot robot = getRobot15();
 Driver driver(robot, TANK_DRIVE);
 
-//#define RUN_AUTON // uncomment to run auton, comment to run teleop
+#define RUN_AUTON // uncomment to run auton, comment to run teleop
 //#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
 
 using namespace pros;
