@@ -15,7 +15,7 @@
 #define GFU_DIST(maxSpeed) SingleBoundedPID({0.1, 0, 0, 0.12, maxSpeed})
 #define GFU_DIST_PRECISE(maxSpeed) DoubleBoundedPID({0.1, 0, 0, 0.12, maxSpeed}, 0.1, 3)
 #define GFU_TURN SimplePID({1, 0, 0.1, 0.0, 1})
-#define GTU_TURN DoubleBoundedPID({1.25, 0, 0.095, 0.15, 1}, getRadians(1.5), 3)
+#define GTU_TURN DoubleBoundedPID({1.25, 0, 0.095, 0.15, 1}, getRadians(1.5), 1)
 #define GTU_TURN_PRECISE DoubleBoundedPID({1.25, 0, 0.095, 0.15, 1}, getRadians(0.75), 3)
 #define GCU_CURVE SimplePID({2.5/*2.25*//*1.7*/, 0, 0})
 
@@ -28,7 +28,7 @@ void startIntake(Robot& robot) {
 }
 
 void delayResetIndexer(Robot& robot) {
-    pros::delay(300);
+    pros::delay(500);
     robot.indexer->set_value(false);
     setEffort(*robot.intake, 1);
 }
@@ -43,7 +43,7 @@ void shoot(Robot& robot) {
     // wait for spinup
     if (!robot.flywheel->atTargetVelocity()) {
 
-        constexpr uint32_t TIMEOUT_MS = 3000; // maximum time to wait for spinup to proper velocity
+        constexpr uint32_t TIMEOUT_MS = 5000; // maximum time to wait for spinup to proper velocity
 
         setEffort(*robot.intake, 0);
         uint32_t start = pros::millis();
@@ -54,18 +54,17 @@ void shoot(Robot& robot) {
 
     uint32_t start = pros::millis();
     Shooter shooter;
-    while (pros::millis() - start < 6000) {
+    while (pros::millis() - start < 4000) {
         setEffort(*robot.intake, shooter.tickIntakeShootingSpeed(robot));
     }
 
     // reset indexer after 500ms, nonblocking
-    //pros::Task([&] {delayResetIndexer(robot); });
+    pros::Task([&] {delayResetIndexer(robot); });
 }
 
 void threeTileAuton(Robot& robot) {
-
     // GENERATED C++ CODE FROM PathGen 3.4.3
-// Exported: Sun Jan 15 22:06:32 2023
+// Exported: Sun Jan 15 22:23:50 2023
 
 // Robot assumes a starting position of (18.5,91.2) at heading of 0.0 degrees.
 robot.flywheel->setVelocity(3212); // Preemptively set speed for next shot
@@ -87,16 +86,14 @@ shoot(robot);
 robot.flywheel->setVelocity(3148); // Preemptively set speed for next shot
 
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(306.76));
-setEffort(*robot.intake, 1);
-goForwardU(robot, GFU_DIST_PRECISE(0.37), GFU_TURN, 33.02, getRadians(306.76));
-pros::delay(320);
+goForwardU(robot, GFU_DIST_PRECISE(0.46), GFU_TURN, 33.02, getRadians(306.76));
+pros::delay(380);
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(23.07));
 
 shoot(robot);
 robot.flywheel->setVelocity(3212); // Preemptively set speed for next shot
 
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(36.24));
-setEffort(*robot.intake, 1);
 goForwardU(robot, GFU_DIST_PRECISE(0.45), GFU_TURN, 7.96, getRadians(36.24));
 goForwardU(robot, GFU_DIST_PRECISE(0.55), GFU_TURN, -5.8, getRadians(396.23));
 pros::delay(260);
@@ -107,18 +104,15 @@ goTurnU(robot, GTU_TURN_PRECISE, getRadians(23.94));
 shoot(robot);
 robot.flywheel->setVelocity(3245); // Preemptively set speed for next shot
 
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(291.99));
-setEffort(*robot.intake, 1);
-goForwardU(robot, GFU_DIST_PRECISE(0.82), GFU_TURN, 17.64, getRadians(291.99));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(348.75));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 17.03, getRadians(348.75));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(40.56));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(286.82));
+goForwardU(robot, GFU_DIST_PRECISE(0.82), GFU_TURN, 19.66, getRadians(286.82));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(352.17));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 17.35, getRadians(352.17));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(40.99));
 
 shoot(robot);
 
 // ================================================
-
-
 
 
 
