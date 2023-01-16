@@ -47,11 +47,8 @@ void competition_initialize() {}
 
 void autonomous() {
 
-	//matchAutonIMUOnly(robot);
-    twoTileAuton(robot);
-    //topSideSkillsAuto(robot);
+    //twoTileAuton(robot);
     //threeTileAuton(robot);
-    //threeTile(robot);
 }
 
 
