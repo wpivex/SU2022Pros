@@ -9,7 +9,7 @@ class Shooter {
 private:
 
     const double FIRST_INTAKE_SPEED = -1;
-    const double AFTER_INTAKE_SPEED = -0.5;
+    const double AFTER_INTAKE_SPEED = -1;
 
     int state = 0;
     /*
