@@ -119,10 +119,8 @@ shoot(robot);
 }
 
 void twoTileAuton(Robot& robot) {// GENERATED C++ CODE FROM PathGen 3.4.3
-// GENERATED C++ CODE FROM PathGen 3.4.3
-
-// Robot assumes a starting position of (88.0,15.9) at heading of 42.48 degrees.
-// GENERATED C++ CODE FROM PathGen 3.4.3
+// GENERATED C++ CODE FROM PathGen 3.4.4
+// Exported: Mon Jan 16 14:55:10 2023
 
 // Robot assumes a starting position of (88.0,15.9) at heading of 42.48 degrees.
 robot.flywheel->setVelocity(3148); // Preemptively set speed for next shot
@@ -131,14 +129,14 @@ robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
 
 goForwardU(robot, GFU_DIST_PRECISE(0.51), GFU_TURN, 20.68, getRadians(42.48));
 pros::delay(1000);
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(485.77));
-goForwardU(robot, GFU_DIST_PRECISE(0.51), GFU_TURN, -18.01, getRadians(485.77));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(151.49));
-goForwardU(robot, GFU_DIST_PRECISE(0.52), GFU_TURN, 19.8, getRadians(151.49));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(475.46));
+goForwardU(robot, GFU_DIST_PRECISE(0.51), GFU_TURN, -19.99, getRadians(475.46));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(140.2));
+goForwardU(robot, GFU_DIST_PRECISE(0.52), GFU_TURN, 20.14, getRadians(140.2));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(72.16));
 
 shoot(robot);
-robot.flywheel->setVelocity(3000); // Preemptively set speed for next shot
+/*robot.flywheel->setVelocity(3000); // Preemptively set speed for next shot
 
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(133.26));
 goForwardU(robot, GFU_DIST_PRECISE(0.51), GFU_TURN, 44.84, getRadians(133.26));
@@ -181,6 +179,8 @@ goForwardU(robot, GFU_DIST_PRECISE(0.51), GFU_TURN, 15.08, getRadians(57.22));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(49.19));
 
 shoot(robot);
-
+*/
 // ================================================
+
+
 }

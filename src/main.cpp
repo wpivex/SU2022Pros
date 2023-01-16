@@ -47,8 +47,8 @@ void competition_initialize() {}
 
 void autonomous() {
 
-    //twoTileAuton(robot);
-    threeTileAuton(robot);
+    twoTileAuton(robot);
+    //threeTileAuton(robot);
 }
 
 

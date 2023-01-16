@@ -13,9 +13,8 @@ private:
 
     int state = 0;
     /*
-    State = 0: flywheel getting to top speed
-    State = 1: flywheel reached top speed
-    State = 2: flywheel dropped from shooting
+    State = 0: flywheel has not yet shot first disk
+    State = 1: flywheel has shot first disk
     */
 
 public:
@@ -28,13 +27,12 @@ public:
 
         double diff = robot.flywheel->getTargetVelocity() - robot.flywheel->getCurrentVelocity();
 
-        if (state == 0 && diff < 50) state = 1;
-        if (state == 1 && diff > 75) state = 2;
+        if (diff > 75) state = 1; // state == 1 means that the flyweel already shot the first disk
 
-        if (diff > 75) { // flywheel speed drop
+        if (diff > 50) { // if below target velocity by this number, stop flywheel
             return 0;
         } else {
-            return (state == 2) ? AFTER_INTAKE_SPEED : FIRST_INTAKE_SPEED;
+            return (state == 1) ? AFTER_INTAKE_SPEED : FIRST_INTAKE_SPEED;
         }
     }
 };
