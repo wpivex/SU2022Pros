@@ -46,7 +46,8 @@ Robot getRobot15() {
 
     robot.indexer.reset(new pros::ADIDigitalOut('G'));
 
-    robot.roller.reset(new pros::Motor(10));
+    robot.roller.reset(new pros::Motor(10, pros::E_MOTOR_GEAR_100));
+    robot.roller->set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
 
     robot.shooterFlap.reset(new pros::ADIDigitalOut('H'));
 
@@ -96,6 +97,11 @@ Robot getRobot18() {
     robot.intake->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
 
     robot.indexer.reset(new pros::ADIDigitalOut('G'));
+
+    robot.roller.reset(new pros::Motor(10, pros::E_MOTOR_GEAR_100));
+    robot.roller->set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
+
+    robot.shooterFlap.reset(new pros::ADIDigitalOut('H'));
 
     return robot;
 

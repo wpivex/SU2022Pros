@@ -33,6 +33,27 @@ void delayResetIndexer(Robot& robot) {
     setEffort(*robot.intake, 1);
 }
 
+// blocking function to move rollers some degrees
+// speed between -1 to 1
+void moveRollerDegrees(Robot& robot, double degrees, double speed) {
+
+    double startPosition = robot.roller->get_position();
+    robot.roller->move_relative(degrees, speed * 100);
+    while (fabs(robot.roller->get_position() - startPosition) < 5) {
+        pros::delay(10);
+    }
+}
+
+// blocking function to move rollers for some time
+void moveRollerTime(Robot& robot, int timeMs, double speed) {
+    robot.roller->move_velocity(speed * 100);
+    double startTime = pros::millis();
+    while (pros::millis() - startTime < timeMs) {
+        pros::delay(10);
+    }
+    robot.roller->brake();
+}
+
 // shoot a 3-burst round. First two rounds are short burst (110ms with 220ms break), third is longer (300ms)
 void shoot(Robot& robot) {
 
