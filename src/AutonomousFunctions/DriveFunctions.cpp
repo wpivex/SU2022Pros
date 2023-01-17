@@ -42,7 +42,7 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
     int32_t startTime = pros::millis();
 
     // FULL EXAMPLE FUNCTION
-    while (!pidDistance.isCompleted()  && pros::millis() < MAX_TIMEOUT) {
+    while (!pidDistance.isCompleted()  && pros::millis() - startTime < MAX_TIMEOUT) {
 
         float baseVelocity = pidDistance.tick(distance - robot.drive->getDistance());
         float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
