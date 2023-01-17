@@ -57,13 +57,12 @@ public:
         rightMotors.tare_position();
     }
 
-    // Get distance travelled by the left wheels in linear inches
-    double getLeftDistance() {
+    double _getMotorDistance(pros::MotorGroup& motors) {
 
         double sum = 0;
         int size = 0;
-        for (int i = 0; i < leftMotors.size(); i++) {
-            double pos = leftMotors[i].get_position();
+        for (int i = 0; i < motors.size(); i++) {
+            double pos = motors[i].get_position();
             if (pos != PROS_ERR_F) {
                 size++;
                 sum += pos;
@@ -74,28 +73,40 @@ public:
 
         return sum / size * MOTOR_ROT_TO_LINEAR_INCHES;
     }
+
+    // Get distance travelled by the left wheels in linear inches
+    double getLeftDistance() { return _getMotorDistance(leftMotors); }
 
     // Get distance travelled by the right wheels in linear inches
-    double getRightDistance() {
-        
-        double sum = 0;
-        int size = 0;
-        for (int i = 0; i < rightMotors.size(); i++) {
-            double pos = rightMotors[i].get_position();
-            if (pos != PROS_ERR_F) {
-                size++;
-                sum += pos;
-            }
-        }
-
-        if (size == 0) return 0;
-
-        return sum / size * MOTOR_ROT_TO_LINEAR_INCHES;
-    }
+    double getRightDistance() { return _getMotorDistance(rightMotors); }
 
     // Get average distance travelled by the left and right wheels in linear inches
     double getDistance() {
         return (getLeftDistance() + getRightDistance()) / 2.0;
+    }
+
+    // get motor current for motor group in amps
+    double _getMotorCurrent(pros::MotorGroup& motors) {
+
+        double sum = 0;
+        int size = 0;
+        for (int i = 0; i < motors.size(); i++) {
+            double current = motors[i].get_current_draw(); // returns in mA
+            if (current != PROS_ERR_F) {
+                size++;
+                sum += pos;
+            }
+        }
+
+        if (size == 0) return 0;
+
+        return (sum / size) / 1000.0; // convert to amps
+    }
+
+    double getCurrent() {
+        double left = _getMotorCurrent(leftMotors);
+        double right = _getMotorCurrent(rightMotors);
+        return (left + right) / 2.0;
     }
 
 };
