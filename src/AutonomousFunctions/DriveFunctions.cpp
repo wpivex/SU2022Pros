@@ -19,8 +19,8 @@ void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, float timeSeconds, fl
         float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
         float deltaVelocity = pidHeading.tick(headingError);
         
-        float left = targetEffort - deltaVelocity;
-        float right = targetEffort + deltaVelocity;
+        float left = targetEffort + deltaVelocity;
+        float right = targetEffort - deltaVelocity;
         robot.drive->setEffort(left, right);
 
         pros::delay(10);
@@ -44,8 +44,8 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
         pros::lcd::print(0, "%f", headingError);
         float deltaVelocity = pidHeading.tick(headingError);
 
-        float left = baseVelocity - deltaVelocity;
-        float right = baseVelocity + deltaVelocity;
+        float left = baseVelocity + deltaVelocity;
+        float right = baseVelocity - deltaVelocity;
         robot.drive->setEffort(left, right);
 
         pros::delay(10);
@@ -55,12 +55,15 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
 
 // Turn to some given heading: left is positive
 void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
+    bool positive = deltaInHeading(absoluteHeading, robot.localizer->getHeading()) > 0;
     while(!pidHeading.isCompleted()) {
         float headingError = deltaInHeading(absoluteHeading, robot.localizer->getHeading());
+        if (positive && headingError < 0) headingError += 2*M_PI;
+        else if (!positive && headingError > 0) headingError -= 2*M_PI;
         float turnVelocity = pidHeading.tick(headingError);
 
-        float left = -turnVelocity;
-        float right = turnVelocity;
+        float left = turnVelocity;
+        float right = -turnVelocity;
         robot.drive->setEffort(left, right);
         //written out in variables for ease of debugging. can shorten later
         // also I'm pretty sure the signs should be flipped but I'm keeping it consistent for now.
@@ -70,23 +73,6 @@ void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
     
     robot.drive->stop();
 }
-
-void goTurnEncoder(Robot& robot, EndablePID&& pidDistance, float theta) {
-
-    robot.drive->resetDistance();
-
-    float totalDistance = theta * robot.drive->TRACK_WIDTH / 2;
-
-    while (!pidDistance.isCompleted()) {
-
-        float currentDistance = (robot.drive->getRightDistance() - robot.drive->getLeftDistance()) / 2;
-        float speed = pidDistance.tick(totalDistance - currentDistance);
-        robot.drive->setEffort(-speed, speed);
-        pros::delay(10);
-    }
-    robot.drive->stop();
-}
-
 
 // Have the robot move in a curve starting from startTheta to endTheta given the radius of curvature about a point that the robot's center would travel around
 // A negative radius reverse
@@ -106,7 +92,7 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
     robot.drive->resetDistance();
 
     while (!pidDistance.isCompleted()) {
-        double largerDistanceCurrent = (deltaTheta > 0 != reverse) ? robot.drive->getRightDistance() : robot.drive->getLeftDistance();
+        double largerDistanceCurrent = (deltaTheta > 0 != reverse) ? robot.drive->getLeftDistance() : robot.drive->getRightDistance();
         largerDistanceCurrent = fabs(largerDistanceCurrent);
         double distanceError = largerDistanceTotal - largerDistanceCurrent;
 
@@ -132,8 +118,10 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
             right *= -1;
         }
 
-        // IMU PID Correction:
-        left -= headingCorrection; 
+        left = 0;
+        right = 0;
+
+        left -= headingCorrection;
         right += headingCorrection;
 
         robot.drive->setEffort(left, right);
