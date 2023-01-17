@@ -5,7 +5,8 @@
 
 void Driver::runDriver() {
     pros::lcd::initialize();
-
+    // Reinitialize flap position
+    robot.shooterFlap->set_value(flapUp);
     while (true) {
         pros::lcd::clear();
         pros::lcd::print(0, "Target: %f", robot.flywheel->getTargetVelocity());
@@ -63,10 +64,13 @@ void Driver::handleSecondaryActions() {
 
     // Roller mech controls
     if (controller.pressing(DIGITAL_L1)) {
-        setEffort(*robot.roller, 1);
+        setEffort(*robot.roller, -1);
     }
     else if (controller.pressing(DIGITAL_L2)) {
-        setEffort(*robot.roller, -1);
+        setEffort(*robot.roller, 1);
+    }
+    else{
+        setEffort(*robot.roller, 0);
     }
 
     // Indexer controls
