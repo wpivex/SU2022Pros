@@ -19,8 +19,8 @@ void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, float timeSeconds, fl
         float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
         float deltaVelocity = pidHeading.tick(headingError);
         
-        float left = targetEffort + deltaVelocity;
-        float right = targetEffort - deltaVelocity;
+        float left = targetEffort - deltaVelocity;
+        float right = targetEffort + deltaVelocity;
         robot.drive->setEffort(left, right);
 
         pros::delay(10);
@@ -44,8 +44,8 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
         pros::lcd::print(0, "%f", headingError);
         float deltaVelocity = pidHeading.tick(headingError);
 
-        float left = baseVelocity + deltaVelocity;
-        float right = baseVelocity - deltaVelocity;
+        float left = baseVelocity - deltaVelocity;
+        float right = baseVelocity + deltaVelocity;
         robot.drive->setEffort(left, right);
 
         pros::delay(10);
@@ -62,8 +62,8 @@ void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
         else if (!positive && headingError > 0) headingError -= 2*M_PI;
         float turnVelocity = pidHeading.tick(headingError);
 
-        float left = turnVelocity;
-        float right = -turnVelocity;
+        float left = -turnVelocity;
+        float right = turnVelocity;
         robot.drive->setEffort(left, right);
         //written out in variables for ease of debugging. can shorten later
         // also I'm pretty sure the signs should be flipped but I'm keeping it consistent for now.
@@ -92,7 +92,7 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
     robot.drive->resetDistance();
 
     while (!pidDistance.isCompleted()) {
-        double largerDistanceCurrent = (deltaTheta > 0 != reverse) ? robot.drive->getLeftDistance() : robot.drive->getRightDistance();
+        double largerDistanceCurrent = (deltaTheta > 0 != reverse) ? robot.drive->getRightDistance() : robot.drive->getLeftDistance();
         largerDistanceCurrent = fabs(largerDistanceCurrent);
         double distanceError = largerDistanceTotal - largerDistanceCurrent;
 
@@ -117,9 +117,6 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
             left *= -1;
             right *= -1;
         }
-
-        left = 0;
-        right = 0;
 
         left -= headingCorrection;
         right += headingCorrection;
