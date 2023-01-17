@@ -1,3 +1,5 @@
+
+
 #include "AutonomousFunctions/DriveFunctions.h"
 #include "misc/MathUtility.h"
 #include "pros/rtos.hpp"
@@ -40,7 +42,7 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
     int32_t startTime = pros::millis();
 
     // FULL EXAMPLE FUNCTION
-    while (!pidDistance.isCompleted() && pros::millis() < MAX_TIMEOUT) {
+    while (!pidDistance.isCompleted()  && pros::millis() < MAX_TIMEOUT) {
 
         float baseVelocity = pidDistance.tick(distance - robot.drive->getDistance());
         float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
@@ -58,11 +60,8 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
 
 // Turn to some given heading: left is positive
 void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
-    bool positive = deltaInHeading(absoluteHeading, robot.localizer->getHeading()) > 0;
     while(!pidHeading.isCompleted()) {
         float headingError = deltaInHeading(absoluteHeading, robot.localizer->getHeading());
-        if (positive && headingError < 0) headingError += 2*M_PI;
-        else if (!positive && headingError > 0) headingError -= 2*M_PI;
         float turnVelocity = pidHeading.tick(headingError);
 
         float left = -turnVelocity;
@@ -76,6 +75,23 @@ void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
     
     robot.drive->stop();
 }
+
+void goTurnEncoder(Robot& robot, EndablePID&& pidDistance, float theta) {
+
+    robot.drive->resetDistance();
+
+    float totalDistance = theta * robot.drive->TRACK_WIDTH / 2;
+
+    while (!pidDistance.isCompleted()) {
+
+        float currentDistance = (robot.drive->getRightDistance() - robot.drive->getLeftDistance()) / 2;
+        float speed = pidDistance.tick(totalDistance - currentDistance);
+        robot.drive->setEffort(-speed, speed);
+        pros::delay(10);
+    }
+    robot.drive->stop();
+}
+
 
 // Have the robot move in a curve starting from startTheta to endTheta given the radius of curvature about a point that the robot's center would travel around
 // A negative radius reverse
@@ -121,7 +137,8 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
             right *= -1;
         }
 
-        left -= headingCorrection;
+        // IMU PID Correction:
+        left -= headingCorrection; 
         right += headingCorrection;
 
         robot.drive->setEffort(left, right);
@@ -183,19 +200,15 @@ void goToY(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float
 
 /*
 LEAVING THIS HERE UNTIL FUNCTION IS BUG FREE
-
 find equation for line
 find equation for robot movement
 find where they intersect
 calculate distance to point
 drive to point while controlling heading
-
 slope = (y2-y1)/(x2-x1)
-
 y - y1 = slope(x - x1)
 roboSlope= tan(robot.localizer->getHeading());
 y - robot.localizer->getY() = roboSlope(x - robot.localizer->getX())
-
 slope(x - x1) + y1 = roboSlope(x - robot.localizer->getX()) + robot.localizer->getY()
 slope*x - slope*x1 + y1 = roboSlope*x - roboSlope*robot.localizer->getX()) + robot.localizer->getY()
 slope*x -  roboSlope*x  = - roboSlope*robot.localizer->getX()) + robot.localizer->getY() + slope*x1 - y1
