@@ -35,3 +35,11 @@ void Odometry::setHeading(double headingRadians) {
     d = fmod(fmod(d, 360) + 360, 360);
     imu.set_heading(d);
 }
+
+double Odometry::getRotation() {
+    return -getRadians(imu.get_rotation());
+}
+
+void Odometry::setRotation(double rotationRadians) {
+    imu.set_rotation(getDegrees(-rotationRadians));
+}
