@@ -94,7 +94,7 @@ public:
             double current = motors[i].get_current_draw(); // returns in mA
             if (current != PROS_ERR_F) {
                 size++;
-                sum += pos;
+                sum += current;
             }
         }
 
