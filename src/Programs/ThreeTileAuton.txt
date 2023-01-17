@@ -1,7 +1,7 @@
-// GENERATED C++ CODE FROM PathGen 3.4.4
-// Exported: Mon Jan 16 15:53:45 2023
+// GENERATED C++ CODE FROM PathGen 3.4.5d
+// Exported: Tue Jan 17 00:00:44 2023
 
-// Robot assumes a starting position of (18.5,91.2) at heading of 0.0 degrees.
+// Robot assumes a starting position of (18.5,91.2) at heading of 357.49 degrees.
 robot.flywheel->setVelocity(3212); // Preemptively set speed for next shot
 setEffort(*robot.intake, 1); // Start running intake immediately
 robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
@@ -14,6 +14,9 @@ goTurnU(robot, GTU_TURN_PRECISE, getRadians(315.27));
 goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -19.67, getRadians(315.27));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(360.01));
 goForwardU(robot, GFU_DIST_PRECISE(0.48), GFU_TURN, -3.48, getRadians(360.01));
+
+moveRollerDegrees(robot, 40, 1);
+
 goForwardU(robot, GFU_DIST_PRECISE(0.55), GFU_TURN, 3.62, getRadians(359.99));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(5.18));
 

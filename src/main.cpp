@@ -52,7 +52,7 @@ void autonomous() {
     threeTileAuton(robot);
     #endif
     #ifndef IS_THREE_TILE
-    //twoTileAuton(robot);
+    twoTileAuton(robot);
     #endif
 }
 
