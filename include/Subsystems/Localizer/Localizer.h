@@ -12,5 +12,5 @@ public:
     virtual void init() = 0;
     virtual void setPosition(double x, double y) = 0;
     virtual void setHeading(double headingRadians) = 0;
-    virtual double setRotation(double rotationRadians) = 0;
+    virtual void setRotation(double rotationRadians) = 0;
 };

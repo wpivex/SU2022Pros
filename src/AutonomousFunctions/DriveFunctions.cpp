@@ -65,7 +65,6 @@ void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
     robot.localizer->setRotation(0);
 
     while(!pidHeading.isCompleted()) {
-        float headingError = ;
         float turnVelocity = pidHeading.tick(targetRotation - robot.localizer->getRotation());
 
         float left = -turnVelocity;
