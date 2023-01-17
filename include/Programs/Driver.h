@@ -35,9 +35,11 @@ private:
     Shooter shooter;
 
     bool indexerOn;
+    bool flapUp = false;
     int indexerTimer, indexerOffTimer;
-    int speed = 3000;
+    const int DEFAULT_SPEED = 2100;
+    int speed = DEFUALT_SPEED;
 
-    double shootSpeed = 0.5;
+    double shootSpeed = 1;
 
 };

@@ -46,6 +46,10 @@ Robot getRobot15() {
 
     robot.indexer.reset(new pros::ADIDigitalOut('G'));
 
+    robot.roller.reset(new pros::Motor(10))
+
+    robot.shooterFlap.reset(new pros::ADIDigitalOut('H'));
+
     return robot;
 
 }

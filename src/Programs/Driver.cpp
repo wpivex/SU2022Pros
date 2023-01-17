@@ -49,18 +49,28 @@ void Driver::handleDrivetrain() {
 
 void Driver::handleSecondaryActions() {
 
-    if (controller.pressing(DIGITAL_X)) shootSpeed = 1;
-    else if (controller.pressing(DIGITAL_A)) shootSpeed = 0.75;
-    else if (controller.pressing(DIGITAL_B)) shootSpeed = 0.5;
-    else if (controller.pressing(DIGITAL_Y)) shootSpeed = 0.25;
-
-    if (controller.pressed(DIGITAL_L1)) {
+    // Flywheel Speed Controls
+    if (controller.pressed(DIGITAL_UP)) {
         if (speed < 3600) speed = fmin(speed + 100, 3600);
     }
-    else if (controller.pressed(DIGITAL_L2)) {
+    else if (controller.pressed(DIGITAL_DOWN)) {
         if (speed > 0) speed = fmax(speed - 100, 0);
     }
-    else if (controller.pressed(DIGITAL_R2)) {
+    if(controller.pressed(DIGITAL_RIGHT)) {
+        // Set speed back to default speed
+        speed = DEFAULT_SPEED;
+    }
+
+    // Roller mech controls
+    if (controller.pressing(DIGITAL_L1)) {
+        setEffort(*robot.roller, 1);
+    }
+    else if (controller.pressing(DIGITAL_L2)) {
+        setEffort(*robot.roller, -1);
+    }
+
+    // Indexer controls
+    if (controller.pressed(DIGITAL_R2)) {
         robot.indexer->set_value(false);
         indexerOn = true;
         indexerTimer = pros::millis();
@@ -69,10 +79,18 @@ void Driver::handleSecondaryActions() {
         robot.indexer->set_value(true);
         indexerOn = false;
         indexerOffTimer = pros::millis();
-    } else if (controller.pressed(DIGITAL_R1)) {
+    } 
+    else if (controller.pressed(DIGITAL_R1)) {
         //shooter.reset();
     }
 
+    // Flywheel flap toggle
+    if (controller.pressed(DIGITAL_X)) {
+        flapUp = !flapUp;
+        robot.shooterFlap->set_value(flapUp);
+    }
+
+    // Running the indexer via the intake
     if (indexerOn && pros::millis() - 250 > indexerTimer || (!indexerOn && pros::millis() - 300 < indexerOffTimer)) {
         setEffort(*robot.intake, 1);
     } else if (controller.pressing(DIGITAL_R1)) {
@@ -81,6 +99,7 @@ void Driver::handleSecondaryActions() {
         robot.intake->brake();
     }
 
+    // Flywheel set speed
     robot.flywheel->setVelocity(speed);
 
 }
