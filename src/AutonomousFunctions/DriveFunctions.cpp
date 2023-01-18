@@ -61,11 +61,15 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
 // Turn to some given heading: left is positive
 void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
 
-    float targetRotation = deltaInHeading(absoluteHeading, robot.localizer->getHeading());
-    robot.localizer->setRotation(0);
+    bool positive = deltaInHeading(absoluteHeading, robot.localizer->getHeading()) > 0;
 
     while(!pidHeading.isCompleted()) {
-        float turnVelocity = pidHeading.tick(targetRotation - robot.localizer->getRotation());
+        float headingError = deltaInHeading(absoluteHeading, robot.localizer->getHeading());
+
+        if (positive && headingError < getRadians(-170)) headingError += getRadians(180);
+        else if (!positive && headingError > getRadians(170)) headingError -= getRadians(180);
+
+        float turnVelocity = pidHeading.tick(headingError);
 
         float left = -turnVelocity;
         float right = turnVelocity;
