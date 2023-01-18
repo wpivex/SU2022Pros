@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 // GENERATED C++ CODE FROM PathGen 3.4.4
 // Exported: Mon Jan 16 16:06:31 2023
 
@@ -20,6 +21,42 @@ robot.flywheel->setVelocity(3000); // Preemptively set speed for next shot
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(139.55));
 goForwardU(robot, GFU_DIST_PRECISE(0.51), GFU_TURN, 46.02, getRadians(139.55));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(48.62));
+=======
+// GENERATED C++ CODE FROM PathGen 3.4.5e
+// Exported: Tue Jan 17 19:49:54 2023
+
+// Robot assumes a starting position of (88.0,15.9) at heading of 44.22 degrees.
+robot.flywheel->setVelocity(3100); // Preemptively set speed for next shot
+setEffort(*robot.intake, 1); // Start running intake immediately
+robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
+
+goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, 22.18, getRadians(44.22));
+pros::delay(1000);
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(483.02));
+goForwardU(robot, GFU_DIST_PRECISE(0.3), GFU_TURN, -15.37, getRadians(483.02));
+
+// Back up and do rollers using drivetrain current detection
+robot.drive->setEffort(-0.3, -0.3);
+robot.roller->move_velocity(100) // max roller speed
+// Keep driving until current exceeds threshold indicating contact with wall
+while(robot.drive->getCurrent() < 1.2) pros::delay(10);
+// stop rollers
+robot.roller->brake();
+robot.drive->stop();
+
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(450.16));
+goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, -9.48, getRadians(450.16));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(135.39));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 22.07, getRadians(135.39));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(72.3));
+
+shoot(robot);
+robot.flywheel->setVelocity(3000); // Preemptively set speed for next shot
+
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(135.39));
+goForwardU(robot, GFU_DIST_PRECISE(0.4), GFU_TURN, 45.27, getRadians(135.39));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(48.22));
+>>>>>>> Stashed changes
 
 shoot(robot);
 robot.flywheel->setVelocity(3000); // Preemptively set speed for next shot
@@ -60,3 +97,7 @@ goTurnU(robot, GTU_TURN_PRECISE, getRadians(49.19));
 shoot(robot);
 
 // ================================================
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
