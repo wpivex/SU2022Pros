@@ -60,42 +60,18 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
 
 // Turn to some given heading: left is positive
 void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
-
-    bool positive = deltaInHeading(absoluteHeading, robot.localizer->getHeading()) > 0;
-
     while(!pidHeading.isCompleted()) {
         float headingError = deltaInHeading(absoluteHeading, robot.localizer->getHeading());
-
-        if (positive && headingError < getRadians(-170)) headingError += getRadians(180);
-        else if (!positive && headingError > getRadians(170)) headingError -= getRadians(180);
-
         float turnVelocity = pidHeading.tick(headingError);
 
         float left = -turnVelocity;
         float right = turnVelocity;
         robot.drive->setEffort(left, right);
-        //written out in variables for ease of debugging. can shorten later
-        // also I'm pretty sure the signs should be flipped but I'm keeping it consistent for now.
+        
 
         pros::delay(10);
     }
     
-    robot.drive->stop();
-}
-
-void goTurnEncoder(Robot& robot, EndablePID&& pidDistance, float theta) {
-
-    robot.drive->resetDistance();
-
-    float totalDistance = theta * robot.drive->TRACK_WIDTH / 2;
-
-    while (!pidDistance.isCompleted()) {
-
-        float currentDistance = (robot.drive->getRightDistance() - robot.drive->getLeftDistance()) / 2;
-        float speed = pidDistance.tick(totalDistance - currentDistance);
-        robot.drive->setEffort(-speed, speed);
-        pros::delay(10);
-    }
     robot.drive->stop();
 }
 
