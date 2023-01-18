@@ -15,8 +15,8 @@
 #define GFU_DIST(maxSpeed) SingleBoundedPID({0.1, 0, 0, 0.12, maxSpeed})
 #define GFU_DIST_PRECISE(maxSpeed) DoubleBoundedPID({0.1, 0, 0, 0.12, maxSpeed}, 0.1, 3)
 #define GFU_TURN SimplePID({1, 0, 0.1, 0.0, 1})
-#define GTU_TURN DoubleBoundedPID({1.25, 0, 0.095, 0.15, 1}, getRadians(1.5), 1)
-#define GTU_TURN_PRECISE DoubleBoundedPID({1.25, 0, 0.095, 0.15, 1}, getRadians(0.75), 3)
+#define GTU_TURN DoubleBoundedPID({1.25, 0.00, 0.095, 0.15, 1}, getRadians(1.5), 1)
+#define GTU_TURN_PRECISE DoubleBoundedPID({1.25, 0.005, 0.105, 0.15, 1}, getRadians(0.75), 3)
 #define GCU_CURVE SimplePID({2.5/*2.25*//*1.7*/, 0, 0})
 
 // don't stop motors at end
