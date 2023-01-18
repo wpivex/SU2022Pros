@@ -1,31 +1,23 @@
 // GENERATED C++ CODE FROM PathGen 3.4.6
-// Exported: Tue Jan 17 18:24:58 2023
+// Exported: Tue Jan 17 21:53:22 2023
 
-// Robot assumes a starting position of (17.9,102.2) at heading of 20.45 degrees.
+// Robot assumes a starting position of (14.1,102.0) at heading of 16.54 degrees.
 robot.flywheel->setVelocity(3115); // Preemptively set speed for next shot
 setEffort(*robot.intake, 1); // Start running intake immediately
 robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
 
-goForwardU(robot, GFU_DIST_PRECISE(0.45), GFU_TURN, 13.53, getRadians(20.45));
+goForwardU(robot, GFU_DIST_PRECISE(0.45), GFU_TURN, 16.17, getRadians(16.54));
 pros::delay(1000);
-goForwardU(robot, GFU_DIST_PRECISE(0.52), GFU_TURN, -9.31, getRadians(380.44));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(299.38));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -11.13, getRadians(299.38));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(360.01));
-/*goForwardU(robot, GFU_DIST_PRECISE(0.48), GFU_TURN, -9.02, getRadians(360.01));*/
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(363.51));
+goForwardU(robot, GFU_DIST_PRECISE(0.52), GFU_TURN, -8.25, getRadians(363.51));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(303.89));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -8.85, getRadians(303.89));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(361.01));
+/*goForwardU(robot, GFU_DIST_PRECISE(0.48), GFU_TURN, -10.57, getRadians(361.01));*/
 
-// Back up and do rollers using drivetrain current detection
-robot.drive->setEffort(-0.3, -0.3);
-robot.roller->move_velocity(100); // max roller speed
 
-// Keep driving until current exceeds threshold indicating contact with wall
-while (robot.drive->getCurrent() < 1.2) pros::delay(10);
 
-// stop rollers
-robot.roller->brake();
-robot.drive->stop();
-
-goForwardU(robot, GFU_DIST_PRECISE(0.55), GFU_TURN, 8.81, getRadians(359.99));
+goForwardU(robot, GFU_DIST_PRECISE(0.55), GFU_TURN, 10.35, getRadians(1.03));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(5.83));
 
 shoot(robot);

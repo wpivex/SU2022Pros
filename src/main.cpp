@@ -33,7 +33,10 @@ void initialize() {
 
     #ifdef RUN_AUTON
     #ifndef TUNE_FLYWHEEL
-    while (!centerButtonReady) pros::delay(10);
+    while (!centerButtonReady) {
+        pros::lcd::print(1, "Heading (deg): %f", robot.localizer->getHeading() * 180 / 3.1415);
+        pros::delay(10);
+    }
     #endif
     #endif
 
