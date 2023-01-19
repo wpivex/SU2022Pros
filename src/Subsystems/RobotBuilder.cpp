@@ -51,7 +51,7 @@ Robot getRobot15() {
 
     robot.shooterFlap.reset(new pros::ADIDigitalOut('H'));
 
-    robot.endgame.reset(new pros::ADIDigitalOut('A'));
+    robot.endgame.reset(new pros::ADIDigitalOut('B'));
 
     return robot;
 
@@ -106,7 +106,7 @@ Robot getRobot18() {
 
     robot.shooterFlap.reset(new pros::ADIDigitalOut('H'));
 
-    robot.endgame.reset(new pros::ADIDigitalOut('A'));
+    robot.endgame.reset(new pros::ADIDigitalOut('B'));
 
     return robot;
 
