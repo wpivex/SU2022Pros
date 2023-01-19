@@ -108,6 +108,12 @@ void Driver::handleSecondaryActions() {
         robot.endgame->set_value(true);
     }
 
+    if (controller.pressed(DIGITAL_Y)) {
+        pros::Task taskFlywheel([&] {
+            robot.flywheel->maintainVelocityTask();
+        });
+    }
+
     // Flywheel set speed
     robot.flywheel->setVelocity(speed);
 
