@@ -5,14 +5,21 @@
 #include "Programs/Autonomous.h"
 #include "TuneFlywheel.h"
 
+//#define IS_FIFTEEN // uncomment for 15, comment for 18
 
-Robot robot = getRobot15();
-Driver driver(robot, TANK_DRIVE);
+#ifdef IS_FIFTEEN
+    #define IS_THREE_TILE
+    Robot robot = getRobot15();
+    Driver driver(robot, TANK_DRIVE);
+#else
+    #define IS_TWO_TILE
+    Robot robot = getRobot18();
+    Driver driver(robot, ARCADE_DRIVE);
+#endif
 
-#define RUN_TEST
 
-#define RUN_AUTON // uncomment to run auton, comment to run teleop
-#define IS_THREE_TILE // uncomment to run three tile, comment to run two tile
+//#define RUN_TEST
+//#define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
 //#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
 
 using namespace pros;
