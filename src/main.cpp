@@ -9,6 +9,8 @@
 Robot robot = getRobot15();
 Driver driver(robot, TANK_DRIVE);
 
+#define RUN_TEST
+
 #define RUN_AUTON // uncomment to run auton, comment to run teleop
 #define IS_THREE_TILE // uncomment to run three tile, comment to run two tile
 //#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
@@ -50,6 +52,11 @@ void competition_initialize() {}
 
 
 void autonomous() {    
+
+    #ifdef RUN_TEST
+    testAuton(robot);
+    return;
+    #endif
 
     #ifdef IS_THREE_TILE
     threeTileAuton(robot);
