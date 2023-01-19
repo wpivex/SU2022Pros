@@ -37,7 +37,7 @@ private:
     bool indexerOn;
     bool flapUp = true;
     int indexerTimer, indexerOffTimer;
-    const int DEFAULT_SPEED = 2200;
+    const int DEFAULT_SPEED = 2300;
     int speed = DEFAULT_SPEED;
 
     double shootSpeed = 1;

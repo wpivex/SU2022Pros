@@ -19,7 +19,7 @@
 
 
 //#define RUN_TEST
-//#define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
+#define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
 //#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
 
 using namespace pros;
@@ -34,6 +34,8 @@ void initialize() {
 
     pros::lcd::initialize();
     pros::lcd::register_btn1_cb (ready);
+
+    robot.shooterFlap->set_value(true); // start flap up
 
 	
 	if (robot.localizer) robot.localizer->init();
@@ -58,7 +60,9 @@ void disabled() {}
 void competition_initialize() {}
 
 
-void autonomous() {    
+void autonomous() {  
+
+    robot.shooterFlap->set_value(false); // flap down  
 
     #ifdef RUN_TEST
     testAuton(robot);

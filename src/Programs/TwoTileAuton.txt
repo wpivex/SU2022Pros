@@ -1,8 +1,8 @@
 // GENERATED C++ CODE FROM PathGen 3.4.6
-// Exported: Thu Jan 19 08:20:44 2023
+// Exported: Thu Jan 19 10:47:34 2023
 
 // Robot assumes a starting position of (88.0,15.9) at heading of 44.22 degrees.
-robot.flywheel->setVelocity(3100); // Preemptively set speed for next shot
+robot.flywheel->setVelocity(3148); // Preemptively set speed for next shot
 setEffort(*robot.intake, 1); // Start running intake immediately
 robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
 
@@ -54,4 +54,3 @@ shoot(robot);
 
 // ================================================
 
- 
