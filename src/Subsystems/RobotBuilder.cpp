@@ -70,7 +70,7 @@ Robot getRobot18() {
     ));
 
     robot.localizer.reset(new Odometry(
-        13, // imu port
+        14, // imu port
         {'E','F'}, // left encoder port
         {'C', 'D'}, // right encoder port
         {'A', 'B'}, // back encoder port
@@ -99,7 +99,7 @@ Robot getRobot18() {
 
     robot.indexer.reset(new pros::ADIDigitalOut('G'));
 
-    robot.roller.reset(new pros::Motor(10, pros::E_MOTOR_GEAR_100));
+    robot.roller.reset(new pros::Motor(7, pros::E_MOTOR_GEAR_100));
     robot.roller->set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
 
     robot.shooterFlap.reset(new pros::ADIDigitalOut('H'));
