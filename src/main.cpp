@@ -8,11 +8,11 @@
 //#define IS_FIFTEEN // uncomment for 15, comment for 18
 
 #ifdef IS_FIFTEEN
-    #define IS_THREE_TILE
+    #define IS_TWO_TILE
     Robot robot = getRobot15();
     Driver driver(robot, TANK_DRIVE);
 #else
-    #define IS_TWO_TILE
+    #define IS_THREE_TILE
     Robot robot = getRobot18();
     Driver driver(robot, ARCADE_DRIVE);
 #endif
