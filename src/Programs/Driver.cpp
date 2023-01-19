@@ -1,12 +1,14 @@
 #include "Programs/Driver.h"
 #include "misc/ProsUtility.h"
 #include "pros/llemu.hpp"
+#include "pros/motors.h"
 #include "pros/rtos.hpp"
 
 void Driver::runDriver() {
     pros::lcd::initialize();
     // Reinitialize flap position
     robot.shooterFlap->set_value(flapUp);
+    robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
     while (true) {
         pros::lcd::clear();
         pros::lcd::print(0, "Target: %f", robot.flywheel->getTargetVelocity());

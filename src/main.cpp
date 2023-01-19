@@ -5,16 +5,16 @@
 #include "Programs/Autonomous.h"
 #include "TuneFlywheel.h"
 
-//#define IS_FIFTEEN // uncomment for 15, comment for 18
+#define IS_FIFTEEN // uncomment for 15, comment for 18
 
 #ifdef IS_FIFTEEN
     #define IS_TWO_TILE
     Robot robot = getRobot15();
-    Driver driver(robot, TANK_DRIVE, 2300);
+    Driver driver(robot, TANK_DRIVE, 2400); 
 #else
     #define IS_THREE_TILE
     Robot robot = getRobot18();
-    Driver driver(robot, TANK_DRIVE, 2700);
+    Driver driver(robot, TANK_DRIVE, 2400);
 #endif
 
 
