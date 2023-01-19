@@ -11,17 +11,22 @@ class Driver {
 
 public:
 
-    Driver(Robot& robotReference, DRIVE_TYPE driveType):
+    Driver(Robot& robotReference, DRIVE_TYPE driveType, int defaultFlywheelSpeed):
         robot(robotReference),
         drive(driveType),
-        shootAlternator(3, 11, 7) // 70ms on / 70ms off
-    {}
+        shootAlternator(3, 11, 7), // 70ms on / 70ms off
+        DEFAULT_SPEED(defaultFlywheelSpeed)
+    {
+        speed = DEFAULT_SPEED;
+    }
 
     void runDriver();
 
     ControllerSM controller;
         
 private:
+
+    const int DEFAULT_SPEED;
 
     void handleDrivetrain();
     void handleSecondaryActions();
@@ -37,8 +42,8 @@ private:
     bool indexerOn;
     bool flapUp = true;
     int indexerTimer, indexerOffTimer;
-    const int DEFAULT_SPEED = 2300;
-    int speed = DEFAULT_SPEED;
+    
+    int speed;
 
     double shootSpeed = 1;
 
