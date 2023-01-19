@@ -14,7 +14,7 @@
 #else
     #define IS_TWO_TILE
     Robot robot = getRobot18();
-    Driver driver(robot, ARCADE_DRIVE);
+    Driver driver(robot, TANK_DRIVE);
 #endif
 
 

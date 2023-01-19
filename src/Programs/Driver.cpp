@@ -103,6 +103,11 @@ void Driver::handleSecondaryActions() {
         robot.intake->brake();
     }
 
+    // Endgame mech. Activate if B pressed
+    if (controller.pressed(DIGITAL_B)) {
+        robot.endgame->set_value(true);
+    }
+
     // Flywheel set speed
     robot.flywheel->setVelocity(speed);
 

@@ -51,6 +51,8 @@ Robot getRobot15() {
 
     robot.shooterFlap.reset(new pros::ADIDigitalOut('H'));
 
+    robot.endgame.reset(new pros::ADIDigitalOut('A'));
+
     return robot;
 
 }
@@ -103,6 +105,8 @@ Robot getRobot18() {
     robot.roller->set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
 
     robot.shooterFlap.reset(new pros::ADIDigitalOut('H'));
+
+    robot.endgame.reset(new pros::ADIDigitalOut('A'));
 
     return robot;
 

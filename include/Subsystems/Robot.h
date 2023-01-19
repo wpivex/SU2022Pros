@@ -20,4 +20,6 @@ public:
     std::unique_ptr<pros::Motor> roller;
     std::unique_ptr<pros::ADIDigitalOut> shooterFlap;
 
+    std::unique_ptr<pros::ADIDIgitalOut> endgame;
+
 };
