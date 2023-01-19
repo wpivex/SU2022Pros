@@ -19,6 +19,7 @@ void Odometry::updatePositionTask() { // blocking task used to update (x, y, hea
 }
 
 void Odometry::init() {
+    pros::delay(500);
     imu.reset(true);
     pros::delay(1000);
 

@@ -5,7 +5,7 @@
 #include "Programs/Autonomous.h"
 #include "TuneFlywheel.h"
 
-#define IS_FIFTEEN // uncomment for 15, comment for 18
+//#define IS_FIFTEEN // uncomment for 15, comment for 18
 
 #ifdef IS_FIFTEEN
     #define IS_TWO_TILE
@@ -19,7 +19,7 @@
 
 
 //#define RUN_TEST
-#define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
+//#define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
 //#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
 
 using namespace pros;
