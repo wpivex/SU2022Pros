@@ -64,6 +64,12 @@ void autonomous() {
 
     robot.shooterFlap->set_value(false); // flap down  
 
+    if (true && robot.flywheel) {
+        pros::Task taskFlywheel([&] {
+            robot.flywheel->maintainVelocityTask();
+        });
+    }
+
     #ifdef RUN_TEST
     testAuton(robot);
     return;
@@ -87,12 +93,7 @@ void opcontrol() {
     return;
     #endif
 
-	
-    if (true && robot.flywheel) {
-        pros::Task taskFlywheel([&] {
-            robot.flywheel->maintainVelocityTask();
-        });
-    }
+
 
     if (false && robot.localizer) {
         pros::Task taskLocalizer([&] {
