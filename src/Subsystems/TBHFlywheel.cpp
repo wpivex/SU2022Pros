@@ -5,14 +5,10 @@ TBHFlywheel(std::initializer_list<int8_t> flywheelMotors, std::vector<DataPoint>
     gain(gainConstant)
 {}
 
-void TBHFlywheel::onSetpointUpdate() {
-    isFirstCrossover = true;
-}
-
 // Given the current velocity, return a goal velocity based on tbh algorithm to minimize error
-float TBHFlywheel::getNextMotorVoltage(float currentVelocityRPM) {
+float TBHFlywheel::getNextMotorVoltage(float currentRPM) {
     
-    float error = targetRPM - currentVelocityRPM; // calculate the error;
+    float error = targetRPM - currentRPM; // calculate the error;
     output += gain * error; // integrate the output
 
     output = clamp(output, 0, 12); // bound output to possible voltages

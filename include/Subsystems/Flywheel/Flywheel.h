@@ -17,7 +17,7 @@ protected:
     pros::MotorGroup motors;
     bool hasSetStopped = false;
 
-    virtual void onSetpointUpdate() {}
+    bool isFirstCrossover = true;
 
 public:
 

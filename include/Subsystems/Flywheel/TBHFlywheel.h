@@ -8,11 +8,7 @@ private:
     double output = 0;
     double prevError = 0;
     double tbh;
-    bool isFirstCrossover = true;
 
-protected:
-
-    void onSetpointUpdate() override;
 
 public:
 

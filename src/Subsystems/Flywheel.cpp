@@ -6,7 +6,7 @@ void Flywheel::setVelocity(double velocity) {
     targetRPM = velocity;
     if (velocity == 0) hasSetStopped = false;
 
-    onSetpointUpdate();
+    isFirstCrossover = true;
 }
 
 double Flywheel::getTargetVelocity() {
