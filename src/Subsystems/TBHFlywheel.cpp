@@ -1,41 +1,36 @@
 #include "Subsystems/Flywheel/TBHFlywheel.h"
-#include "pros/llemu.hpp"
 
+TBHFlywheel(std::initializer_list<int8_t> flywheelMotors, std::vector<DataPoint> voltRpmData, double startSpeed, double gainConstant):
+    Flywheel(flywheelMotors, voltRpmData, startSpeed),
+    gain(gainConstant)
+{}
 
-void TBHFlywheel::setVelocity(double velocity) {
-    tbh.setTargetRPM(velocity);
-    if (velocity == 0) hasSetStopped = false;
+void TBHFlywheel::onSetpointUpdate() {
+    isFirstCrossover = true;
 }
 
-double TBHFlywheel::getTargetVelocity() {
-    return tbh.getTargetRPM();
-}
-
-double TBHFlywheel::getCurrentVelocity() {
-    return average(motors.get_actual_velocities()) * ratio;
-}
-
-bool TBHFlywheel::atTargetVelocity() {
-    return fabs(getTargetVelocity() - getCurrentVelocity()) < 20;
-}
-
-void TBHFlywheel::maintainVelocityTask() {
+// Given the current velocity, return a goal velocity based on tbh algorithm to minimize error
+float TBHFlywheel::getNextMotorVoltage(float currentVelocityRPM) {
     
-    while (true) {
+    float error = targetRPM - currentVelocityRPM; // calculate the error;
+    output += gain * error; // integrate the output
 
-        if (tbh.getTargetRPM() == 0 && !hasSetStopped) {
-            motors.brake();
-            hasSetStopped = true;
-        } else if (tbh.getTargetRPM() != 0) {
-            float currentSpeed = getCurrentVelocity();
-            //pros::lcd::print(0, "flywheel: %f", currentSpeed);
-            float motorInputVolts = tbh.getNextMotorVoltage(currentSpeed);
-            motors.move_voltage(motorInputVolts * 1000); // millivolts
+    output = clamp(output, 0, 12); // bound output to possible voltages
+        
+    if (sign(error) != sign(prevError)) { // if zero crossing,
+
+        if (isFirstCrossover) { // First zero crossing after a new set velocity command
+            // Set drive to the open loop approximation
+            output = rpmToVolt(targetRPM);
+        } else {
+            output = 0.5 * (output + tbh); // Take Back Half
+            isFirstCrossover = false;
         }
-        pros::delay(10);
-    }
-}
 
-void TBHFlywheel::setRawVoltage(double volts) {
-    motors.move_voltage(volts * 1000);
+        tbh = output;// update Take Back Half variable
+        prevError = error; // save the previous error
+    }
+
+    return output;
+
 }
