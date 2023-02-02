@@ -1,12 +1,12 @@
 #include "Subsystems/Flywheel/TBHFlywheel.h"
 
-TBHFlywheel(std::initializer_list<int8_t> flywheelMotors, std::vector<DataPoint> voltRpmData, double startSpeed, double gainConstant):
+TBHFlywheel::TBHFlywheel(std::initializer_list<int8_t> flywheelMotors, std::vector<DataPoint> voltRpmData, double startSpeed, double gainConstant):
     Flywheel(flywheelMotors, voltRpmData, startSpeed),
     gain(gainConstant)
 {}
 
 // Given the current velocity, return a goal velocity based on tbh algorithm to minimize error
-float TBHFlywheel::getNextMotorVoltage(float currentRPM) {
+double TBHFlywheel::getNextMotorVoltage(double currentRPM) {
     
     float error = targetRPM - currentRPM; // calculate the error;
     output += gain * error; // integrate the output
@@ -17,7 +17,7 @@ float TBHFlywheel::getNextMotorVoltage(float currentRPM) {
 
         if (isFirstCrossover) { // First zero crossing after a new set velocity command
             // Set drive to the open loop approximation
-            output = rpmToVolt(targetRPM);
+            output = rpmToVolt(data, targetRPM);
         } else {
             output = 0.5 * (output + tbh); // Take Back Half
             isFirstCrossover = false;

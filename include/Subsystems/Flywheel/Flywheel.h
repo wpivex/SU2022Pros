@@ -1,12 +1,11 @@
 #pragma once
-#include "Flywheel.h"
-#include "Algorithms/TBH.h"
 #include "misc/MathUtility.h"
 #include <vector>
+#include "Algorithms/ConversionData.h"
 #include "main.h"
 
 // 3600 rpm 1:1 cart, but programmed as default 200rpm cart
-class TBHFlywheel : public Flywheel {
+class Flywheel {
 
 protected:
 
@@ -21,7 +20,7 @@ protected:
 
 public:
 
-    TBHFlywheel(std::initializer_list<int8_t> flywheelMotors, std::vector<DataPoint> voltRpmData, double startSpeed):
+    Flywheel(std::initializer_list<int8_t> flywheelMotors, std::vector<DataPoint> voltRpmData, double startSpeed):
         motors(flywheelMotors),
         data(voltRpmData),
         targetRPM(startSpeed)

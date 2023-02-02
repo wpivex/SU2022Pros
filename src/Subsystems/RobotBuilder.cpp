@@ -82,7 +82,6 @@ Robot getRobot18() {
 
     robot.flywheel.reset(new TBHFlywheel(
         {-1, 2}, // ports
-        0.0002, // tbh constant
         { // volt to rpm data
             {1615, 5},
             {1966, 6},
@@ -93,7 +92,8 @@ Robot getRobot18() {
             {3751, 11},
             {4141, 12}
         },
-        0 // start speed
+        0, // start speed
+        0.0002 // tbh constant
     ));
 
     robot.intake.reset(new pros::MotorGroup({11, -12}));
