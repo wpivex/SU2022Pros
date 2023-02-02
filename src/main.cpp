@@ -9,7 +9,7 @@
 
 #ifdef IS_FIFTEEN
     #define IS_TWO_TILE
-    Robot robot = getRobot15();
+    Robot robot = getRobot18();
     Driver driver(robot, TANK_DRIVE, 2400); 
 #else
     #define IS_THREE_TILE

@@ -1,6 +1,7 @@
 #include "Subsystems/RobotBuilder.h"
 #include "Subsystems/Localizer/Odometry.h"
 #include "Subsystems/Flywheel/TBHFlywheel.h"
+#include "Subsystems/Flywheel/BBFFlywheel.h"
 #include "pros/motors.h"
 
 Robot getRobot15() {
@@ -95,6 +96,22 @@ Robot getRobot18() {
         0, // start speed
         0.0002 // tbh constant
     ));
+
+    // robot.flywheel.reset(new BBFFlywheel(
+    //     {-1, 2}, // ports
+    //     { // volt to rpm data
+    //         {1615, 5},
+    //         {1966, 6},
+    //         {2306, 7},
+    //         {2646, 8},
+    //         {3054, 9},
+    //         {3416, 10},
+    //         {3751, 11},
+    //         {4141, 12}
+    //     },
+    //     0, // start speed
+    //     10 // tolerance in rpm
+    // ));
 
     robot.intake.reset(new pros::MotorGroup({11, -12}));
     robot.intake->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
