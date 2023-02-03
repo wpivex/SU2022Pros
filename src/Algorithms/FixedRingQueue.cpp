@@ -5,11 +5,11 @@
 
 RingQueue::RingQueue(int sizeP) {
   capacity = sizeP;
-  arr = std::vector<float>(sizeP);
+  arr = std::vector<double>(sizeP);
 }
 
 // If at capacity, the first element is popped
-bool RingQueue::push(float value) {
+bool RingQueue::push(double value) {
 
   sum += value; // append to sum
 
@@ -25,7 +25,7 @@ bool RingQueue::push(float value) {
   }
 }
 
-float RingQueue::getAverage() {
+double RingQueue::getAverage() {
 
   if (size == 0) return 0; 
 
@@ -34,7 +34,7 @@ float RingQueue::getAverage() {
   return sum / size;
 }
 
-float RingQueue::get(int index) {
+double RingQueue::get(int index) {
   return arr[(firstElement + index) % capacity];
 }
 
@@ -42,11 +42,11 @@ int RingQueue::getSize() {
   return size;
 }
 
-float RingQueue::standardDeviation() {
+double RingQueue::standardDeviation() {
 
   if (size == 0) return 0;
 
-  float sum = 0; // recalc sum to avoid drift
+  double sum = 0; // recalc sum to avoid drift
   int i = firstElement;
   int count = 0;
   while (count < size) {
@@ -54,13 +54,13 @@ float RingQueue::standardDeviation() {
     i = (i + 1) % capacity;
     count++;
   }
-  float mean = sum / size;
+  double mean = sum / size;
 
-  float sumsqr = 0; // sum squared
+  double sumsqr = 0; // sum squared
   i = firstElement;
   count = 0;
   while (count < size) {
-    float deviation = arr[i] - mean;
+    double deviation = arr[i] - mean;
     sumsqr += deviation*deviation;
     i = (i + 1) % capacity;
     count++;
@@ -68,4 +68,21 @@ float RingQueue::standardDeviation() {
 
   return sqrt(sumsqr / size);
   
+}
+
+double RingQueue::isAllEqual() {
+
+  double num = arr[firstElement];
+
+  int i = (firstElement + 1) % capacity;
+  int count = 1;
+  while (count < size) {
+    
+    if (num != arr[i]) return false;
+
+    i = (i + 1) % capacity;
+    count++;
+  }
+
+  return size == capacity;
 }

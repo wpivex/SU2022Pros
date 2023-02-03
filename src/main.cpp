@@ -5,7 +5,7 @@
 #include "Programs/Autonomous.h"
 #include "TuneFlywheel.h"
 
-//#define IS_FIFTEEN // uncomment for 15, comment for 18
+#define IS_FIFTEEN // uncomment for 15, comment for 18
 
 #ifdef IS_FIFTEEN
     #define IS_TWO_TILE
@@ -70,17 +70,28 @@ void autonomous() {
         });
     }
 
-    #ifdef RUN_TEST
-    testAuton(robot);
-    return;
-    #endif
+    try {
 
-    #ifdef IS_THREE_TILE
-    threeTileAuton(robot);
-    #endif
-    #ifndef IS_THREE_TILE
-    twoTileAuton(robot);
-    #endif
+        #ifdef RUN_TEST
+        testAuton(robot);
+        return;
+        #endif
+
+        #ifdef IS_THREE_TILE
+        threeTileAuton(robot);
+        #endif
+        #ifndef IS_THREE_TILE
+        twoTileAuton(robot);
+        #endif
+
+    } catch (std::runtime_error &e) {
+        pros::lcd::clear();
+        pros::lcd::print(0, "IMU disconnect, force shutdown.");
+        robot.drive->stop();
+        robot.intake->brake();
+    }
+
+    
 }
 
 

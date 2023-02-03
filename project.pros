@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "tank18",
+    "project_name": "tank15",
     "target": "v5",
     "templates": {
       "kernel": {

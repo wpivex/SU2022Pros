@@ -2,6 +2,7 @@
 
 #include "main.h"
 #include "Localizer.h"
+#include "Algorithms/FixedRingQueue.h"
 
 class Odometry : public Localizer {
 
@@ -12,6 +13,10 @@ private:
 
     double currentX, currentY, currentHeading;
 
+    bool imuValid = true;
+
+    RingQueue q;
+
 public:
 
     Odometry(uint8_t imuPort, pros::ADIEncoder leftEncoder, pros::ADIEncoder rightEncoder, pros::ADIEncoder backEncoder,
@@ -21,7 +26,8 @@ public:
         right(rightEncoder),
         back(backEncoder),
         diameter(wheelDiameter),
-        backDistance(backEncoderDistance)
+        backDistance(backEncoderDistance),
+        q(5)
     {}
 
     double getX() override; // inches

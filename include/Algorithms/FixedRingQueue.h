@@ -7,16 +7,19 @@ class RingQueue {
 
   public:
   RingQueue(int sizeP);
-  bool push(float value); // Push to queue. If at capacity, pop.
-  float getAverage();
-  float get(int index);
+  
+  bool push(double value); // Push to queue. If at capacity, pop.
+  double getAverage();
+  double get(int index);
   int getSize();
-  float standardDeviation();
+  double standardDeviation();
+
+  double isAllEqual();
 
   private:
-  std::vector<float> arr;
+  std::vector<double> arr;
   int capacity;
   int size = 0;
   int firstElement = 0;
-  float sum = 0;
+  double sum = 0;
 };

@@ -1,5 +1,6 @@
 #include "Subsystems/Localizer/Odometry.h"
 #include "misc/MathUtility.h"
+#include <stdexcept>
 
 
 double Odometry::getX() { // inches
@@ -11,7 +12,17 @@ double Odometry::getY() { // inches
 }
 
 double Odometry::getHeading() { // radians
-    return -getRadians(imu.get_heading());
+
+
+    double deg = imu.get_heading();
+    q.push(deg);
+
+    if (q.isAllEqual()) {
+        imuValid = false;
+        throw std::runtime_error("IMU disconnect");
+    }
+
+    return -getRadians(deg);
 }
     
 void Odometry::updatePositionTask() { // blocking task used to update (x, y, heading)
@@ -22,6 +33,7 @@ void Odometry::init() {
     pros::delay(500);
     imu.reset(true);
     pros::delay(1000);
+    while (imu.get_heading() == POS_INF) pros::delay(10);
 
 }
 

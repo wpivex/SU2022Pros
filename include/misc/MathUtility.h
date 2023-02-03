@@ -1,8 +1,14 @@
 #pragma once
 
 #include <vector>
+#include <limits>
 #include "math.h"
 #include "config.h"
+
+#define POS_INF (1.0 / 0.0)
+#define NEG_INF ((-1.0) / 0.0)
+
+#define ERROR_DOUBLE 2048
 
 // return -1 to 1, cubed, with deadzone
 inline double normalizedAxis(pros::controller_analog_e_t joystick) {
