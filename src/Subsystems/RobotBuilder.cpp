@@ -64,7 +64,7 @@ Robot getRobot18() {
     Robot robot;
 
     robot.drive.reset(new Drive(
-        {-3, 4, -5, 6}, // left motor ports
+        {5,6, -5, 6}, // left motor ports
         {-9, 16, 18, -19}, // right motor ports
         pros::E_MOTOR_GEAR_600, // internal gear ratio
         3.0/4.0, // external gear ratio
@@ -82,7 +82,7 @@ Robot getRobot18() {
     ));
 
     robot.flywheel.reset(new TBHFlywheel(
-        {-1, 2}, // ports
+        {-3, 4}, // ports
         { // volt to rpm data
             {1615, 5},
             {1966, 6},
@@ -98,7 +98,7 @@ Robot getRobot18() {
     ));
 
     // robot.flywheel.reset(new BBFFlywheel(
-    //     {-1, 2}, // ports
+    //     {-3, 4}, // ports
     //     { // volt to rpm data
     //         {1615, 5},
     //         {1966, 6},
@@ -110,7 +110,7 @@ Robot getRobot18() {
     //         {4141, 12}
     //     },
     //     0, // start speed
-    //     10 // tolerance in rpm
+    //     100 // tolerance in rpm
     // ));
 
     robot.intake.reset(new pros::MotorGroup({11, -12}));

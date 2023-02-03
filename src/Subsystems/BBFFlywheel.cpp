@@ -9,10 +9,10 @@ BBFFlywheel::BBFFlywheel(std::initializer_list<int8_t> flywheelMotors, std::vect
 double BBFFlywheel::getNextMotorVoltage(double currentRPM) {
 
     if (currentRPM < targetRPM - tolerance) {
-        return 0;
+        return 12;
     } else if (currentRPM < targetRPM + tolerance) {
         return rpmToVolt(data, targetRPM);
     } else {
-        return 12;
+        return 0;
     }
 }

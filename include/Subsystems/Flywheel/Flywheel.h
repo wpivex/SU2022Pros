@@ -12,11 +12,15 @@ protected:
     std::vector<DataPoint> data;
 
     double targetRPM;
-    double ratio = 18;
+    double ratio = 36;
     pros::MotorGroup motors;
     bool hasSetStopped = false;
 
+    double targetVoltage;
+
     bool isFirstCrossover = true;
+
+    bool isOn = false;
 
 public:
 
@@ -24,12 +28,15 @@ public:
         motors(flywheelMotors),
         data(voltRpmData),
         targetRPM(startSpeed)
-    {}
+    {
+        motors.set_gearing(pros::E_MOTOR_GEAR_100);
+    }
 
     void setVelocity(double velocity);
     double getTargetVelocity();
     double getCurrentVelocity();
     void maintainVelocityTask();
+    double getTargetVoltage();
     
     bool atTargetVelocity();
 

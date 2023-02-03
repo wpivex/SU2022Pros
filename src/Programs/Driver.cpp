@@ -9,11 +9,24 @@ void Driver::runDriver() {
     // Reinitialize flap position
     robot.shooterFlap->set_value(flapUp);
     robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
+
+    if (true && robot.flywheel) {
+        pros::Task taskFlywheel([&] {
+            robot.flywheel->maintainVelocityTask();
+        });
+    }
+
     while (true) {
+
+        double curr = robot.flywheel->getCurrentVelocity();
+        queue.push(curr);
+
         pros::lcd::clear();
         pros::lcd::print(0, "Target: %f", robot.flywheel->getTargetVelocity());
-        pros::lcd::print(1, "Current: %f", robot.flywheel->getCurrentVelocity());
-        pros::lcd::print(2, "Intake speed: %f", shootSpeed);
+        pros::lcd::print(1, "Current: %f", curr);
+        pros::lcd::print(2, "SD: %f", queue.standardDeviation());
+        pros::lcd::print(3, "Voltage: %f", robot.flywheel->getTargetVoltage());
+        pros::lcd::print(4, "Intake speed: %f", shootSpeed);
 
         // Handle drivetrain locomotion from joysticks (tank, arcade, etc.)
         handleDrivetrain();
@@ -108,12 +121,6 @@ void Driver::handleSecondaryActions() {
     // Endgame mech. Activate if B pressed
     if (controller.pressed(DIGITAL_B)) {
         robot.endgame->set_value(true);
-    }
-
-    if (controller.pressed(DIGITAL_Y)) {
-        pros::Task taskFlywheel([&] {
-            robot.flywheel->maintainVelocityTask();
-        });
     }
 
     // Flywheel set speed

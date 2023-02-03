@@ -22,6 +22,9 @@ bool Flywheel::atTargetVelocity() {
 }
 
 void Flywheel::maintainVelocityTask() {
+
+    if (isOn) return;
+    isOn = true;
     
     while (true) {
 
@@ -30,14 +33,19 @@ void Flywheel::maintainVelocityTask() {
             hasSetStopped = true;
         } else if (targetRPM != 0) {
             float currentRPM = getCurrentVelocity();
-            //pros::lcd::print(0, "flywheel: %f", currentSpeed);
-            float motorInputVolts = getNextMotorVoltage(currentRPM);
-            motors.move_voltage(motorInputVolts * 1000); // millivolts
+            //pros::lcd::print(0, "flywheel: %f", getCurrentVelocity());
+            targetVoltage = getNextMotorVoltage(currentRPM);
+            motors.move_voltage(targetVoltage * 1000); // millivolts
         }
         pros::delay(10);
     }
 }
 
 void Flywheel::setRawVoltage(double volts) {
+    targetVoltage = volts;
     motors.move_voltage(volts * 1000);
+}
+
+double Flywheel::getTargetVoltage() {
+    return targetVoltage;
 }

@@ -4,6 +4,7 @@
 #include "Subsystems/Robot.h"
 #include "pros/misc.h"
 #include "Algorithms/Shooter.h"
+#include "Algorithms/FixedRingQueue.h"
 
 enum DRIVE_TYPE {TANK_DRIVE, ARCADE_DRIVE};
 
@@ -15,7 +16,8 @@ public:
         robot(robotReference),
         drive(driveType),
         shootAlternator(3, 11, 7), // 70ms on / 70ms off
-        DEFAULT_SPEED(defaultFlywheelSpeed)
+        DEFAULT_SPEED(defaultFlywheelSpeed),
+        queue(100)
     {
         speed = DEFAULT_SPEED;
     }
@@ -38,6 +40,8 @@ private:
     Alternator shootAlternator;
 
     Shooter shooter;
+
+    RingQueue queue;
 
     bool indexerOn;
     bool flapUp = true;
