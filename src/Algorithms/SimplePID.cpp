@@ -20,6 +20,11 @@ float SimplePID::tick(float error) {
   }
   output = fmax(-K.MAX, fmin(K.MAX, output));
 
+  // Bound output by maximum acceleration
+  output = fmax(prevOutput - K.MAX_ACCEL, fmin(prevOutput + K.MAX_ACCEL, output));
+
+  prevOutput = output;
+
   return output;
 }
 

@@ -14,9 +14,9 @@
 
 #define GFU_DIST(maxSpeed) SingleBoundedPID({0.1, 0, 0, 0.12, maxSpeed})
 
-#define GFU_DIST_PRECISE(maxSpeed) DoubleBoundedPID({0.1, 0, 0.01, 0.12, maxSpeed}, 0.075, 3)
+#define GFU_DIST_PRECISE(maxSpeed) DoubleBoundedPID({0.1, 0, 0.027, 0.12, maxSpeed, 0.03}, 0.075, 3)
 
-#define GFU_TURN SimplePID({1, 0, 0.1, 0.0, 1})
+#define GFU_TURN SimplePID({1, 1.5, 0, 0.0, 1})
 #define GTU_TURN DoubleBoundedPID({1.25, 0.00, 0.095, 0.15, 1}, getRadians(1.5), 1)
 
 #define GTU_TURN_PRECISE DoubleBoundedPID({1.25, 0.005, 0.13, 0.15, 1}, getRadians(0.5), 3)
@@ -102,10 +102,5 @@ void twoTileAuton(Robot& robot) {// GENERATED C++ CODE FROM PathGen 3.4.3
 }
 
 void testAuton(Robot& robot) {
-    goForwardU(robot, GFU_DIST_PRECISE(0.75), GFU_TURN, 24, getRadians(0));
-    goTurnU(robot, GTU_TURN_PRECISE, getRadians(45));
-    goTurnU(robot, GTU_TURN_PRECISE, getRadians(90));
-    goTurnU(robot, GTU_TURN_PRECISE, getRadians(180));
-    goTurnU(robot, GTU_TURN_PRECISE, getRadians(0));
-
+    goForwardU(robot, GFU_DIST_PRECISE(0.7), GFU_TURN, 24*4, getRadians(0));
 }
