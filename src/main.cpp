@@ -70,6 +70,12 @@ void autonomous() {
         });
     }
 
+    if (true && robot.localizer) {
+        pros::Task taskOdometry([&] {
+            robot.localizer->updatePositionTask();
+        });
+    }
+
     try {
 
         #ifdef RUN_TEST

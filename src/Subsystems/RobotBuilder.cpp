@@ -19,11 +19,7 @@ Robot getRobot15() {
 
     robot.localizer.reset(new Odometry(
         8, // imu port
-        {'E','F'}, // left encoder port
-        {'C', 'D'}, // right encoder port
-        {'A', 'B'}, // back encoder port
-        1.625, // odom wheel diameter in inches
-        5.5 // distance from center of rotation to back encoder in inches
+        *robot.drive // reference to drive object
     ));
 
     robot.flywheel.reset(new TBHFlywheel(
@@ -74,11 +70,7 @@ Robot getRobot18() {
 
     robot.localizer.reset(new Odometry(
         14, // imu port
-        {'E','F'}, // left encoder port
-        {'C', 'D'}, // right encoder port
-        {'A', 'B'}, // back encoder port
-        1.625, // odom wheel diameter in inches
-        5.5 // distance from center of rotation to back encoder in inches
+        *robot.drive // reference to drive object
     ));
 
     robot.flywheel.reset(new TBHFlywheel(

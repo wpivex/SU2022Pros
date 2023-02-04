@@ -16,17 +16,23 @@ void Driver::runDriver() {
         });
     }
 
+    if (true && robot.localizer) {
+        pros::Task taskOdometry([&] {
+            robot.localizer->updatePositionTask();
+        });
+    }
+
     while (true) {
 
         double curr = robot.flywheel->getCurrentVelocity();
         queue.push(curr);
 
-        pros::lcd::clear();
-        pros::lcd::print(0, "Target: %f", robot.flywheel->getTargetVelocity());
-        pros::lcd::print(1, "Current: %f", curr);
-        pros::lcd::print(2, "SD: %f", queue.standardDeviation());
-        pros::lcd::print(3, "Voltage: %f", robot.flywheel->getTargetVoltage());
-        pros::lcd::print(4, "Intake speed: %f", shootSpeed);
+        // pros::lcd::clear();
+        // pros::lcd::print(0, "Target: %f", robot.flywheel->getTargetVelocity());
+        // pros::lcd::print(1, "Current: %f", curr);
+        // pros::lcd::print(2, "SD: %f", queue.standardDeviation());
+        // pros::lcd::print(3, "Voltage: %f", robot.flywheel->getTargetVoltage());
+        // pros::lcd::print(4, "Intake speed: %f", shootSpeed);
 
         // Handle drivetrain locomotion from joysticks (tank, arcade, etc.)
         handleDrivetrain();

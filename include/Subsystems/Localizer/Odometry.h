@@ -2,31 +2,31 @@
 
 #include "main.h"
 #include "Localizer.h"
+#include "Subsystems/Drive/Drive.h"
 #include "Algorithms/FixedRingQueue.h"
 
 class Odometry : public Localizer {
 
 private:
     pros::IMU imu;
-    pros::ADIEncoder left, right, back;
-    double diameter, backDistance;
+
 
     double currentX, currentY, currentHeading;
+    double prevLeftDistance, prevRightDistance, prevHeading;
 
     bool imuValid = true;
 
+    Drive& drive;
+
     RingQueue q;
+
+    bool isOn = false;
 
 public:
 
-    Odometry(uint8_t imuPort, pros::ADIEncoder leftEncoder, pros::ADIEncoder rightEncoder, pros::ADIEncoder backEncoder,
-    double wheelDiameter, double backEncoderDistance):
+    Odometry(uint8_t imuPort, Drive& drivetrain):
         imu(imuPort),
-        left(leftEncoder),
-        right(rightEncoder),
-        back(backEncoder),
-        diameter(wheelDiameter),
-        backDistance(backEncoderDistance),
+        drive(drivetrain),
         q(5)
     {}
 
