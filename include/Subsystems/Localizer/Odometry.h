@@ -27,6 +27,8 @@ private:
 
     bool isOn = false;
 
+    double getRawHeading();
+
 public:
 
     Odometry(uint8_t imuPortA, uint8_t imuPortB, uint8_t gpsPort, Drive& drivetrain):

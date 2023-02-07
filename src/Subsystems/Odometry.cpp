@@ -11,7 +11,14 @@ double Odometry::getY() { // inches
     return currentY;
 }
 
-double Odometry::getHeading() { // radians
+double Odometry::getHeading() {
+
+    if (!imuValidA && !imuValidB) throw std::runtime_error("Both IMU disconnect.");
+    return currentHeading;
+
+}
+
+double Odometry::getRawHeading() { // radians
 
 
     double headingA = -getRadians(imuA.get_heading());
@@ -44,7 +51,7 @@ void Odometry::updatePositionTask() { // blocking task used to update (x, y, hea
         drive.resetDistance();
         prevLeftDistance = 0;
         prevRightDistance = 0;
-        prevHeading = getHeading();
+        prevHeading = getRawHeading();
 
         double gpsX, gpsY, gpsHeading;
         double biasX = 0, biasY = 0, biasHeading = 0;
@@ -90,21 +97,20 @@ void Odometry::updatePositionTask() { // blocking task used to update (x, y, hea
             // Find filtered position
             currentX = odomX + biasX;
             currentY = odomY + biasY;
-            currentHeading = odomHeading + biasHeading;
+            currentHeading = heading + biasHeading;
 
             // Update bias from gps
-            if (gps.quality() == 100) { // replace with pros version
+            if (gps.get_error() < 0.015) { // we found that, below this value, gps reads stable values
                 biasX += (gpsX - currentX) * K_POSITION;
                 biasY += (gpsY - currentY) * K_POSITION;
                 biasHeading += deltaInHeading(gpsHeading, currentHeading) * K_HEADING;
             }
-
             
 
             pros::lcd::clear();
             pros::lcd::print(0, "X: %f", currentX);
             pros::lcd::print(1, "Y: %f", currentY);
-            pros::lcd::print(2, "Heading: %f", heading * 180 / 3.1415);
+            pros::lcd::print(2, "Heading: %f", currentHeading * 180 / 3.1415);
         }
     } catch (std::runtime_error &e) {
         // nothing, stopping motors handled in main thread
