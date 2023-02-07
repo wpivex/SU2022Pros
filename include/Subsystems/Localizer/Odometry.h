@@ -8,26 +8,30 @@
 class Odometry : public Localizer {
 
 private:
-    pros::IMU imu;
+    pros::IMU imuA;
+    pros::IMU imuB;
 
 
     double currentX, currentY, currentHeading;
     double prevLeftDistance, prevRightDistance, prevHeading;
 
-    bool imuValid = true;
+    bool imuValidA = true;
+    bool imuValidB = true;
 
     Drive& drive;
 
-    RingQueue q;
+    RingQueue qA, qB;
 
     bool isOn = false;
 
 public:
 
-    Odometry(uint8_t imuPort, Drive& drivetrain):
-        imu(imuPort),
+    Odometry(uint8_t imuPortA, uint8_t imuPortB, Drive& drivetrain):
+        imuA(imuPortA),
+        imuB(imuPortB),
         drive(drivetrain),
-        q(5)
+        qA(5),
+        qB(5)
     {}
 
     double getX() override; // inches

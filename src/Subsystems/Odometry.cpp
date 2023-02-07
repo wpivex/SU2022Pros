@@ -14,15 +14,24 @@ double Odometry::getY() { // inches
 double Odometry::getHeading() { // radians
 
 
-    double deg = imu.get_heading();
-    q.push(deg);
+    double headingA = -getRadians(imuA.get_heading());
+    qA.push(headingA);
 
-    if (!imuValid || q.isAllEqual()) {
-        imuValid = false;
-        throw std::runtime_error("IMU disconnect");
+    double headingB = -getRadians(imuB.get_heading());
+    qB.push(headingB);
+
+    if (qA.isAllEqual()) {
+        imuValidA = false;
+    }
+    if (qB.isAllEqual()) {
+        imuValidA = false;
     }
 
-    return -getRadians(deg);
+    if (!imuValidA && !imuValidB) throw std::runtime_error("Both IMU disconnect.");
+    else if (!imuValidA) return headingB;
+    else if (!imuValidB) return headingA;
+
+    return headingA + deltaInHeading(headingB, headingA) / 2.0;
 }
     
 void Odometry::updatePositionTask() { // blocking task used to update (x, y, heading)
