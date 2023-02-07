@@ -46,6 +46,12 @@ void Odometry::updatePositionTask() { // blocking task used to update (x, y, hea
         prevRightDistance = 0;
         prevHeading = getHeading();
 
+        double gpsX, gpsY, gpsHeading;
+        double biasX = 0, biasY = 0, biasHeading = 0;
+
+        const double K_POSITION = 0.05;
+        const double K_HEADING = 0.01;
+
         while (true) {
 
             pros::delay(10);
@@ -74,6 +80,25 @@ void Odometry::updatePositionTask() { // blocking task used to update (x, y, hea
             prevLeftDistance = left;
             prevRightDistance = right;
             prevHeading = heading;
+
+            // Calculate gps
+            pros::c::gps_status_s_t status = gps.get_status();
+            gpsX = status.x;
+            gpsY = status.y;
+            gpsHeading = status.yaw;
+
+            // Find filtered position
+            currentX = odomX + biasX;
+            currentY = odomY + biasY;
+            currentHeading = odomHeading + biasHeading;
+
+            // Update bias from gps
+            if (gps.quality() == 100) { // replace with pros version
+                biasX += (gpsX - currentX) * K_POSITION;
+                biasY += (gpsY - currentY) * K_POSITION;
+                biasHeading += deltaInHeading(gpsHeading, currentHeading) * K_HEADING;
+            }
+
             
 
             pros::lcd::clear();
@@ -90,28 +115,24 @@ void Odometry::updatePositionTask() { // blocking task used to update (x, y, hea
 
 void Odometry::init() {
     pros::delay(500);
-    imu.reset(true);
+    imuA.reset(false);
+    imuB.reset(true);
     pros::delay(1000);
-    while (imu.get_heading() == POS_INF) pros::delay(10);
+    while (imuA.get_heading() == POS_INF || imuB.get_heading() == POS_INF) pros::delay(10);
 
 }
 
 void Odometry::setPosition(double x, double y) {
     currentX = x;
+    odomX = x;
     currentY = y;
+    odomY = y;
     
 }
 
 void Odometry::setHeading(double headingRadians) {
     double d = getDegrees(-headingRadians);
     d = fmod(fmod(d, 360) + 360, 360);
-    imu.set_heading(d);
-}
-
-double Odometry::getRotation() {
-    return -getRadians(imu.get_rotation());
-}
-
-void Odometry::setRotation(double rotationRadians) {
-    imu.set_rotation(getDegrees(-rotationRadians));
+    imuA.set_heading(d);
+    imuB.set_heading(d);
 }
