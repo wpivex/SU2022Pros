@@ -46,6 +46,11 @@ void Odometry::updatePositionTask() { // blocking task used to update (x, y, hea
     if (isOn) return;
     isOn = true;
 
+    // Initialize odom position
+    pros::c::gps_status_s_t status = gps.get_status();
+    odomX = status.x;
+    odomY = status.y;
+
     try {
 
         drive.resetDistance();
@@ -61,6 +66,14 @@ void Odometry::updatePositionTask() { // blocking task used to update (x, y, hea
 
         while (true) {
 
+                
+            pros::lcd::print(0, "X pos: %f",currentX);
+            pros::lcd::print(1, "Y pos: %f", currentY);
+            pros::lcd::print(2, "Heading: %f", currentHeading);
+
+            pros::lcd::print(3, "X odom: %f",odomX);
+            pros::lcd::print(4, "Y odom: %f", odomY);
+
             pros::delay(10);
 
             double left = drive.getLeftDistance();
@@ -74,14 +87,14 @@ void Odometry::updatePositionTask() { // blocking task used to update (x, y, hea
             double arcLength = (deltaLeft + deltaRight) / 2;
             if (deltaHeading == 0) {
                 // rare case where robot moved perfectly straight this tick
-                currentX += arcLength * cos(heading);
-                currentY += arcLength * sin(heading);
+                odomX += arcLength * cos(heading);
+                odomY += arcLength * sin(heading);
 
             } else {
                 // The robot moved in an arc with radius = arcLength / deltaTheta
                 double radius = arcLength / deltaHeading;
-                currentX += radius * (cos(heading) - cos(prevHeading));
-                currentY += radius * (sin(heading) - sin(prevHeading));
+                odomX += radius * (cos(heading) - cos(prevHeading));
+                odomY += radius * (sin(heading) - sin(prevHeading));
             }
             
             prevLeftDistance = left;
@@ -133,7 +146,6 @@ void Odometry::setPosition(double x, double y) {
     odomX = x;
     currentY = y;
     odomY = y;
-    
 }
 
 void Odometry::setHeading(double headingRadians) {

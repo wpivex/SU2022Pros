@@ -102,5 +102,5 @@ void twoTileAuton(Robot& robot) {// GENERATED C++ CODE FROM PathGen 3.4.3
 }
 
 void testAuton(Robot& robot) {
-    goForwardU(robot, GFU_DIST_PRECISE(0.3), GFU_TURN, 24*40, getRadians(0));
+    goToPoint(robot, GFU_DIST(0.3), GFU_TURN, -24, 24);
 }

@@ -18,9 +18,9 @@ Robot getRobot15() {
     ));
 
     robot.localizer.reset(new Odometry(
-        8, // imu port A
-        -1, // imu port B
-        -1, // gps port
+        4, // imu port A
+        21, // imu port B
+        5, // gps port
         *robot.drive // reference to drive object
     ));
 
