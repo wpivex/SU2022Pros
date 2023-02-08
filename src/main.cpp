@@ -86,10 +86,13 @@ void autonomous() {
         #endif
 
         #ifdef IS_THREE_TILE
-        threeTileAuton(robot);
+        if (isSkills) threeTileSkills(robot);
+        else threeTileAuton(robot);
         #endif
+
         #ifndef IS_THREE_TILE
-        twoTileAuton(robot);
+        if (isSkills) twoTileSkills(robot);
+        else twoTileAuton(robot);
         #endif
 
     } catch (std::runtime_error &e) {

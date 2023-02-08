@@ -101,6 +101,18 @@ void twoTileAuton(Robot& robot) {// GENERATED C++ CODE FROM PathGen 3.4.3
 
 }
 
+void threeTileSkills(Robot& robot) {
+
+    #include "ThreeTileSkills.txt"
+    
+}
+
+void twoTileSkills(Robot& robot) {// GENERATED C++ CODE FROM PathGen 3.4.3
+
+    #include "TwoTileSkills.txt"
+
+}
+
 void testAuton(Robot& robot) {
     goToPoint(robot, GFU_DIST(0.3), GFU_TURN, -24, 24);
 }

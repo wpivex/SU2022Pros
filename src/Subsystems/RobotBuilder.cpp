@@ -10,8 +10,8 @@ Robot getRobot15(bool isSkills) {
     Robot robot;
 
     robot.drive.reset(new Drive(
-        {11, 12, 13, 14}, // left motor ports
-        {15, 2, 3, 4}, // right motor ports
+        {-11, 12, 13, -14}, // left motor ports
+        {-15, -2, 3, 4}, // right motor ports
         pros::E_MOTOR_GEAR_600, // internal gear ratio
         3.0/4.0, // external gear ratio
         2.73, // wheel diameter in inches
@@ -37,7 +37,7 @@ Robot getRobot15(bool isSkills) {
     
 
     robot.flywheel.reset(new TBHFlywheel(
-        {1, -2}, // ports
+        {-19, 20}, // ports
         { // volt to rpm data
             {1615, 5},
             {1966, 6},
@@ -52,10 +52,10 @@ Robot getRobot15(bool isSkills) {
         0.0002 // tbh constant
     ));
 
-    robot.intake.reset(new pros::MotorGroup({-13, 16}));
+    robot.intake.reset(new pros::MotorGroup({-16, 17}));
     robot.intake->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
 
-    robot.indexer.reset(new pros::ADIDigitalOut('G'));
+    robot.indexer.reset(new pros::ADIDigitalOut('A'));
 
     robot.roller.reset(new pros::Motor(5, pros::E_MOTOR_GEAR_100));
     robot.roller->set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
