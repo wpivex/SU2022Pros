@@ -4,6 +4,7 @@
 #include "IMULocalizer.h"
 #include "Subsystems/Drive/Drive.h"
 #include "Algorithms/FixedRingQueue.h"
+#include "misc/MathUtility.h"
 
 class Odometry : public IMULocalizer {
 
@@ -20,9 +21,9 @@ private:
 
 public:
 
-    Odometry(Drive& drivetrain, uint8_t imuPortA, uint8_t imuPortB, uint8_t gpsPort):
+    Odometry(Drive& drivetrain, uint8_t imuPortA, uint8_t imuPortB, uint8_t gpsPort, double gpsXOffset, double gpsYOffset):
         IMULocalizer(drivetrain, imuPortA, imuPortB),
-        gps(gpsPort)
+        gps(gpsPort, gpsXOffset / METERS_TO_INCHES, gpsYOffset / METERS_TO_INCHES)
     {}
 
     double getX() override; // inches

@@ -12,7 +12,7 @@ bool isSkills = true;
 #ifdef IS_FIFTEEN
     #define IS_TWO_TILE
     Robot robot = getRobot15(isSkills);
-    Driver driver(robot, TANK_DRIVE, 2400); 
+    Driver driver(robot, ARCADE_DRIVE, 2400); 
 #else
     #define IS_THREE_TILE
     Robot robot = getRobot18(isSkills);
@@ -20,8 +20,8 @@ bool isSkills = true;
 #endif
 
 
-// #define RUN_TEST
-// #define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
+#define RUN_TEST
+#define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
 //#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
 
 using namespace pros;

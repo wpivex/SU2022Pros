@@ -5,12 +5,12 @@
 #include "pros/rtos.hpp"
 
 // Check if targetHeading was set to default, in which case maintain the current heading and update targetHeading value
-inline void setHeading(Robot& robot, float& targetHeading) {
+inline void setHeading(Robot& robot, double& targetHeading) {
     if (targetHeading == MAINTAIN_CURRENT_HEADING) targetHeading = robot.localizer->getHeading();
 }
 
 // Go forwards for some time while maintaining heading
-void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, float timeSeconds, float targetEffort, float targetHeading) {
+void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, double timeSeconds, double targetEffort, double targetHeading) {
     
     setHeading(robot, targetHeading);
 
@@ -18,11 +18,11 @@ void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, float timeSeconds, fl
 
     while (pros::millis() < endTime) {
 
-        float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
-        float deltaVelocity = pidHeading.tick(headingError);
+        double headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
+        double deltaVelocity = pidHeading.tick(headingError);
         
-        float left = targetEffort - deltaVelocity;
-        float right = targetEffort + deltaVelocity;
+        double left = targetEffort - deltaVelocity;
+        double right = targetEffort + deltaVelocity;
         robot.drive->setEffort(left, right);
 
         pros::delay(10);
@@ -32,7 +32,7 @@ void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, float timeSeconds, fl
 }
 
 // Go forwards some distance while maintaining heading
-void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float distance, float targetHeading) {
+void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, double distance, double targetHeading) {
     
     setHeading(robot, targetHeading);
 
@@ -44,13 +44,13 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
     // FULL EXAMPLE FUNCTION
     while (!pidDistance.isCompleted()/*  && pros::millis() - startTime < MAX_TIMEOUT*/) {
 
-        float baseVelocity = pidDistance.tick(distance - robot.drive->getDistance());
-        float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
+        double baseVelocity = pidDistance.tick(distance - robot.drive->getDistance());
+        double headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
         pros::lcd::print(0, "%f", headingError);
-        float deltaVelocity = pidHeading.tick(headingError);
+        double deltaVelocity = pidHeading.tick(headingError);
 
-        float left = baseVelocity - deltaVelocity;
-        float right = baseVelocity + deltaVelocity;
+        double left = baseVelocity - deltaVelocity;
+        double right = baseVelocity + deltaVelocity;
         robot.drive->setEffort(left, right);
 
         pros::delay(10);
@@ -59,13 +59,13 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
 }
 
 // Turn to some given heading: left is positive
-void goTurnU(Robot& robot, EndablePID&& pidHeading, float absoluteHeading) {
+void goTurnU(Robot& robot, EndablePID&& pidHeading, double absoluteHeading) {
     while(!pidHeading.isCompleted()) {
-        float headingError = deltaInHeading(absoluteHeading, robot.localizer->getHeading());
-        float turnVelocity = pidHeading.tick(headingError);
+        double headingError = deltaInHeading(absoluteHeading, robot.localizer->getHeading());
+        double turnVelocity = pidHeading.tick(headingError);
 
-        float left = -turnVelocity;
-        float right = turnVelocity;
+        double left = -turnVelocity;
+        double right = turnVelocity;
         robot.drive->setEffort(left, right);
         
 
@@ -134,27 +134,39 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
 
 
 // go to (x,y) through concurrently aiming at (x,y) and getting as close to it as possible
-void goToPoint(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float goalX, float goalY) {
+void goToPoint(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, double goalX, double goalY) {
 
     double startX = robot.localizer->getX();
     double startY = robot.localizer->getY();
 
+    double recalculateHeading = true;
     double targetHeading = headingToPoint(startX, startY, goalX, goalY);
-    double targetDistance = getDistance(startX, startY, goalX, goalY);
 
     while(!pidDistance.isCompleted()){
 
         double x = robot.localizer->getX();
         double y = robot.localizer->getY();
+        double h = robot.localizer->getHeading();
 
-        float currentDistance = distanceToPointProjection(x, y, startX, startY, goalX, goalY);        
-        float baseVelocity = pidDistance.tick(targetDistance - currentDistance);
+        double otherX = x + cos(h);
+        double otherY = y + sin(h);
 
-        float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
-        float deltaVelocity = pidHeading.tick(headingError);
+        double currentDistance = -distancePointToLine(goalX, goalY, x, y, otherX, otherY); 
+        if (currentDistance < 12) recalculateHeading = false;
+        if (recalculateHeading) targetHeading = headingToPoint(x, y, goalX, goalY);
 
-        float left = baseVelocity + deltaVelocity;
-        float right = baseVelocity - deltaVelocity;
+        // pros::lcd::clear();
+        // pros::lcd::print(0, "%.2f", currentDistance);      
+        // pros::lcd::print(1, "goal %.2f %.2f", goalX, goalY);
+        // pros::lcd::print(2, "current %.2f %.2f", x, y);`
+        // pros::lcd::print(3, "other %.2f %.2f", otherX, otherY);
+        double baseVelocity = pidDistance.tick(currentDistance);
+
+        double headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
+        double deltaVelocity = pidHeading.tick(headingError);
+
+        double left = baseVelocity - deltaVelocity;
+        double right = baseVelocity + deltaVelocity;
         robot.drive->setEffort(left, right);
 
         pros::delay(10);
@@ -163,7 +175,7 @@ void goToPoint(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, f
     robot.drive->stop();
 }
 
-void turnToPoint(Robot& robot, EndablePID&& pidHeading, float goalX, float goalY) {
+void turnToPoint(Robot& robot, EndablePID&& pidHeading, double goalX, double goalY) {
 
     double startX = robot.localizer->getX();
     double startY = robot.localizer->getY();

@@ -1,7 +1,7 @@
 #include "Subsystems/Flywheel/TBHFlywheel.h"
 
-TBHFlywheel::TBHFlywheel(std::initializer_list<int8_t> flywheelMotors, std::vector<DataPoint> voltRpmData, double startSpeed, double gainConstant):
-    Flywheel(flywheelMotors, voltRpmData, startSpeed),
+TBHFlywheel::TBHFlywheel(std::initializer_list<int8_t> flywheelMotors, std::vector<DataPoint> voltRpmData, std::vector<DataPoint> rpmDistanceData, double startSpeed, double gainConstant):
+    Flywheel(flywheelMotors, voltRpmData, rpmDistanceData, startSpeed),
     gain(gainConstant)
 {}
 

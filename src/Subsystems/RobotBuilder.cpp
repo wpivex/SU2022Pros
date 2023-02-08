@@ -2,7 +2,6 @@
 #include "Subsystems/Localizer/Odometry.h"
 #include "Subsystems/Localizer/IMULocalizer.h"
 #include "Subsystems/Flywheel/TBHFlywheel.h"
-#include "Subsystems/Flywheel/BBFFlywheel.h"
 #include "pros/motors.h"
 
 Robot getRobot15(bool isSkills) {
@@ -18,27 +17,28 @@ Robot getRobot15(bool isSkills) {
         14.25//15.2 // track width in inches
     ));
 
-    if (isSkills) {
-        robot.localizer.reset(new Odometry(
-            *robot.drive, // reference to drive object
-            8, // imu port A
-            9, // imu port B
-            5 // gps port
-        ));
-    }
-    else {
-        robot.localizer.reset(new IMULocalizer(
-            *robot.drive, // reference to drive object
-            8, // imu port A
-            9 // imu port B
-        ));
-    }
+    robot.localizer.reset(new IMULocalizer(
+        *robot.drive, // reference to drive object
+        8, // imu port A
+        9 // imu port B
+    ));
+
 
     
 
     robot.flywheel.reset(new TBHFlywheel(
         {-19, 20}, // ports
-        { // volt to rpm data
+        { // rpm to volt data
+            {1615, 5},
+            {1966, 6},
+            {2306, 7},
+            {2646, 8},
+            {3054, 9},
+            {3416, 10},
+            {3751, 11},
+            {4141, 12}
+        },
+        { // rpm to distance data
             {1615, 5},
             {1966, 6},
             {2306, 7},
@@ -82,25 +82,26 @@ Robot getRobot18(bool isSkills) {
         14.25//15.2 // track width in inches
     ));
 
-    if (isSkills) {
-        robot.localizer.reset(new Odometry(
-            *robot.drive, // reference to drive object
-            8, // imu port A
-            9, // imu port B
-            5 // gps port
-        ));
-    }
-    else {
-        robot.localizer.reset(new IMULocalizer(
-            *robot.drive, // reference to drive object
-            14, // imu port A
-            -1 // imu port B
-        ));
-    }
+    robot.localizer.reset(new IMULocalizer(
+        *robot.drive, // reference to drive object
+        14, // imu port A
+        -1 // imu port B
+    ));
+
 
     robot.flywheel.reset(new TBHFlywheel(
         {-3, 4}, // ports
-        { // volt to rpm data
+        { // rpm to volt data
+            {1615, 5},
+            {1966, 6},
+            {2306, 7},
+            {2646, 8},
+            {3054, 9},
+            {3416, 10},
+            {3751, 11},
+            {4141, 12}
+        },
+        { // rpm to distance data
             {1615, 5},
             {1966, 6},
             {2306, 7},

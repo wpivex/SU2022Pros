@@ -37,7 +37,8 @@ double IMULocalizer::getRawHeading() { // radians
     else if (!imuValidA) return headingB;
     else if (!imuValidB) return headingA;
 
-    return headingA + deltaInHeading(headingB, headingA) / 2.0;
+    double avg = headingA + deltaInHeading(headingB, headingA) / 2.0;
+    return fmod(fmod(avg, 2*M_PI) + 2*M_PI, 2*M_PI);
 }
     
 void IMULocalizer::updatePositionTask() { // blocking task used to update (x, y, heading)

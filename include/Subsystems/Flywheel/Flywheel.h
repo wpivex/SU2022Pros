@@ -24,9 +24,12 @@ protected:
 
 public:
 
-    Flywheel(std::initializer_list<int8_t> flywheelMotors, std::vector<DataPoint> voltRpmData, double startSpeed):
+    std::vector<DataPoint> rpmDistance;
+
+    Flywheel(std::initializer_list<int8_t> flywheelMotors, std::vector<DataPoint> voltRpmData, std::vector<DataPoint> rpmDistanceData, double startSpeed):
         motors(flywheelMotors),
         data(voltRpmData),
+        rpmDistance(rpmDistanceData),
         targetRPM(startSpeed)
     {
         motors.set_gearing(pros::E_MOTOR_GEAR_100);

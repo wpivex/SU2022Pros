@@ -34,27 +34,33 @@ void Odometry::updatePositionTask() { // blocking task used to update (x, y, hea
         double gpsX, gpsY, gpsHeading;
         double biasX = 0, biasY = 0, biasHeading = 0;
 
-        const double K_POSITION = 0.05;
+        const double K_POSITION = 0.03;
         const double K_HEADING = 0.01;
+
+        pros::screen::set_pen(0x00FF0000);
 
         while (true) {
 
+            pros::screen::erase();
             pros::lcd::clear();
-            pros::lcd::print(0, "X pos: %f",currentX);
-            pros::lcd::print(1, "Y pos: %f", currentY);
-            pros::lcd::print(2, "Raw Heading: %f", getRawHeading());
-            pros::lcd::print(3, "Filtered Heading: %f", currentHeading);
 
-            pros::lcd::print(4, "X odom: %f",odomX);
-            pros::lcd::print(5, "Y odom: %f", odomY);
+            if (gps.get_error() > 0.015) {
+                pros::screen::fill_rect(0, 0, 200, 200);
+            }
 
-            pros::lcd::print(6, "GPS confidence: %f", gps.get_error());
+            pros::lcd::print(0, "Filtered: %.2f %.2f %.2f",currentX, currentY, currentHeading);
+            pros::lcd::print(1, "Odom/IMU: %.2f %.2f %.2f", odomX, odomY, getRawHeading());
+            pros::lcd::print(2, "Individual IMU: %.2f %.2f", -getRadians(imuA.get_heading()), -getRadians(imuB.get_heading()));
+            pros::lcd::print(3, "GPS: %.2f %.2f %.2f", gpsX, gpsY, gpsHeading);
+            pros::lcd::print(4, "Bias: %.2f %.2f %.2f", biasX, biasY, biasHeading);
+
+            pros::lcd::print(5, "GPS error: %f", gps.get_error());
 
             pros::delay(10);
 
             double left = drive.getLeftDistance();
             double right = drive.getRightDistance();
-            double heading = getHeading();
+            double heading = getRawHeading();
 
             double deltaLeft = left - prevLeftDistance;
             double deltaRight = right - prevRightDistance;
@@ -79,9 +85,9 @@ void Odometry::updatePositionTask() { // blocking task used to update (x, y, hea
 
             // Calculate gps
             pros::c::gps_status_s_t status = gps.get_status();
-            gpsX = status.x;
-            gpsY = status.y;
-            gpsHeading = status.yaw;
+            gpsX = status.x * METERS_TO_INCHES;
+            gpsY = status.y * METERS_TO_INCHES;
+            gpsHeading = fmod(-status.yaw + 360, 360) * M_PI / 180;
 
             // Find filtered position
             currentX = odomX + biasX;

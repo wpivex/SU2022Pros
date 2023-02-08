@@ -8,7 +8,8 @@
 #define POS_INF (1.0 / 0.0)
 #define NEG_INF ((-1.0) / 0.0)
 
-#define ERROR_DOUBLE 2048
+#define ERROR_DOUBLE (2048)
+#define METERS_TO_INCHES (39.3701)
 
 // return -1 to 1, cubed, with deadzone
 inline double normalizedAxis(pros::controller_analog_e_t joystick) {
@@ -77,5 +78,10 @@ inline double distanceToPointProjection(double x, double y, double x1, double y1
 }
 
 inline double headingToPoint(double startX, double startY, double goalX, double goalY) {
-    return atan2(goalY - startY, goalX - startX);
+    return atan2(goalY - startY, goalX - startX) - M_PI/2;
+}
+
+// Distance between point (x0, y0) and line (x1, y1,),(x2,y2)
+inline double distancePointToLine(double x0, double y0, double x1, double y1, double x2, double y2) {
+    return ((x2-x1)*(y1-y0) - (x1-x0)*(y2-y1)) / getDistance(x1, y1, x2, y2);
 }

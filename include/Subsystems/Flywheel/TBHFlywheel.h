@@ -12,7 +12,7 @@ private:
 
 public:
 
-    TBHFlywheel(std::initializer_list<int8_t> flywheelMotors, std::vector<DataPoint> voltRpmData, double startSpeed, double gainConstant);
+    TBHFlywheel(std::initializer_list<int8_t> flywheelMotors, std::vector<DataPoint> voltRpmData, std::vector<DataPoint> rpmDistanceData, double startSpeed, double gainConstant);
  
     double getNextMotorVoltage(double currentRPM) override;
 
