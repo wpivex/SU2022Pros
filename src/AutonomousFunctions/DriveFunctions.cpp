@@ -132,107 +132,24 @@ void goCurveU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidCurve, doub
     if (pidDistance.stopMotors) robot.drive->stop();
 }
 
-// Go to some x position by driving forwards or backwards. Works best when roughly perpendicular to x axis
-void goToX(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float xcoord) {
-    float targetHeading = robot.localizer->getHeading();
-
-    robot.drive->resetDistance();
-
-    while (!pidDistance.isCompleted()) {
-        float distance = (xcoord-robot.localizer->getY())*cosf((targetHeading+(robot.localizer->getHeading()))/2);
-        // something is off but my brain stopped going brr when my stomach decided i was hungry. shall return
-
-        float baseVelocity = pidDistance.tick(distance - robot.drive->getDistance());
-        float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
-        float deltaVelocity = pidHeading.tick(headingError);
-
-        float left = baseVelocity + deltaVelocity;
-        float right = baseVelocity - deltaVelocity;
-        robot.drive->setEffort(left, right);
-
-        pros::delay(10);
-    }
-    
-    robot.drive->stop();
-}
-
-// Go to some y position by driving forwards or backwards. Works best when roughly perpendicular to y axis
-void goToY(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float ycoord, float targetHeading) {
-    robot.drive->resetDistance();
-
-    while (!pidDistance.isCompleted()) {
-        float distance = (ycoord-robot.localizer->getY())*cosf((targetHeading+(robot.localizer->getHeading()))/2);
-        
-        float baseVelocity = pidDistance.tick(distance - robot.drive->getDistance());
-        float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
-        float deltaVelocity = pidHeading.tick(headingError);
-
-        float left = baseVelocity + deltaVelocity;
-        float right = baseVelocity - deltaVelocity;
-        robot.drive->setEffort(left, right);
-
-        pros::delay(10);
-    }
-    
-    robot.drive->stop();
-}
-
-// Go as close to some line (defined by two points) as possible
-// Essentially goForwardU but with ending control from odom
-// Line defined by (x1, y1) to (x2, y2) in inches
-
-/*
-LEAVING THIS HERE UNTIL FUNCTION IS BUG FREE
-find equation for line
-find equation for robot movement
-find where they intersect
-calculate distance to point
-drive to point while controlling heading
-slope = (y2-y1)/(x2-x1)
-y - y1 = slope(x - x1)
-roboSlope= tan(robot.localizer->getHeading());
-y - robot.localizer->getY() = roboSlope(x - robot.localizer->getX())
-slope(x - x1) + y1 = roboSlope(x - robot.localizer->getX()) + robot.localizer->getY()
-slope*x - slope*x1 + y1 = roboSlope*x - roboSlope*robot.localizer->getX()) + robot.localizer->getY()
-slope*x -  roboSlope*x  = - roboSlope*robot.localizer->getX()) + robot.localizer->getY() + slope*x1 - y1
-x  = (-roboSlope*robot.localizer->getX()) + robot.localizer->getY() + slope*x1 - y1)/ (slope - roboSlope)
-*/
-void goForwardToLineU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading,
-        float x1, float y1, float x2, float y2, float targetHeading) {
-    
-    setHeading(robot, targetHeading);
-
-    while(!pidDistance.isCompleted()){
-        float lineSlope = (y2-y1)/(x2-x1);
-        float roboSlope= tan(robot.localizer->getHeading());
-
-        float desX = ((-roboSlope*robot.localizer->getX()) + robot.localizer->getY() + (lineSlope*x1) - y1)/ (lineSlope - roboSlope);
-        float desY = (lineSlope*(desX - x1)) + y1;
-
-        float distance = sqrtf(pow((desX-robot.localizer->getX()),2)+pow((desY-robot.localizer->getY()),2));
-
-        float baseVelocity = pidDistance.tick(distance - robot.drive->getDistance());
-        float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
-        float deltaVelocity = pidHeading.tick(headingError);
-
-        float left = baseVelocity + deltaVelocity;
-        float right = baseVelocity - deltaVelocity;
-        robot.drive->setEffort(left, right);
-    }
-    
-    robot.drive->stop();
-}
 
 // go to (x,y) through concurrently aiming at (x,y) and getting as close to it as possible
-void goToPoint(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float xcoord, float ycoord) {
-    robot.drive->resetDistance();
+void goToPoint(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float goalX, float goalY) {
+
+    double startX = robot.localizer->getX();
+    double startY = robot.localizer->getY();
+
+    double targetHeading = headingToPoint(startX, startY, goalX, goalY);
+    double targetDistance = getDistance(startX, startY, goalX, goalY);
 
     while(!pidDistance.isCompleted()){
-        float targetHeading = (atan2f((ycoord-robot.localizer->getY()), (xcoord-robot.localizer->getX())))*180/M_PI;
 
-        float distance = sqrtf(pow((xcoord-robot.localizer->getX()),2)+pow((ycoord-robot.localizer->getY()),2));
-        
-        float baseVelocity = pidDistance.tick(distance - robot.drive->getDistance());
+        double x = robot.localizer->getX();
+        double y = robot.localizer->getY();
+
+        float currentDistance = distanceToPointProjection(x, y, startX, startY, goalX, goalY);        
+        float baseVelocity = pidDistance.tick(targetDistance - currentDistance);
+
         float headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
         float deltaVelocity = pidHeading.tick(headingError);
 
@@ -244,4 +161,15 @@ void goToPoint(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, f
     }
     
     robot.drive->stop();
+}
+
+void turnToPoint(Robot& robot, EndablePID&& pidHeading, float goalX, float goalY) {
+
+    double startX = robot.localizer->getX();
+    double startY = robot.localizer->getY();
+
+    double targetHeading = headingToPoint(startX, startY, goalX, goalY);
+
+    goTurnU(robot, std::move(pidHeading), targetHeading);
+
 }

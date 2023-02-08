@@ -56,3 +56,26 @@ constexpr double getRadians(double degrees) {
 constexpr double getDegrees(double radians) {
     return radians * 180.0 / M_PI;
 }
+
+// Get distance from (x1, y1) to (x2, y2)
+inline double getDistance(double x1, double y1, double x2, double y2) {
+    double dx = x2 - x1;
+    double dy = y2 - y1;
+    return sqrt(dx*dx + dy*dy);
+}
+
+// Return distance from (x1, y1) to the closest point to (x,y) on line from (x1, y1) to (x2, y2)
+inline double distanceToPointProjection(double x, double y, double x1, double y1, double x2, double y2) {
+    double ax = x - x1;
+    double ay = y - y1;
+    double bx = x2 - x1;
+    double by = y2 - y1;
+
+    double scalar = (ax * bx + ay * by) / (bx * bx + by * by);
+    return getDistance(x1, y1, x1 + scalar * bx, y1 + scalar * by);
+
+}
+
+inline double headingToPoint(double startX, double startY, double goalX, double goalY) {
+    return atan2(goalY - startY, goalX - startX);
+}

@@ -35,5 +35,5 @@ void goForwardToLineU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHea
 
 
 // go to (x,y) through concurrently aiming at (x,y) and getting as close to it as possible
-void goToPoint(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float xcoord, float ycoord);
-void turnToPoint(Robot& robot, EndablePID&& pidHeading, float xcoord, float ycoord);
+void goToPoint(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, float goalX, float goalY);
+void turnToPoint(Robot& robot, EndablePID&& pidHeading, float goalX, float goalY);
