@@ -13,7 +13,7 @@ private:
 
 
     double currentX, currentY, currentHeading;
-    double odomX, odomY;
+    double odomX = 0, odomY = 0;
     double prevLeftDistance, prevRightDistance, prevHeading;
 
     bool isOn = false;

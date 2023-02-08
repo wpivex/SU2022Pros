@@ -23,10 +23,6 @@ void Odometry::updatePositionTask() { // blocking task used to update (x, y, hea
     if (isOn) return;
     isOn = true;
 
-    // Initialize odom position
-    pros::c::gps_status_s_t status = gps.get_status();
-    odomX = status.x;
-    odomY = status.y;
 
     try {
 
@@ -43,13 +39,16 @@ void Odometry::updatePositionTask() { // blocking task used to update (x, y, hea
 
         while (true) {
 
-                
+            pros::lcd::clear();
             pros::lcd::print(0, "X pos: %f",currentX);
             pros::lcd::print(1, "Y pos: %f", currentY);
-            pros::lcd::print(2, "Heading: %f", currentHeading);
+            pros::lcd::print(2, "Raw Heading: %f", getRawHeading());
+            pros::lcd::print(3, "Filtered Heading: %f", currentHeading);
 
-            pros::lcd::print(3, "X odom: %f",odomX);
-            pros::lcd::print(4, "Y odom: %f", odomY);
+            pros::lcd::print(4, "X odom: %f",odomX);
+            pros::lcd::print(5, "Y odom: %f", odomY);
+
+            pros::lcd::print(6, "GPS confidence: %f", gps.get_error());
 
             pros::delay(10);
 
@@ -95,12 +94,9 @@ void Odometry::updatePositionTask() { // blocking task used to update (x, y, hea
                 biasY += (gpsY - currentY) * K_POSITION;
                 biasHeading += deltaInHeading(gpsHeading, currentHeading) * K_HEADING;
             }
-            
+        
 
-            pros::lcd::clear();
-            pros::lcd::print(0, "X: %f", currentX);
-            pros::lcd::print(1, "Y: %f", currentY);
-            pros::lcd::print(2, "Heading: %f", currentHeading * 180 / 3.1415);
+            pros::delay(10);
         }
     } catch (std::runtime_error &e) {
         // nothing, stopping motors handled in main thread

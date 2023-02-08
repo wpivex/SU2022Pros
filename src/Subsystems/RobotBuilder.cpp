@@ -29,8 +29,8 @@ Robot getRobot15(bool isSkills) {
     else {
         robot.localizer.reset(new IMULocalizer(
             *robot.drive, // reference to drive object
-            14, // imu port A
-            -1 // imu port B
+            8, // imu port A
+            9 // imu port B
         ));
     }
 

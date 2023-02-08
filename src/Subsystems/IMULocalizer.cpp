@@ -45,6 +45,7 @@ void IMULocalizer::updatePositionTask() { // blocking task used to update (x, y,
 }
 
 void IMULocalizer::init() {
+    pros::lcd::print(0, "start init");
     pros::delay(500);
     imuA.reset(false);
     imuB.reset(true);
