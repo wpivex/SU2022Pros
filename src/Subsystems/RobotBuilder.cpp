@@ -1,5 +1,6 @@
 #include "Subsystems/RobotBuilder.h"
 #include "Subsystems/Localizer/Odometry.h"
+#include "Subsystems/Localizer/IMULocalizer.h"
 #include "Subsystems/Flywheel/TBHFlywheel.h"
 #include "Subsystems/Flywheel/BBFFlywheel.h"
 #include "pros/motors.h"
@@ -9,8 +10,8 @@ Robot getRobot15() {
     Robot robot;
 
     robot.drive.reset(new Drive(
-        {-11, 12, -14, 15}, // left motor ports
-        {17, 18, -19, -20}, // right motor ports
+        {11, 12, 13, 14}, // left motor ports
+        {15, 2, 3, 4}, // right motor ports
         pros::E_MOTOR_GEAR_600, // internal gear ratio
         3.0/4.0, // external gear ratio
         2.73, // wheel diameter in inches
@@ -18,10 +19,10 @@ Robot getRobot15() {
     ));
 
     robot.localizer.reset(new Odometry(
-        4, // imu port A
-        21, // imu port B
-        5, // gps port
-        *robot.drive // reference to drive object
+        *robot.drive, // reference to drive object
+        8, // imu port A
+        9, // imu port B
+        5 // gps port
     ));
 
     robot.flywheel.reset(new TBHFlywheel(
@@ -45,7 +46,7 @@ Robot getRobot15() {
 
     robot.indexer.reset(new pros::ADIDigitalOut('G'));
 
-    robot.roller.reset(new pros::Motor(10, pros::E_MOTOR_GEAR_100));
+    robot.roller.reset(new pros::Motor(5, pros::E_MOTOR_GEAR_100));
     robot.roller->set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
 
     robot.shooterFlap.reset(new pros::ADIDigitalOut('H'));
@@ -70,11 +71,10 @@ Robot getRobot18() {
         14.25//15.2 // track width in inches
     ));
 
-    robot.localizer.reset(new Odometry(
+    robot.localizer.reset(new IMULocalizer(
+        *robot.drive, // reference to drive object
         14, // imu port A
-        -1, // imu port B
-        -1, // gps port
-        *robot.drive // reference to drive object
+        -1 // imu port B
     ));
 
     robot.flywheel.reset(new TBHFlywheel(
@@ -92,22 +92,6 @@ Robot getRobot18() {
         0, // start speed
         0.0002 // tbh constant
     ));
-
-    // robot.flywheel.reset(new BBFFlywheel(
-    //     {-3, 4}, // ports
-    //     { // volt to rpm data
-    //         {1615, 5},
-    //         {1966, 6},
-    //         {2306, 7},
-    //         {2646, 8},
-    //         {3054, 9},
-    //         {3416, 10},
-    //         {3751, 11},
-    //         {4141, 12}
-    //     },
-    //     0, // start speed
-    //     100 // tolerance in rpm
-    // ));
 
     robot.intake.reset(new pros::MotorGroup({11, -12}));
     robot.intake->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
