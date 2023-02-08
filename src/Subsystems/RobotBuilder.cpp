@@ -5,7 +5,7 @@
 #include "Subsystems/Flywheel/BBFFlywheel.h"
 #include "pros/motors.h"
 
-Robot getRobot15() {
+Robot getRobot15(bool isSkills) {
 
     Robot robot;
 
@@ -18,12 +18,23 @@ Robot getRobot15() {
         14.25//15.2 // track width in inches
     ));
 
-    robot.localizer.reset(new Odometry(
-        *robot.drive, // reference to drive object
-        8, // imu port A
-        9, // imu port B
-        5 // gps port
-    ));
+    if (isSkills) {
+        robot.localizer.reset(new Odometry(
+            *robot.drive, // reference to drive object
+            8, // imu port A
+            9, // imu port B
+            5 // gps port
+        ));
+    }
+    else {
+        robot.localizer.reset(new IMULocalizer(
+            *robot.drive, // reference to drive object
+            14, // imu port A
+            -1 // imu port B
+        ));
+    }
+
+    
 
     robot.flywheel.reset(new TBHFlywheel(
         {1, -2}, // ports
@@ -58,7 +69,7 @@ Robot getRobot15() {
 }
 
 
-Robot getRobot18() {
+Robot getRobot18(bool isSkills) {
 
     Robot robot;
 
@@ -71,11 +82,21 @@ Robot getRobot18() {
         14.25//15.2 // track width in inches
     ));
 
-    robot.localizer.reset(new IMULocalizer(
-        *robot.drive, // reference to drive object
-        14, // imu port A
-        -1 // imu port B
-    ));
+    if (isSkills) {
+        robot.localizer.reset(new Odometry(
+            *robot.drive, // reference to drive object
+            8, // imu port A
+            9, // imu port B
+            5 // gps port
+        ));
+    }
+    else {
+        robot.localizer.reset(new IMULocalizer(
+            *robot.drive, // reference to drive object
+            14, // imu port A
+            -1 // imu port B
+        ));
+    }
 
     robot.flywheel.reset(new TBHFlywheel(
         {-3, 4}, // ports

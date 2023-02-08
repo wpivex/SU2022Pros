@@ -6,14 +6,16 @@
 #include "TuneFlywheel.h"
 
 #define IS_FIFTEEN // uncomment for 15, comment for 18
+bool isSkills = false;
+
 
 #ifdef IS_FIFTEEN
     #define IS_TWO_TILE
-    Robot robot = getRobot15();
+    Robot robot = getRobot15(isSkills);
     Driver driver(robot, TANK_DRIVE, 2400); 
 #else
     #define IS_THREE_TILE
-    Robot robot = getRobot18();
+    Robot robot = getRobot18(isSkills);
     Driver driver(robot, TANK_DRIVE, 2400);
 #endif
 
