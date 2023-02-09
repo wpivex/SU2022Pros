@@ -27,12 +27,12 @@ void Driver::runDriver() {
         double curr = robot.flywheel->getCurrentVelocity();
         queue.push(curr);
 
-        // pros::lcd::clear();
-        // pros::lcd::print(0, "Target: %f", robot.flywheel->getTargetVelocity());
-        // pros::lcd::print(1, "Current: %f", curr);
-        // pros::lcd::print(2, "SD: %f", queue.standardDeviation());
-        // pros::lcd::print(3, "Voltage: %f", robot.flywheel->getTargetVoltage());
-        // pros::lcd::print(4, "Intake speed: %f", shootSpeed);
+        pros::lcd::clear();
+        pros::lcd::print(0, "Target: %f", robot.flywheel->getTargetVelocity());
+        pros::lcd::print(1, "Current: %f", curr);
+        pros::lcd::print(2, "SD: %f", queue.standardDeviation());
+        pros::lcd::print(3, "Voltage: %f", robot.flywheel->getTargetVoltage());
+        pros::lcd::print(4, "Intake speed: %f", shootSpeed);
 
         // Handle drivetrain locomotion from joysticks (tank, arcade, etc.)
         handleDrivetrain();
@@ -73,10 +73,10 @@ void Driver::handleSecondaryActions() {
 
     // Flywheel Speed Controls
     if (controller.pressed(DIGITAL_UP)) {
-        if (speed < 3600) speed = fmin(speed + 100, 3600);
+        if (speed < 3600) speed = fmin(speed + 25, 3600);
     }
     else if (controller.pressed(DIGITAL_DOWN)) {
-        if (speed > 0) speed = fmax(speed - 100, 0);
+        if (speed > 0) speed = fmax(speed - 25, 0);
     }
     if(controller.pressed(DIGITAL_RIGHT)) {
         // Set speed back to default speed

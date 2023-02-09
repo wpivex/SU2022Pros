@@ -24,12 +24,13 @@ protected:
 
 public:
 
-    std::vector<DataPoint> rpmDistance;
+    std::vector<DataPoint> rpmDistanceDown, rpmDistanceUp;
 
-    Flywheel(std::initializer_list<int8_t> flywheelMotors, std::vector<DataPoint> voltRpmData, std::vector<DataPoint> rpmDistanceData, double startSpeed):
+    Flywheel(std::initializer_list<int8_t> flywheelMotors, std::vector<DataPoint> voltRpmData, std::vector<DataPoint> rpmDistanceFlapDownData, std::vector<DataPoint> rpmDistanceFlapUpData, double startSpeed):
         motors(flywheelMotors),
         data(voltRpmData),
-        rpmDistance(rpmDistanceData),
+        rpmDistanceDown(rpmDistanceFlapDownData),
+        rpmDistanceUp(rpmDistanceFlapUpData),
         targetRPM(startSpeed)
     {
         motors.set_gearing(pros::E_MOTOR_GEAR_100);

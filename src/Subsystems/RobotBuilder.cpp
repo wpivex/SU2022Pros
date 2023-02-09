@@ -38,7 +38,17 @@ Robot getRobot15(bool isSkills) {
             {3751, 11},
             {4141, 12}
         },
-        { // rpm to distance data
+        { // rpm to distance data FOR FLAP DOWN
+            {1615, 5}, // (rpm, distance in inches)
+            {1966, 6},
+            {2306, 7},
+            {2646, 8},
+            {3054, 9},
+            {3416, 10},
+            {3751, 11},
+            {4141, 12}
+        },
+        { // rpm to distance data FOR FLAP UP
             {1615, 5},
             {1966, 6},
             {2306, 7},
@@ -101,7 +111,17 @@ Robot getRobot18(bool isSkills) {
             {3751, 11},
             {4141, 12}
         },
-        { // rpm to distance data
+        { // rpm to distance data FOR FLAP DOWN
+            {1615, 5}, // (rpm, distance in inches)
+            {1966, 6},
+            {2306, 7},
+            {2646, 8},
+            {3054, 9},
+            {3416, 10},
+            {3751, 11},
+            {4141, 12}
+        },
+        { // rpm to distance data FOR FLAP UP
             {1615, 5},
             {1966, 6},
             {2306, 7},

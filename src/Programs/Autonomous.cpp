@@ -62,8 +62,10 @@ void moveRollerTime(Robot& robot, int timeMs, double speed) {
     robot.roller->brake();
 }
 
-void setShootDistance(Robot& robot, double distanceToGoal, double rpmCorrection) {
-    double rpm = voltToRpm(robot.flywheel->rpmDistance, distanceToGoal);
+void setShootDistance(Robot& robot, double distanceToGoal, double rpmCorrection, bool flapUp) {
+    double rpm;
+    if (flapUp) rpm = voltToRpm(robot.flywheel->rpmDistanceUp, distanceToGoal);
+    else rpm = voltToRpm(robot.flywheel->rpmDistanceDown, distanceToGoal);
     robot.flywheel->setVelocity(rpm + rpmCorrection);
 }
 
