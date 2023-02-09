@@ -12,7 +12,7 @@ bool isSkills = true;
 #ifdef IS_FIFTEEN
     #define IS_TWO_TILE
     Robot robot = getRobot15(isSkills);
-    Driver driver(robot, TANK_DRIVE, 2400); 
+    Driver driver(robot, ARCADE_DRIVE, 2400); 
 #else
     #define IS_THREE_TILE
     Robot robot = getRobot18(isSkills);

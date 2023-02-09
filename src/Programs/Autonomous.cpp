@@ -7,6 +7,7 @@
 #include "Algorithms/NoPID.h"
 #include "Algorithms/Alternator.h"
 #include "Algorithms/Shooter.h"
+#include "Algorithms/ConversionData.h"
 #include "misc/MathUtility.h"
 #include "misc/ProsUtility.h"
 #include "pros/llemu.hpp"
@@ -22,6 +23,8 @@
 #define GTU_TURN_PRECISE DoubleBoundedPID({1.25, 0.005, 0.13, 0.15, 1}, getRadians(0.5), 3)
 
 #define GCU_CURVE SimplePID({2.5/*2.25*//*1.7*/, 0, 0})
+
+#define NO_CORRECTION SimplePID({0,0,0})
 
 // don't stop motors at end
 #define NO_SLOWDOWN(maxSpeed) NoPID(maxSpeed)
@@ -59,6 +62,12 @@ void moveRollerTime(Robot& robot, int timeMs, double speed) {
     robot.roller->brake();
 }
 
+void setShootDistance(Robot& robot, double distanceToGoal, double rpmCorrection, bool flapUp) {
+    double rpm;
+    if (flapUp) rpm = voltToRpm(robot.flywheel->rpmDistanceUp, distanceToGoal);
+    else rpm = voltToRpm(robot.flywheel->rpmDistanceDown, distanceToGoal);
+    robot.flywheel->setVelocity(rpm + rpmCorrection);
+}
 
 // shoot a 3-burst round. First two rounds are short burst (110ms with 220ms break), third is longer (300ms)
 void shoot(Robot& robot) {
@@ -114,5 +123,32 @@ void twoTileSkills(Robot& robot) {// GENERATED C++ CODE FROM PathGen 3.4.3
 }
 
 void testAuton(Robot& robot) {
-    goToPoint(robot, GFU_DIST(0.3), GFU_TURN, -24, 24);
+    robot.localizer->setPosition(0,0);
+    robot.localizer->setHeading(0);
+    //goToPoint(robot, GFU_DIST(0.4), NO_CORRECTION, 0, 24);
+
+    for (int i = 0; i < 4; i++) {
+        turnToPoint(robot, GTU_TURN_PRECISE, 24, 0);
+        pros::delay(500);
+        goToPoint(robot, GFU_DIST(0.4), GFU_TURN, 24, 0);
+        pros::delay(500);
+
+        turnToPoint(robot, GTU_TURN_PRECISE, 24, -24);
+        pros::delay(500);
+        goToPoint(robot, GFU_DIST(0.4), GFU_TURN, 24, -24);
+        pros::delay(500);
+
+        turnToPoint(robot, GTU_TURN_PRECISE, 0, -24);
+        pros::delay(500);
+        goToPoint(robot, GFU_DIST(0.4), GFU_TURN, 0, -24);
+        pros::delay(500);
+
+        turnToPoint(robot, GTU_TURN_PRECISE, 0, 0);
+        pros::delay(500);
+        goToPoint(robot, GFU_DIST(0.4), GFU_TURN, 0, 0);
+        pros::delay(500);
+
+    }
+    
+    
 }
