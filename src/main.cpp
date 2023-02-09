@@ -21,7 +21,7 @@ bool isSkills = true;
 
 
 // #define RUN_TEST
-// #define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
+#define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
 //#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
 
 using namespace pros;
@@ -40,9 +40,9 @@ void initialize() {
     robot.shooterFlap->set_value(true); // start flap up
 
 	
-	if (robot.localizer) robot.localizer->init();
-    robot.localizer->setHeading(getRadians(0));
-	pros::lcd::print(0, "initialized.");
+	// if (robot.localizer) robot.localizer->init();
+    // robot.localizer->setHeading(getRadians(0));
+	// pros::lcd::print(0, "initialized.");
 
     #ifdef RUN_AUTON
     #ifndef TUNE_FLYWHEEL
