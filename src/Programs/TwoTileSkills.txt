@@ -1,5 +1,5 @@
 // GENERATED C++ CODE FROM PathGen 3.5.4
-// Exported: Fri Feb 10 03:03:55 2023
+// Exported: Fri Feb 10 04:19:51 2023
 
 // Robot assumes a starting position of (54.2,13.7) at heading of 180.0 degrees.
 robot.localizer->setHeading(getRadians(180.0));
@@ -22,6 +22,8 @@ robot.drive->setEffort(-0.3, -0.3);
 robot.roller->move_velocity(100);
 uint32_t endTime = pros::millis() + 2000;
 while (robot.drive->getCurrent() < 1.2 && pros::millis() < endTime) pros::delay(10);
+robot.drive->setEffort(-0.1, -0.1);
+pros::delay(120);
 robot.roller->brake();
 robot.drive->stop();
 }
@@ -39,6 +41,8 @@ robot.drive->setEffort(-0.3, -0.3);
 robot.roller->move_velocity(100);
 uint32_t endTime = pros::millis() + 2000;
 while (robot.drive->getCurrent() < 1.2 && pros::millis() < endTime) pros::delay(10);
+robot.drive->setEffort(-0.1, -0.1);
+pros::delay(120);
 robot.roller->brake();
 robot.drive->stop();
 }
