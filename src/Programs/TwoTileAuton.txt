@@ -1,5 +1,5 @@
 // GENERATED C++ CODE FROM PathGen 3.5.3
-// Exported: Thu Feb  9 16:53:02 2023
+// Exported: Fri Feb 10 00:23:15 2023
 
 // Robot assumes a starting position of (88.0,12.2) at heading of 0.0 degrees.
 robot.localizer->setHeading(getRadians(0.0));
@@ -19,11 +19,14 @@ goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -7.78, getRadians(480.32));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(448.52));
 
 // Back up and do rollers using drivetrain current detection
+{
 robot.drive->setEffort(-0.3, -0.3);
 robot.roller->move_velocity(100);
-while (robot.drive->getCurrent() < 1.2) pros::delay(10);
+uint32_t endTime = pros::millis() + 2000;
+while (robot.drive->getCurrent() < 1.2 && pros::millis() < endTime) pros::delay(10);
 robot.roller->brake();
 robot.drive->stop();
+}
 
 /*goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -11.68, getRadians(448.52));*/
 goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 5.14, getRadians(88.53));

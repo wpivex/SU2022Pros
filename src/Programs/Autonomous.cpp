@@ -90,8 +90,8 @@ void shoot(Robot& robot) {
 
     uint32_t start = pros::millis();
     Shooter shooter;
-    while (pros::millis() - start < 6000) {
-        setEffort(*robot.intake, shooter.tickIntakeShootingSpeed(robot));
+    while (pros::millis() - start < 5000) {
+        setEffort(*robot.intake, -0.5);
     }
 
     // reset indexer after 500ms, nonblocking

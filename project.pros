@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "ThreeTileSkillsEasy",
+    "project_name": "Auto Test",
     "target": "v5",
     "templates": {
       "kernel": {

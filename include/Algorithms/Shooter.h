@@ -28,6 +28,9 @@ public:
     double tickIntakeShootingSpeed(Robot& robot) {
 
         double diff = robot.flywheel->getTargetVelocity() - robot.flywheel->getCurrentVelocity();
+        pros::lcd::clear();
+        pros::lcd::print(0, "state: %d", state);
+        pros::lcd::print(1, "diff: %f", diff);
 
         if (state == 0 && diff > 75) { // flywheel slowed down. Means we just finished shooting a disc
             discNum++;

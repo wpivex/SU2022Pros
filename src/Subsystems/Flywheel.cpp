@@ -20,7 +20,7 @@ double Flywheel::getCurrentVelocity() {
 }
 
 bool Flywheel::atTargetVelocity() {
-    return fabs(getTargetVelocity() - getCurrentVelocity()) < 20;
+    return fabs(getTargetVelocity() - getCurrentVelocity()) < 30;
 }
 
 void Flywheel::maintainVelocityTask() {

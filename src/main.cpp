@@ -6,15 +6,15 @@
 #include "TuneFlywheel.h"
 
 #define IS_FIFTEEN // uncomment for 15, comment for 18
-bool isSkills = false;
+bool isSkills = true;
 
 
 #ifdef IS_FIFTEEN
     #define IS_TWO_TILE
     Robot robot = getRobot15(isSkills);
-    Driver driver(robot, ARCADE_DRIVE, 2400); 
+    Driver driver(robot, TANK_DRIVE, 2400); 
 #else
-    #define IS_THREE_TILE
+    #define IS_TWO_TILE
     Robot robot = getRobot18(isSkills);
     Driver driver(robot, TANK_DRIVE, 2400);
 #endif
@@ -40,9 +40,9 @@ void initialize() {
     robot.shooterFlap->set_value(true); // start flap up
 
 	
-	// if (robot.localizer) robot.localizer->init();
+	if (robot.localizer) robot.localizer->init();
     // robot.localizer->setHeading(getRadians(0));
-	// pros::lcd::print(0, "initialized.");
+	pros::lcd::print(0, "initialized.");
 
     #ifdef RUN_AUTON
     #ifndef TUNE_FLYWHEEL
