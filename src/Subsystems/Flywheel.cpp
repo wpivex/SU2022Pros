@@ -3,6 +3,8 @@
 
 
 void Flywheel::setVelocity(double velocity) {
+    pros::lcd::clear();
+    pros::lcd::print(0, "Flywheel target velocity: %.2f", velocity);
     targetRPM = velocity;
     if (velocity == 0) hasSetStopped = false;
 

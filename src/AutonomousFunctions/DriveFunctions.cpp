@@ -46,7 +46,9 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
 
         double baseVelocity = pidDistance.tick(distance - robot.drive->getDistance());
         double headingError = deltaInHeading(targetHeading, robot.localizer->getHeading());
-        pros::lcd::print(0, "%f", headingError);
+        //pros::lcd::print(0, "Heading error: %f", headingError);
+        //pros::lcd::print(1, "Target heading: %f", targetHeading);
+        //pros::lcd::print(2, "Current heading: %f", robot.localizer->getHeading());
         double deltaVelocity = pidHeading.tick(headingError);
 
         double left = baseVelocity - deltaVelocity;
