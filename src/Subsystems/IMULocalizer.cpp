@@ -26,11 +26,12 @@ double IMULocalizer::getRawHeading() { // radians
     double headingB = -getRadians(imuB.get_heading());
     qB.push(headingB);
 
+    
     if (qA.isAllEqual()) {
         imuValidA = false;
     }
     if (qB.isAllEqual()) {
-        imuValidA = false;
+        imuValidB = false;
     }
 
     if (!imuValidA && !imuValidB) throw std::runtime_error("Both IMU disconnect.");

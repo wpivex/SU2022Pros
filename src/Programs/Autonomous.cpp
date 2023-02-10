@@ -20,7 +20,7 @@
 #define GFU_TURN SimplePID({1, 1.5, 0, 0.0, 1})
 #define GTU_TURN DoubleBoundedPID({1.25, 0.00, 0.095, 0.15, 1}, getRadians(1.5), 1)
 
-#define GTU_TURN_PRECISE DoubleBoundedPID({1.25, 0.005, 0.13, 0.15, 1}, getRadians(0.5), 3)
+#define GTU_TURN_PRECISE DoubleBoundedPID({1.25, 0.005, 0.13, 0.17, 1}, getRadians(0.5), 3)
 
 #define GCU_CURVE SimplePID({2.5/*2.25*//*1.7*/, 0, 0})
 
@@ -90,8 +90,8 @@ void shoot(Robot& robot) {
 
     uint32_t start = pros::millis();
     Shooter shooter;
-    while (pros::millis() - start < 4000) {
-        setEffort(*robot.intake, -1);
+    while (pros::millis() - start < 6000) {
+        setEffort(*robot.intake, shooter.tickIntakeShootingSpeed(robot));
     }
 
     // reset indexer after 500ms, nonblocking
@@ -123,32 +123,8 @@ void twoTileSkills(Robot& robot) {// GENERATED C++ CODE FROM PathGen 3.4.3
 }
 
 void testAuton(Robot& robot) {
-    robot.localizer->setPosition(0,0);
-    robot.localizer->setHeading(0);
-    //goToPoint(robot, GFU_DIST(0.4), NO_CORRECTION, 0, 24);
-
-    for (int i = 0; i < 4; i++) {
-        turnToPoint(robot, GTU_TURN_PRECISE, 24, 0);
-        pros::delay(500);
-        goToPoint(robot, GFU_DIST(0.4), GFU_TURN, 24, 0);
-        pros::delay(500);
-
-        turnToPoint(robot, GTU_TURN_PRECISE, 24, -24);
-        pros::delay(500);
-        goToPoint(robot, GFU_DIST(0.4), GFU_TURN, 24, -24);
-        pros::delay(500);
-
-        turnToPoint(robot, GTU_TURN_PRECISE, 0, -24);
-        pros::delay(500);
-        goToPoint(robot, GFU_DIST(0.4), GFU_TURN, 0, -24);
-        pros::delay(500);
-
-        turnToPoint(robot, GTU_TURN_PRECISE, 0, 0);
-        pros::delay(500);
-        goToPoint(robot, GFU_DIST(0.4), GFU_TURN, 0, 0);
-        pros::delay(500);
-
-    }
+    
+    #include "TestAuton.txt"
     
     
 }
