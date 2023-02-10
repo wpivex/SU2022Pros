@@ -6,7 +6,7 @@
 #include "TuneFlywheel.h"
 
 #define IS_FIFTEEN // uncomment for 15, comment for 18
-bool isSkills = false;
+bool isSkills = true;
 
 
 #ifdef IS_FIFTEEN
@@ -38,7 +38,6 @@ void initialize() {
     pros::lcd::register_btn1_cb (ready);
 
     robot.shooterFlap->set_value(true); // start flap up
-
 	
 	if (robot.localizer) robot.localizer->init();
     // robot.localizer->setHeading(getRadians(0));

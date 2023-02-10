@@ -73,10 +73,10 @@ void Driver::handleSecondaryActions() {
 
     // Flywheel Speed Controls
     if (controller.pressed(DIGITAL_UP)) {
-        if (speed < 3600) speed = fmin(speed + 25, 3600);
+        if (speed < 3600) speed = fmin(speed + 100, 3600);
     }
     else if (controller.pressed(DIGITAL_DOWN)) {
-        if (speed > 0) speed = fmax(speed - 25, 0);
+        if (speed > 0) speed = fmax(speed - 100, 0);
     }
     if(controller.pressed(DIGITAL_RIGHT)) {
         // Set speed back to default speed

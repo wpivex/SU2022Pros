@@ -17,6 +17,8 @@ robot.drive->setEffort(-0.3, -0.3);
 robot.roller->move_velocity(100);
 uint32_t endTime = pros::millis() + 2000;
 while (robot.drive->getCurrent() < 1.2 && pros::millis() < endTime) pros::delay(10);
+robot.drive->setEffort(-0.1, -0.1);
+pros::delay(90);
 robot.roller->brake();
 robot.drive->stop();
 }
@@ -35,6 +37,8 @@ robot.drive->setEffort(-0.3, -0.3);
 robot.roller->move_velocity(100);
 uint32_t endTime = pros::millis() + 2000;
 while (robot.drive->getCurrent() < 1.2 && pros::millis() < endTime) pros::delay(10);
+robot.drive->setEffort(-0.1, -0.1);
+pros::delay(90);
 robot.roller->brake();
 robot.drive->stop();
 }
@@ -60,5 +64,10 @@ shoot(robot);
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(305.97));
 goForwardU(robot, GFU_DIST_PRECISE(0.25), GFU_TURN, -33.95, getRadians(305.97));
 robot.endgame->set_value(true);
+
+pros::delay(2000);
+
+robot.endgame->set_value(false);
+
 // ================================================
 
