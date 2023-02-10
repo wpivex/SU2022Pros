@@ -52,7 +52,8 @@ void IMULocalizer::init() {
     imuA.reset(false);
     imuB.reset(true);
     pros::delay(1000);
-    while (imuA.get_heading() == POS_INF && imuB.get_heading() == POS_INF) pros::delay(10);
+    uint32_t endTime = pros::millis() + 5000;
+    while (imuA.get_heading() == POS_INF && imuB.get_heading() == POS_INF && pros::millis() < endTime) pros::delay(10);
     pros::delay(1000);
 
     if (imuA.get_heading() == POS_INF) {
