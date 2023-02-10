@@ -99,8 +99,8 @@ Robot getRobot18(bool isSkills) {
     Robot robot;
 
     robot.drive.reset(new Drive(
-        {-14, 11, 12, -13}, // left motor ports
-        {15, -2, -3, 4}, // right motor ports
+        {-14, 11, -12, 13}, // left motor ports
+        {-15, -2, 3, 4}, // right motor ports
         pros::E_MOTOR_GEAR_600, // internal gear ratio
         3.0/4.0, // external gear ratio
         2.74, // wheel diameter in inches
@@ -116,7 +116,7 @@ Robot getRobot18(bool isSkills) {
 
 
     robot.flywheel.reset(new TBHFlywheel(
-        {-19, 20}, // ports
+        {16, -17}, // ports
         { // rpm to volt data
             {1615, 5},
             {1966, 6},
@@ -168,12 +168,12 @@ Robot getRobot18(bool isSkills) {
     robot.intake.reset(new pros::MotorGroup({-7, 6}));
     robot.intake->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
 
-    robot.indexer.reset(new pros::ADIDigitalOut('A'));
+    robot.indexer.reset(new pros::ADIDigitalOut('H'));
 
-    robot.roller.reset(new pros::Motor(16, pros::E_MOTOR_GEAR_100));
+    robot.roller.reset(new pros::Motor(10, pros::E_MOTOR_GEAR_100));
     robot.roller->set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
 
-    robot.shooterFlap.reset(new pros::ADIDigitalOut('H'));
+    robot.shooterFlap.reset(new pros::ADIDigitalOut('G'));
 
     robot.endgame.reset(new pros::ADIDigitalOut('B'));
 

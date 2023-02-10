@@ -47,12 +47,24 @@ void IMULocalizer::updatePositionTask() { // blocking task used to update (x, y,
 }
 
 void IMULocalizer::init() {
-    pros::lcd::print(0, "start init");
+    pros::lcd::print(0, "Initialization start.");
     pros::delay(500);
     imuA.reset(false);
     imuB.reset(true);
     pros::delay(1000);
-    while (imuA.get_heading() == POS_INF || imuB.get_heading() == POS_INF) pros::delay(10);
+    while (imuA.get_heading() == POS_INF && imuB.get_heading() == POS_INF) pros::delay(10);
+    pros::delay(1000);
+
+    if (imuA.get_heading() == POS_INF) {
+        imuValidA = false;
+        pros::lcd::print(1, "IMU A disconnected. Still operational if IMU B is connected.");
+    }
+    if (imuB.get_heading() == POS_INF) {
+        imuValidB = false;
+        pros::lcd::print(1, "IMU B disconnected. Still operational if IMU A is connected.");
+    }
+
+    pros::lcd::print(0, "Initialization complete.");
 
 }
 

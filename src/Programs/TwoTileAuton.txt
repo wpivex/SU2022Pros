@@ -1,22 +1,18 @@
-// GENERATED C++ CODE FROM PathGen 3.5.3
-// Exported: Fri Feb 10 00:23:15 2023
+// GENERATED C++ CODE FROM PathGen 3.5.4
+// Exported: Fri Feb 10 03:02:00 2023
 
-// Robot assumes a starting position of (88.0,12.2) at heading of 0.0 degrees.
-robot.localizer->setHeading(getRadians(0.0));
-setShootDistance(robot, 110.43247660943389, 0, false); // Preemptively set speed for next shot
+// Robot assumes a starting position of (54.2,13.7) at heading of 180.0 degrees.
+robot.localizer->setHeading(getRadians(180.0));
+setShootDistance(robot, 39.02362449246048, 310, false); // Preemptively set speed for next shot
 setEffort(*robot.intake, 1); // Start running intake immediately
 robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
 
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(18.2));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 24.79, getRadians(18.2));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(80.89));
+/*goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 0.22, getRadians(179.99));*/
 
 shoot(robot);
-setShootDistance(robot, 110.94249880661033, 0, false); // Preemptively set speed for next shot
 
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(480.32));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -7.78, getRadians(480.32));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(448.52));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -56.06, getRadians(539.98));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(450.45));
 
 // Back up and do rollers using drivetrain current detection
 {
@@ -28,34 +24,27 @@ robot.roller->brake();
 robot.drive->stop();
 }
 
-/*goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -11.68, getRadians(448.52));*/
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 5.14, getRadians(88.53));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(137.6));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 22.73, getRadians(137.6));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(47.42));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 7.71, getRadians(47.42));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -7.39, getRadians(407.41));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(74.15));
+/*goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -9.77, getRadians(450.45));*/
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 5.6, getRadians(90.43));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(60.19));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 22.46, getRadians(60.19));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(539.35));
+/*goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -13.58, getRadians(539.35));*/
 
-shoot(robot);
-setShootDistance(robot, 97.56849419321959, 0, false); // Preemptively set speed for next shot
+// Back up and do rollers using drivetrain current detection
+{
+robot.drive->setEffort(-0.3, -0.3);
+robot.roller->move_velocity(100);
+uint32_t endTime = pros::millis() + 2000;
+while (robot.drive->getCurrent() < 1.2 && pros::millis() < endTime) pros::delay(10);
+robot.roller->brake();
+robot.drive->stop();
+}
 
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(135.62));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 48.59, getRadians(135.62));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(48.2));
-
-shoot(robot);
-setShootDistance(robot, 105.68634859072111, 0, false); // Preemptively set speed for next shot
-
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(243.27));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 6.19, getRadians(243.27));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(262.48));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 31.92, getRadians(262.48));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(51.42));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 25.84, getRadians(51.42));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(58.09));
-
-shoot(robot);
-
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 5.99, getRadians(179.34));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(270.03));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 11.66, getRadians(270.03));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(136.9));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 8.2, getRadians(136.9));
 // ================================================
 
