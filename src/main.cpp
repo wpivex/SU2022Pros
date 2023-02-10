@@ -6,7 +6,7 @@
 #include "TuneFlywheel.h"
 
 #define IS_FIFTEEN // uncomment for 15, comment for 18
-bool isSkills = true;
+bool isSkills = false;
 
 
 #ifdef IS_FIFTEEN
