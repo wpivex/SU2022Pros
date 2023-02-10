@@ -165,7 +165,7 @@ Robot getRobot18(bool isSkills) {
         0.0002 // tbh constant
     ));
 
-    robot.intake.reset(new pros::MotorGroup({-7, 6}));
+    robot.intake.reset(new pros::MotorGroup({-7, 5}));
     robot.intake->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
 
     robot.indexer.reset(new pros::ADIDigitalOut('H'));

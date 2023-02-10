@@ -5,12 +5,12 @@
 #include "Programs/Autonomous.h"
 #include "TuneFlywheel.h"
 
-// #define IS_FIFTEEN // uncomment for 15, comment for 18
+#define IS_FIFTEEN // uncomment for 15, comment for 18
 bool isSkills = true;
 
 
 #ifdef IS_FIFTEEN
-    #define IS_TWO_TILE
+    #define IS_THREE_TILE
     Robot robot = getRobot15(isSkills);
     Driver driver(robot, TANK_DRIVE, 2400); 
 #else
@@ -20,7 +20,7 @@ bool isSkills = true;
 #endif
 
 
-// #define RUN_TEST
+//#define RUN_TEST
 #define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
 //#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
 
@@ -46,7 +46,7 @@ void initialize() {
     #ifdef RUN_AUTON
     #ifndef TUNE_FLYWHEEL
     while (!centerButtonReady) {
-        pros::lcd::print(1, "Heading (deg): %f", robot.localizer->getHeading() * 180 / 3.1415);
+        pros::lcd::print(3, "Heading (deg): %f", robot.localizer->getHeading() * 180 / 3.1415);
         pros::delay(10);
     }
     #endif
