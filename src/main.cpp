@@ -6,7 +6,7 @@
 #include "TuneFlywheel.h"
 
 #define IS_FIFTEEN // uncomment for 15, comment for 18
-bool isSkills = true;
+bool isSkills = false;
 
 
 #ifdef IS_FIFTEEN
@@ -21,7 +21,7 @@ bool isSkills = true;
 
 
 //#define RUN_TEST
-#define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
+// #define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
 //#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
 
 using namespace pros;
