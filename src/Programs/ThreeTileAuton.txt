@@ -1,5 +1,5 @@
-// GENERATED C++ CODE FROM PathGen 3.5.3
-// Exported: Thu Feb  9 23:57:27 2023
+// GENERATED C++ CODE FROM PathGen 3.5.4
+// Exported: Fri Feb 10 05:16:00 2023
 
 // Robot assumes a starting position of (6.8,115.1) at heading of 0.0 degrees.
 robot.localizer->setHeading(getRadians(0.0));
@@ -49,7 +49,7 @@ goForwardU(robot, GFU_DIST_PRECISE(0.11), GFU_TURN, 14.91, getRadians(304.58));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(27.3));
 
 shoot(robot);
-setShootDistance(robot, 107.28331394021268, 0, false); // Preemptively set speed for next shot
+setShootDistance(robot, 107.28331394021268, 28, false); // Preemptively set speed for next shot
 
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(401.68));
 goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -32.91, getRadians(401.68));
