@@ -90,7 +90,7 @@ void shoot(Robot& robot) {
 
     uint32_t start = pros::millis();
     setEffort(*robot.intake, -1);
-    while (pros::millis() - start < 2000) {
+    while (pros::millis() - start < 2800) {
         pros::delay(10);
     }
 
