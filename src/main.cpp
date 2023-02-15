@@ -5,7 +5,7 @@
 #include "Programs/Autonomous.h"
 #include "TuneFlywheel.h"
 
-//#define IS_FIFTEEN // uncomment for 15, comment for 18
+#define IS_FIFTEEN // uncomment for 15, comment for 18
 bool isSkills = true;
 
 

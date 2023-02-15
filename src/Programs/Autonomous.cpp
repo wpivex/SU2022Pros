@@ -89,9 +89,9 @@ void shoot(Robot& robot) {
     }
 
     uint32_t start = pros::millis();
-    Shooter shooter;
-    while (pros::millis() - start < 5000) {
-        setEffort(*robot.intake, -0.5);
+    setEffort(*robot.intake, -1);
+    while (pros::millis() - start < 2000) {
+        pros::delay(10);
     }
 
     // reset indexer after 500ms, nonblocking
