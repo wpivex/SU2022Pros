@@ -1,7 +1,7 @@
 #include "Algorithms/SingleBoundedPID.h"
 
 // When error crosses over the target threshold, then the PID controller is done
-void SingleBoundedPID::handleEndCondition(float error) {
+void SingleBoundedPID::handleEndCondition(double error) {
 
     if (isFirst) {
         goingUp = error < 0;

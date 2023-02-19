@@ -11,12 +11,12 @@ class NoPID : public SingleBoundedPID {
 
 public:
 
-    NoPID(float speed):
+    NoPID(double speed):
         SingleBoundedPID({speed, 0, 0})
     {
         stopMotors = false;
     }
 
-    float tick(float error) override;
+    double tick(double error) override;
 
 };

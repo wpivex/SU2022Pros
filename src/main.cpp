@@ -2,23 +2,29 @@
 
 #include "Subsystems/RobotBuilder.h"
 #include "Programs/Driver.h"
+#include "Programs/CompetitionDriver.h"
+#include "Programs/TuningDriver.h"
 #include "Programs/Autonomous.h"
 #include "TuneFlywheel.h"
+#include "Programs/TestFunction/TurnTest.h"
 
 #define IS_FIFTEEN // uncomment for 15, comment for 18
 bool isSkills = true;
-
+#define TEST_TUNE_PID // uncomment to adjust pid using TuningDriver class
 
 #ifdef IS_FIFTEEN
     #define IS_THREE_TILE
     Robot robot = getRobot15(isSkills);
-    Driver driver(robot, TANK_DRIVE, 2400); 
 #else
     #define IS_TWO_TILE
     Robot robot = getRobot18(isSkills);
-    Driver driver(robot, TANK_DRIVE, 2400);
 #endif
 
+#ifdef TEST_TUNE_PID
+    TuningDriver driver(robot, std::make_unique<TurnTest>());
+#else
+    CompetitionDriver driver(robot, TANK_DRIVE, 2400); 
+#endif
 
 //#define RUN_TEST
 #define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp

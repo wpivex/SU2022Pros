@@ -1,18 +1,18 @@
 #pragma once
 
 typedef struct PIDParameters {
-  float P, I, D;
-  float MIN, MAX;
-  float MAX_ACCEL;
+  double P, I, D;
+  double MIN, MAX;
+  double MAX_ACCEL;
 
-  PIDParameters(float kp, float ki, float kd, float minMagnitude, float maxMagnitude, float maxAcceleration):
+  PIDParameters(double kp, double ki, double kd, double minMagnitude, double maxMagnitude, double maxAcceleration):
     P(kp), I(ki), D(kd), MIN(minMagnitude), MAX(maxMagnitude), MAX_ACCEL(maxAcceleration) {}
 
-  PIDParameters(float kp, float ki, float kd, float minMagnitude, float maxMagnitude):
+  PIDParameters(double kp, double ki, double kd, double minMagnitude, double maxMagnitude):
     PIDParameters(kp, ki, kd, minMagnitude, maxMagnitude, 1000000) {}
 
 
-  PIDParameters(float kp, float ki, float kd):
+  PIDParameters(double kp, double ki, double kd):
     PIDParameters(kp, ki, kd, 0, 1000000) {}
 
 } PIDParameters;
@@ -25,14 +25,14 @@ class SimplePID {
 public:
 
   SimplePID(PIDParameters params): K(params) {}
-  virtual float tick(float error);
-  void setNewParam(float kp, float ki, float kd);
+  virtual double tick(double error);
+  void setNewParam(double kp, double ki, double kd);
 protected:
-  virtual void handleEndCondition(float error) {}
+  virtual void handleEndCondition(double error) {}
 
-  float prevError = 0;
-  float prevIntegral = 0;
-  float prevOutput = 0;
+  double prevError = 0;
+  double prevIntegral = 0;
+  double prevOutput = 0;
   
   PIDParameters K;
 

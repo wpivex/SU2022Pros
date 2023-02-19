@@ -10,7 +10,7 @@ class DoubleBoundedPID : public EndablePID {
 
 public:
 
-    DoubleBoundedPID(PIDParameters params, float errorTolerance, int timesWithinTolerance):
+    DoubleBoundedPID(PIDParameters params, double errorTolerance, int timesWithinTolerance):
         EndablePID(params),
         tolerance(errorTolerance),
         timesNeeded(timesWithinTolerance)
@@ -18,8 +18,8 @@ public:
     bool isCompleted() override;
 
 private:
-    void handleEndCondition(float error) override;
-    float tolerance;
+    void handleEndCondition(double error) override;
+    double tolerance;
     int timesNeeded;
     int times = 0;
 };

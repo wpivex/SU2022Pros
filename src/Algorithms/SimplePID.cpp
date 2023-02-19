@@ -1,14 +1,14 @@
 #include "Algorithms/SimplePID.h"
 #include "math.h"
 
-float SimplePID::tick(float error) {
+double SimplePID::tick(double error) {
 
   handleEndCondition(error);
 
-  float integral = prevIntegral + error * 0.02;
-  float derivative = (error - prevError) / 0.02;
+  double integral = prevIntegral + error * 0.02;
+  double derivative = (error - prevError) / 0.02;
 
-  float output = K.P * error + K.I * integral + K.D * derivative;
+  double output = K.P * error + K.I * integral + K.D * derivative;
   prevError = error;
   prevIntegral = integral;
 
@@ -28,6 +28,6 @@ float SimplePID::tick(float error) {
   return output;
 }
 
-void SimplePID::setNewParam(float kp, float ki, float kd){
+void SimplePID::setNewParam(double kp, double ki, double kd){
   K = PIDParameters(kp,ki,kd);
 }

@@ -1,10 +1,10 @@
-#include "Programs/Driver.h"
+#include "Programs/CompetitionDriver.h"
 #include "misc/ProsUtility.h"
 #include "pros/llemu.hpp"
 #include "pros/motors.h"
 #include "pros/rtos.hpp"
 
-void Driver::runDriver() {
+void CompetitionDriver::runDriver() {
     pros::lcd::initialize();
     // Reinitialize flap position
     robot.shooterFlap->set_value(flapUp);
@@ -48,7 +48,7 @@ void Driver::runDriver() {
     }
 }
 
-void Driver::handleDrivetrain() {
+void CompetitionDriver::handleDrivetrain() {
 
     float leftX = controller.getAxis(ANALOG_LEFT_X);
     float leftY = controller.getAxis(ANALOG_LEFT_Y);
@@ -69,7 +69,7 @@ void Driver::handleDrivetrain() {
 
 }
 
-void Driver::handleSecondaryActions() {
+void CompetitionDriver::handleSecondaryActions() {
 
     // Flywheel Speed Controls
     if (controller.pressed(DIGITAL_UP)) {

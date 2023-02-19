@@ -2,7 +2,7 @@
 #include "math.h"
 
 // When error is within [-tolerance, tolerance] for 'timesNeeded' ticks, then the PID controller is done
-void DoubleBoundedPID::handleEndCondition(float error) {
+void DoubleBoundedPID::handleEndCondition(double error) {
 
     if (fabs(error) < tolerance) times++;
     else times = 0;
