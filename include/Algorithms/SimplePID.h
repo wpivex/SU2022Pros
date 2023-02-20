@@ -27,6 +27,7 @@ public:
   SimplePID(PIDParameters params): K(params) {}
   virtual double tick(double error);
   void setNewParam(double kp, double ki, double kd);
+  double getCurrentError();
 protected:
   virtual void handleEndCondition(double error) {}
 

@@ -12,17 +12,17 @@ void TuningDriver::runDriver() {
 
     robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
 
-    const int START_LINE = 3;
+    const int START_LINE = 2;
     int numParams = test->paramValues.size();
 
     int selectedParam = 0;
-    double time = -1;
+    TestData data;
 
     while (true) {
 
-        if (controller.pressed(DIGITAL_A)) time = test->run(robot);
+        if (controller.pressed(DIGITAL_A)) data = test->run(robot);
 
-        drawAdjustableParameters(START_LINE, numParams, selectedParam, test->paramValues, test->paramNames, time);
+        drawAdjustableParameters(START_LINE, numParams, selectedParam, test->paramValues, test->paramNames, data);
         handleControllerInput(numParams, selectedParam, test->paramValues);
         
         
@@ -34,16 +34,17 @@ void TuningDriver::runDriver() {
     }
 }
 
-void TuningDriver::drawAdjustableParameters(int line, int numParams, int selectedParam, std::vector<double>& paramValues, std::vector<std::string>& paramNames, double time) {
+void TuningDriver::drawAdjustableParameters(int line, int numParams, int selectedParam, std::vector<double>& paramValues, std::vector<std::string>& paramNames, TestData& data) {
     
-    // display time for previous run
-    pros::lcd::clear_line(0);
-    pros::lcd::print(0, "Time: %f", time);
+    pros::lcd::clear();
+
+    // display data for previous run
+    pros::lcd::print(0, "Time: %f", data.time);
+    pros::lcd::print(1, "Error: %f", data.error);
 
     // display the adjustable parameters
     std::string str;
     for (int i = 0; i < numParams; i++) {
-        pros::lcd::clear_line(line);
 
         if (i == selectedParam) str = "> ";
         else str = "  ";
@@ -59,10 +60,10 @@ void TuningDriver::drawAdjustableParameters(int line, int numParams, int selecte
 void TuningDriver::handleControllerInput(int numParams, int& selectedParam, std::vector<double>& paramValues) {
 
     // handle changing which parameter is selected
-    if (controller.pressed(DIGITAL_UP) && selectedParam < numParams - 1) {
+    if (controller.pressed(DIGITAL_DOWN) && selectedParam < numParams - 1) {
         selectedParam++;
     }
-    else if (controller.pressed(DIGITAL_DOWN) && selectedParam > 0) {
+    else if (controller.pressed(DIGITAL_UP) && selectedParam > 0) {
         selectedParam--;
     }
 

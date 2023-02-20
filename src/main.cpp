@@ -7,10 +7,11 @@
 #include "Programs/Autonomous.h"
 #include "TuneFlywheel.h"
 #include "Programs/TestFunction/TurnTest.h"
+#include "Programs/TestFunction/ForwardTest.h"
 
 #define IS_FIFTEEN // uncomment for 15, comment for 18
 bool isSkills = true;
-#define TEST_TUNE_PID // uncomment to adjust pid using TuningDriver class
+//#define TEST_TUNE_PID // uncomment to adjust pid using TuningDriver class. Should comment out RUN_AUTON
 
 #ifdef IS_FIFTEEN
     #define IS_THREE_TILE
@@ -21,7 +22,7 @@ bool isSkills = true;
 #endif
 
 #ifdef TEST_TUNE_PID
-    TuningDriver driver(robot, std::make_unique<TurnTest>());
+    TuningDriver driver(robot, std::make_unique<ForwardTest>());
 #else
     CompetitionDriver driver(robot, TANK_DRIVE, 2400); 
 #endif

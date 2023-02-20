@@ -32,7 +32,8 @@ void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, double timeSeconds, d
 }
 
 // Go forwards some distance while maintaining heading
-void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, double distance, double targetHeading) {
+// Return error
+double goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, double distance, double targetHeading) {
     
     setHeading(robot, targetHeading);
 
@@ -58,6 +59,7 @@ void goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, 
         pros::delay(10);
     }
     if (pidDistance.stopMotors) robot.drive->stop();
+    return distance - robot.drive->getDistance();
 }
 
 // Turn to some given heading: left is positive

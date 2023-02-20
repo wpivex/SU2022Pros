@@ -20,7 +20,7 @@ private:
 
     std::unique_ptr<AbstractTest> test;
 
-    void drawAdjustableParameters(int line, int numParams, int selectedParam, std::vector<double>& paramValues, std::vector<std::string>& paramNames, double time);
+    void drawAdjustableParameters(int line, int numParams, int selectedParam, std::vector<double>& paramValues, std::vector<std::string>& paramNames, TestData& data);
     void handleControllerInput(int numParams, int& selectedParam, std::vector<double>& paramValues);
 
 

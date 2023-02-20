@@ -2,6 +2,10 @@
 #include <vector>
 #include "Subsystems/Robot.h"
 
+typedef struct TestData {
+    double error, time;
+} TestData;
+
 class AbstractTest {
 
 public:
@@ -12,15 +16,14 @@ public:
     AbstractTest(std::initializer_list<double> paramValues, std::initializer_list<std::string> paramNames):
         paramValues(paramValues), paramNames(paramNames) {}
 
-    virtual void runFunction(Robot& robot) = 0;
+    virtual double runFunction(Robot& robot) = 0; // return error
     
-    double run(Robot& robot) {
+    TestData run(Robot& robot) {
         int32_t startTime = pros::millis();
 
-        runFunction(robot);
-
+        double error = runFunction(robot);
         double time = ((double) (pros::millis() - startTime)) / 1000.0;
-        return time;
+        return {error, time};
     }
 
 };

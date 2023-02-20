@@ -31,3 +31,7 @@ double SimplePID::tick(double error) {
 void SimplePID::setNewParam(double kp, double ki, double kd){
   K = PIDParameters(kp,ki,kd);
 }
+
+double SimplePID::getCurrentError() {
+  return prevError;
+}

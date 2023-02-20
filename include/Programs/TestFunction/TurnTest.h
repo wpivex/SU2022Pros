@@ -9,23 +9,29 @@ public:
 
     TurnTest():
         AbstractTest(
-            {1.25, 0.005, 0.13, 0.17},
-            {"P", "I", "D", "MIN"}
+            {1.25, 0.005, 0.13, 0.17, 0.5},
+            {"P", "I", "D", "MIN", "TOLERANCE"}
         )
     {}
 
-    void runFunction(Robot& robot) override {
+    double runFunction(Robot& robot) override {
 
         double p = paramValues[0];
         double i = paramValues[1];
         double d = paramValues[2];
         double min = paramValues[3];
+        double tolerance = paramValues[4];
 
-        std::vector<double> targets = {90, 180, 270, 0};
-        for (int counter = 0; counter < targets.size(); i++) {
-            DoubleBoundedPID gtu_turn_precise({p, i, d, min, 1}, getRadians(0.5), 3);
-            goTurnU(robot, std::move(gtu_turn_precise), getRadians(targets[counter]));
+        double error = 0;
+        std::vector<double> targets = {30, 90, 180, 0};
+        for (int counter = 0; counter < targets.size(); counter++) {
+            DoubleBoundedPID gtu_turn_precise({p, i, d, min, 1}, getRadians(tolerance), 3);
+
+            double rad = getRadians(targets[counter]);
+            goTurnU(robot, std::move(gtu_turn_precise), rad);
+            error += fabs(deltaInHeading(rad, robot.localizer->getHeading()));
         }
+        return getDegrees(error);
 
     }
 };
