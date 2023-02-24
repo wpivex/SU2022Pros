@@ -9,8 +9,8 @@ Robot getRobot15(bool isSkills) {
     Robot robot;
 
     robot.drive.reset(new Drive(
-        {-17, 16, 15, -14}, // left motor ports
-        {18, -19, 20, -8}, // right motor ports
+        {-13, -14, 15, 16}, // left motor ports
+        {-17, 18, -19, 20}, // right motor ports
         pros::E_MOTOR_GEAR_600, // internal gear ratio
         3.0/4.0, // external gear ratio
         2.73, // wheel diameter in inches
