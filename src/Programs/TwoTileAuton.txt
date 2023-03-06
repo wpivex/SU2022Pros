@@ -1,9 +1,9 @@
 // GENERATED C++ CODE FROM PathGen 3.6.2b
-// Exported: Mon Mar  6 15:07:27 2023
+// Exported: Mon Mar  6 16:43:02 2023
 
-// Robot assumes a starting position of (110.9,10.0) at heading of 90.0 degrees.
+// Robot assumes a starting position of (91.2,17.7) at heading of 90.0 degrees.
 robot.localizer->setHeading(getRadians(90.0));
-setShootDistance(robot, 102.67870572263936, 0, false); // Preemptively set speed for next shot
+setShootDistance(robot, 93.37537901707091, 0, false); // Preemptively set speed for next shot
 setEffort(*robot.intake, 1); // Start running intake immediately
 robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
 
@@ -18,23 +18,48 @@ robot.roller->brake();
 robot.drive->stop();
 }
 
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(104.03));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(79.38));
 
 // Roller Code here
 
-goForwardU(robot, GFU_DIST_PRECISE(0.31), GFU_TURN, 19.49, getRadians(104.03));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(77.17));
+goForwardU(robot, GFU_DIST_PRECISE(0.31), GFU_TURN, 24.49, getRadians(79.38));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(69.09));
 
 shoot(robot);
-setShootDistance(robot, 94.20035739054237, 0, false); // Preemptively set speed for next shot
+setShootDistance(robot, 90.14491196198352, 0, false); // Preemptively set speed for next shot
 
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(188.41));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 37.55, getRadians(188.41));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(41.15));
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 29.39, getRadians(41.15));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(66.33));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(423.29));
+goForwardU(robot, GFU_DIST_PRECISE(0.32), GFU_TURN, -14.66, getRadians(423.29));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(131.84));
+goForwardU(robot, GFU_DIST_PRECISE(0.32), GFU_TURN, 25.2, getRadians(131.84));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(47.82));
+goForwardU(robot, GFU_DIST_PRECISE(0.32), GFU_TURN, 9.28, getRadians(47.82));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(55.93));
+
+shoot(robot);
+setShootDistance(robot, 97.80531401191287, 0, false); // Preemptively set speed for next shot
+/*
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(407.81));
+goForwardU(robot, GFU_DIST_PRECISE(0.31), GFU_TURN, -10.03, getRadians(407.81));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(132.17));
+goForwardU(robot, GFU_DIST_PRECISE(0.29), GFU_TURN, 15.25, getRadians(132.17));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(46.38));
+
+shoot(robot);
+setShootDistance(robot, 111.19670561063407, 0, false); // Preemptively set speed for next shot
+
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(251.7));
+goForwardU(robot, GFU_DIST_PRECISE(0.29), GFU_TURN, 11.69, getRadians(251.7));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(269.99));
+goForwardU(robot, GFU_DIST_PRECISE(0.31), GFU_TURN, 27.37, getRadians(269.99));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(0.0));
+goForwardU(robot, GFU_DIST_PRECISE(0.32), GFU_TURN, 50.56, getRadians(0.0));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(79.34));
 
 shoot(robot);
 
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(453.89));
+goForwardU(robot, GFU_DIST_PRECISE(0.32), GFU_TURN, -11.83, getRadians(453.89));
 // ================================================
 
+*/

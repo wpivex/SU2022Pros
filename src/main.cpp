@@ -14,7 +14,7 @@ bool isSkills = false;
 //#define TEST_TUNE_PID // uncomment to adjust pid using TuningDriver class. Should comment out RUN_AUTON
 
 #ifdef IS_FIFTEEN
-    #define IS_THREE_TILE
+    //#define IS_THREE_TILE
     Robot robot = getRobot15(isSkills);
 #else
     #define IS_TWO_TILE

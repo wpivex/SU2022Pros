@@ -9,8 +9,8 @@ Robot getRobot15(bool isSkills) {
     Robot robot;
 
     robot.drive.reset(new Drive(
-        {-13, -14, 15, 16}, // left motor ports
-        {-6, 18, -10, 20}, // right motor ports
+        {-13, 14, 15, 16}, // left motor ports
+        {-17, 18, -19, 20}, // right motor ports
         pros::E_MOTOR_GEAR_600, // internal gear ratio
         3.0/4.0, // external gear ratio
         2.73, // wheel diameter in inches
@@ -19,8 +19,8 @@ Robot getRobot15(bool isSkills) {
 
     robot.localizer.reset(new IMULocalizer(
         *robot.drive, // reference to drive object
-        2, // imu port A
-        3 // imu port B
+        1,// relabled to 1, 2, // imu port A
+        8 // imu port B
     ));
 
 
