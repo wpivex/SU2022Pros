@@ -1,15 +1,12 @@
-// GENERATED C++ CODE FROM PathGen 3.5.4
-// Exported: Fri Feb 10 05:23:55 2023
+// GENERATED C++ CODE FROM PathGen 3.6.2b
+// Exported: Mon Mar  6 15:07:27 2023
 
-// Robot assumes a starting position of (88.6,13.1) at heading of 0.0 degrees.
-robot.localizer->setHeading(getRadians(0.0));
-setShootDistance(robot, 116.04453651059926, 28, false); // Preemptively set speed for next shot
+// Robot assumes a starting position of (110.9,10.0) at heading of 90.0 degrees.
+robot.localizer->setHeading(getRadians(90.0));
+setShootDistance(robot, 102.67870572263936, 0, false); // Preemptively set speed for next shot
 setEffort(*robot.intake, 1); // Start running intake immediately
 robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
 
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 27.07, getRadians(0.0));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(449.97));
-/*goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -7.52, getRadians(449.97));*/
 
 // Back up and do rollers using drivetrain current detection
 {
@@ -17,14 +14,25 @@ robot.drive->setEffort(-0.3, -0.3);
 robot.roller->move_velocity(100);
 uint32_t endTime = pros::millis() + 2000;
 while (robot.drive->getCurrent() < 1.2 && pros::millis() < endTime) pros::delay(10);
-robot.drive->setEffort(-0.1, -0.1);
-pros::delay(120);
 robot.roller->brake();
 robot.drive->stop();
 }
 
-goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 8.16, getRadians(89.96));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(83.41));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(104.03));
+
+// Roller Code here
+
+goForwardU(robot, GFU_DIST_PRECISE(0.31), GFU_TURN, 19.49, getRadians(104.03));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(77.17));
+
+shoot(robot);
+setShootDistance(robot, 94.20035739054237, 0, false); // Preemptively set speed for next shot
+
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(188.41));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 37.55, getRadians(188.41));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(41.15));
+goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 29.39, getRadians(41.15));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(66.33));
 
 shoot(robot);
 
