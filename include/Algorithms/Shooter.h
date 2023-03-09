@@ -28,14 +28,13 @@ public:
     double tickIntakeShootingSpeed(Robot& robot) {
 
         double diff = robot.flywheel->getTargetVelocity() - robot.flywheel->getCurrentVelocity();
-        pros::lcd::clear();
-        pros::lcd::print(0, "state: %d", state);
-        pros::lcd::print(1, "diff: %f", diff);
+        // printf("%d, %f, %f, %f, %f, %f \n", state, diff, robot.flywheel->getTargetVelocity(), robot.flywheel->getCurrentVelocity(),
+        // robot.flywheel->motors.get_actual_velocities()[0], robot.flywheel->motors.get_actual_velocities()[1]);
 
-        if (state == 0 && diff > 75) { // flywheel slowed down. Means we just finished shooting a disc
+        if (state == 0 && diff > 150) { // flywheel slowed down. Means we just finished shooting a disc
             discNum++;
             state = 1;
-        } else if (state == 1 && diff < 20) { // we've reached back to full velocity, ready for the next shot
+        } else if (state == 1 && diff < 0) { // we've reached back to full velocity, ready for the next shot
             state = 0;
         }
 

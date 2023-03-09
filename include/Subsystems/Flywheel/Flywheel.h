@@ -13,7 +13,6 @@ protected:
 
     double targetRPM;
     double ratio = 36;
-    pros::MotorGroup motors;
     bool hasSetStopped = false;
 
     double targetVoltage;
@@ -23,6 +22,7 @@ protected:
     bool isOn = false;
 
 public:
+    pros::MotorGroup motors;
 
     std::vector<DataPoint> rpmDistanceDown, rpmDistanceUp;
 
