@@ -11,7 +11,7 @@ robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
 
 robot.shooterFlap->set_value(true);
 
-shoot(robot);
+shoot(robot, 3);
 
 goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, -56.06, getRadians(539.98));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(450.45));
@@ -53,4 +53,3 @@ goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 11.66, getRadians(270.03));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(136.9));
 goForwardU(robot, GFU_DIST_PRECISE(1), GFU_TURN, 8.2, getRadians(136.9));
 // ================================================
-

@@ -70,7 +70,7 @@ void setShootDistance(Robot& robot, double distanceToGoal, double rpmCorrection,
 }
 
 // shoot a 3-burst round. First two rounds are short burst (110ms with 220ms break), third is longer (300ms)
-void shoot(Robot& robot) {
+void shoot(Robot& robot, int diskNum) {
 
     setEffort(*robot.intake, 1);
     robot.indexer->set_value(true);
@@ -90,9 +90,12 @@ void shoot(Robot& robot) {
 
     uint32_t start = pros::millis();
     Shooter shooter;
+    shooter.maxDisk = diskNum;
 
     while (pros::millis() - start < 4000) {
-        setEffort(*robot.intake, shooter.tickIntakeShootingSpeed(robot));
+        double speed = shooter.tickIntakeShootingSpeed(robot);
+        if (speed == 10) break;
+        setEffort(*robot.intake, speed);
         pros::delay(10);
     }
 

@@ -20,6 +20,8 @@ private:
 
 public:
 
+    int maxDisk = 3;
+
     void reset() {
         state = 0;
         discNum = 0;
@@ -37,6 +39,8 @@ public:
         } else if (state == 1 && diff < 0) { // we've reached back to full velocity, ready for the next shot
             state = 0;
         }
+
+        if (discNum == maxDisk) return 10;
 
         if (state == 1) { // if velocity is low after shooting disc, stop flywheel
             return 0;

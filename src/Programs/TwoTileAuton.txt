@@ -1,5 +1,5 @@
-// GENERATED C++ CODE FROM PathGen 3.6.2b
-// Exported: Wed Mar  8 20:26:46 2023
+// GENERATED C++ CODE FROM PathGen 3.6.3
+// Exported: Fri Mar 10 14:01:50 2023
 
 // Robot assumes a starting position of (89.0,19.1) at heading of 90.0 degrees.
 robot.localizer->setHeading(getRadians(90.0));
@@ -11,8 +11,8 @@ goTurnU(robot, GTU_TURN_PRECISE, getRadians(106.04));
 goForwardU(robot, GFU_DIST_PRECISE(0.31), GFU_TURN, 15.4, getRadians(106.04));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(64.48));
 
-shoot(robot);
-setShootDistance(robot, 89.97263275619267, -28, false); // Preemptively set speed for next shot
+shoot(robot, 3);
+setShootDistance(robot, 89.97263275619267, -65, false); // Preemptively set speed for next shot
 
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(51.88));
 goForwardU(robot, GFU_DIST_PRECISE(0.32), GFU_TURN, 12.52, getRadians(51.88));
@@ -21,9 +21,9 @@ goTurnU(robot, GTU_TURN_PRECISE, getRadians(150.84));
 goForwardU(robot, GFU_DIST_PRECISE(0.69), GFU_TURN, 19.12, getRadians(150.84));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(47.17));
 goForwardU(robot, GFU_DIST_PRECISE(0.32), GFU_TURN, 9.38, getRadians(47.17));
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(58.17));
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(55.8));
 
-shoot(robot);
+shoot(robot, 3);
 setShootDistance(robot, 91.20927568342644, 0, false); // Preemptively set speed for next shot
 
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(407.16));
@@ -33,16 +33,16 @@ goForwardU(robot, GFU_DIST_PRECISE(0.29), GFU_TURN, 18.25, getRadians(132.32));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(44.84));
 goForwardU(robot, GFU_DIST_PRECISE(0.29), GFU_TURN, 5.82, getRadians(44.84));
 
-shoot(robot);
-setShootDistance(robot, 103.32005810889383, 0, false); // Preemptively set speed for next shot
+shoot(robot, 1);
+setShootDistance(robot, 103.32005810889383, -56, false); // Preemptively set speed for next shot
 
-goTurnU(robot, GTU_TURN_PRECISE, getRadians(250.14));
-goCurveU(robot, GFU_DIST_PRECISE(0.45), GCU_CURVE, getRadians(250.14), getRadians(275.32), 102.31);
+goTurnU(robot, GTU_TURN_PRECISE, getRadians(241.86));
+goCurveU(robot, GFU_DIST_PRECISE(0.45), GCU_CURVE, getRadians(241.86), getRadians(283.6), 62.63);
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(20.43));
 goForwardU(robot, GFU_DIST_PRECISE(0.58), GFU_TURN, 34.47, getRadians(20.43));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(70.92));
 
-shoot(robot);
+shoot(robot, 3);
 
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(492.02));
 goForwardU(robot, GFU_DIST_PRECISE(0.32), GFU_TURN, -23.99, getRadians(492.02));

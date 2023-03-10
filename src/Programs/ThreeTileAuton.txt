@@ -29,7 +29,7 @@ setEffort(*robot.intake, 1);
 pros::delay(1000);
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(4.46));
 
-shoot(robot);
+shoot(robot, 3);
 setShootDistance(robot, 102.41295574042819, 0, false); // Preemptively set speed for next shot
 
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(372.01));
@@ -40,7 +40,7 @@ goTurnU(robot, GTU_TURN_PRECISE, getRadians(18.73));
 goForwardU(robot, GFU_DIST_PRECISE(0.28), GFU_TURN, 7.9, getRadians(18.73));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(12.81));
 
-shoot(robot);
+shoot(robot, 3);
 setShootDistance(robot, 95.27281187775652, 0, false); // Preemptively set speed for next shot
 
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(378.72));
@@ -51,7 +51,7 @@ goTurnU(robot, GTU_TURN_PRECISE, getRadians(352.5));
 goForwardU(robot, GFU_DIST_PRECISE(0.28), GFU_TURN, 14.14, getRadians(352.5));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(21.01));
 
-shoot(robot);
+shoot(robot, 3);
 setShootDistance(robot, 92.33556065413632, 0, false); // Preemptively set speed for next shot
 
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(352.51));
@@ -62,7 +62,7 @@ goTurnU(robot, GTU_TURN_PRECISE, getRadians(37.76));
 goForwardU(robot, GFU_DIST_PRECISE(0.31), GFU_TURN, 9.83, getRadians(37.76));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(27.12));
 
-shoot(robot);
+shoot(robot, 3);
 setShootDistance(robot, 87.27205693322297, 0, false); // Preemptively set speed for next shot
 
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(397.75));
@@ -74,7 +74,7 @@ goForwardU(robot, GFU_DIST_PRECISE(0.32), GFU_TURN, 13.34, getRadians(42.38));
 goForwardU(robot, GFU_DIST_PRECISE(0.29), GFU_TURN, 6.13, getRadians(42.38));
 goTurnU(robot, GTU_TURN_PRECISE, getRadians(40.45));
 
-shoot(robot);
+shoot(robot, 3);
 
 // ================================================
 
