@@ -27,7 +27,7 @@ Robot getRobot15(bool isSkills) {
     
 
     robot.flywheel.reset(new TBHFlywheel(
-        {9, -4}, // ports
+        {3, -4}, // ports
         { // volt to rpm data
             {1615, 5},
             {1966, 6},
@@ -81,7 +81,7 @@ Robot getRobot15(bool isSkills) {
 
     robot.indexer.reset(new pros::ADIDigitalOut('A'));
 
-    robot.roller.reset(new pros::Motor(5, pros::E_MOTOR_GEAR_100));
+    robot.roller.reset(new pros::Motor(6, pros::E_MOTOR_GEAR_100));
     robot.roller->set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
 
     robot.shooterFlap.reset(new pros::ADIDigitalOut('H'));
@@ -170,7 +170,7 @@ Robot getRobot18(bool isSkills) {
 
     robot.indexer.reset(new pros::ADIDigitalOut('H'));
 
-    robot.roller.reset(new pros::Motor(10, pros::E_MOTOR_GEAR_100));
+    robot.roller.reset(new pros::Motor(6, pros::E_MOTOR_GEAR_100));
     robot.roller->set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
 
     robot.shooterFlap.reset(new pros::ADIDigitalOut('G'));

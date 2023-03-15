@@ -89,15 +89,23 @@ void shoot(Robot& robot, int diskNum) {
     }
 
     uint32_t start = pros::millis();
-    Shooter shooter;
-    shooter.maxDisk = diskNum;
 
-    while (pros::millis() - start < 4000) {
-        double speed = shooter.tickIntakeShootingSpeed(robot);
-        if (speed == 10) break;
-        setEffort(*robot.intake, speed);
-        pros::delay(10);
+    if (diskNum == 0) { // for close range shots. burst fire
+        while (pros::millis() - start < 1600) {
+            setEffort(*robot.intake, -1);
+            pros::delay(10);
+        }
+    } else { // for longer range shots. toggle fire
+        Shooter shooter;
+        shooter.maxDisk = diskNum;
+        while (pros::millis() - start < 4000) {
+            double speed = shooter.tickIntakeShootingSpeed(robot);
+            if (speed == 10) break;
+            setEffort(*robot.intake, speed);
+            pros::delay(10);
+        }
     }
+    
 
     // reset indexer after 500ms, nonblocking
     pros::Task([&] {delayResetIndexer(robot); });
