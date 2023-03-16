@@ -27,7 +27,7 @@ Robot getRobot15(bool isSkills) {
     
 
     robot.flywheel.reset(new TBHFlywheel(
-        {9, -4}, // ports
+        {10, -4}, // ports
         { // volt to rpm data
             {1615, 5},
             {1966, 6},
