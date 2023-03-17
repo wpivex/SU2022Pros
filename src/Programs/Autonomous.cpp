@@ -127,11 +127,7 @@ void shoot(Robot& robot, int diskNum) {
 
         coolDownStart = pros::millis();
         while(pros::millis() - coolDownStart >= coolDownPeriod);
-
     }
-    
-
-
     // reset indexer after 500ms, nonblocking
     pros::Task([&] {delayResetIndexer(robot); });
 }
