@@ -98,7 +98,7 @@ void shoot(Robot& robot, int diskNum) {
     }
     else {
 
-        uint32_t shootPeriod = 5000;
+        uint32_t shootPeriod = 6000;
 
         uint32_t coolDownStart = pros::millis();
         uint32_t coolDownPeriod = 500;
