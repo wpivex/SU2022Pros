@@ -27,7 +27,7 @@ Robot getRobot15(bool isSkills) {
     
 
     robot.flywheel.reset(new TBHFlywheel(
-        {3, -4}, // ports
+        {10, -4}, // ports
         { // volt to rpm data
             {1615, 5},
             {1966, 6},
@@ -73,7 +73,7 @@ Robot getRobot15(bool isSkills) {
             {3350, 121}
         },
         0, // start speed
-        0.0002 // tbh constant
+        0.0001 // tbh constant
     ));
 
     robot.intake.reset(new pros::MotorGroup({-11, 12}));

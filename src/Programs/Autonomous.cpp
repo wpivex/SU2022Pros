@@ -100,7 +100,10 @@ void shoot(Robot& robot, int diskNum) {
         shooter.maxDisk = diskNum;
         while (pros::millis() - start < 4000) {
             double speed = shooter.tickIntakeShootingSpeed(robot);
-            if (speed == 10) break;
+            if (speed == 10) {
+                pros::delay(500);
+                break;
+            }
             setEffort(*robot.intake, speed);
             pros::delay(10);
         }
