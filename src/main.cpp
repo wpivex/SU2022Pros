@@ -15,7 +15,6 @@ bool isSkills = false;
 
 #ifdef IS_FIFTEEN
     //#define IS_THREE_TILE
-    #define IS_TWO_TILE
     Robot robot = getRobot15(isSkills);
 #else
     #define IS_TWO_TILE

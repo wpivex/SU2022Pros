@@ -33,7 +33,7 @@ public:
         // printf("%d, %f, %f, %f, %f, %f \n", state, diff, robot.flywheel->getTargetVelocity(), robot.flywheel->getCurrentVelocity(),
         // robot.flywheel->motors.get_actual_velocities()[0], robot.flywheel->motors.get_actual_velocities()[1]);
 
-        if (state == 0 && diff > 150) { // flywheel slowed down. Means we just finished shooting a disc
+        if (state == 0 && diff > 175) { // flywheel slowed down. Means we just finished shooting a disc
             discNum++;
             state = 1;
         } else if (state == 1 && diff < 0) { // we've reached back to full velocity, ready for the next shot
@@ -44,7 +44,8 @@ public:
 
         if (state == 1) { // if velocity is low after shooting disc, stop flywheel
             return 0;
-        } else {
+        } 
+        else {
             return (discNum == 0) ? FIRST_INTAKE_SPEED : AFTER_INTAKE_SPEED;
         }
     }
