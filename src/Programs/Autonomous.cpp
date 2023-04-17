@@ -96,37 +96,17 @@ void shoot(Robot& robot, int diskNum) {
             pros::delay(10);
         }
     }
-    else {
-
-        uint32_t shootPeriod = 6000;
-
-        uint32_t coolDownStart = pros::millis();
-        uint32_t coolDownPeriod = 500;
-        bool coolDown = true;
-        
+    else {        
         Shooter shooter;
         shooter.maxDisk = diskNum;
-        double speed = shooter.tickIntakeShootingSpeed(robot);
-        
-        while (pros::millis() - start < shootPeriod + (3 * coolDownPeriod)) {    
-            if (!coolDown && coolDownStart != 0 && speed == 0) {
-                coolDown = true;
-                setEffort(*robot.intake, 0);
-            } else if (!coolDown) {
-                coolDownStart = pros::millis();
-                speed = shooter.tickIntakeShootingSpeed(robot);
-                if (speed == 10) break;
-                setEffort(*robot.intake, speed);
-            } else if (coolDown && pros::millis() - coolDownStart >= coolDownPeriod) {
-                coolDown = false;
-                speed = shooter.tickIntakeShootingSpeed(robot);
-            }
 
+        while (pros::millis() - start < 4000) {
+            double speed = shooter.tickIntakeShootingSpeed(robot);
+            if (speed == 10) break;
+            setEffort(*robot.intake, speed);
             pros::delay(10);
         }
-
-        coolDownStart = pros::millis();
-        while(pros::millis() - coolDownStart >= coolDownPeriod);
+        
     }
     // reset indexer after 500ms, nonblocking
     pros::Task([&] {delayResetIndexer(robot); });

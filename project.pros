@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "2tileauto",
+    "project_name": "voltage",
     "target": "v5",
     "templates": {
       "kernel": {
