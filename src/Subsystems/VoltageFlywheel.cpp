@@ -6,19 +6,6 @@ VoltageFlywheel::VoltageFlywheel(std::initializer_list<int8_t> flywheelMotors, s
     gain(gainConstant)
 {}
 
-void VoltageFlywheel::maintainVelocityTask() {
-
-    if (isOn) return;
-    isOn = true;
-    
-    while (true) {
-
-        motors.move_voltage(getTargetVelocity() / 3600.0 * 1000); // millivolts
-        pros::delay(10);
-    }
-
-}
-
 double VoltageFlywheel::getNextMotorVoltage(double currentRPM) {
     return rpmToVolt(data, currentRPM);
 }

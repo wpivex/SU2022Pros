@@ -7,7 +7,6 @@ private:
 public:
 
     VoltageFlywheel(std::initializer_list<int8_t> flywheelMotors, std::vector<DataPoint> voltRpmData, std::vector<DataPoint> rpmDistanceFlapDownData, std::vector<DataPoint> rpmDistanceFlapUpData, double startSpeed, double gainConstant);
- 
-    void maintainVelocityTask() override;
+    
     double getNextMotorVoltage(double currentRPM) override;
 };
