@@ -39,14 +39,14 @@ public:
     void setVelocity(double velocity);
     double getTargetVelocity();
     double getCurrentVelocity();
-    void maintainVelocityTask();
+    virtual void maintainVelocityTask();
     double getTargetVoltage();
     
     bool atTargetVelocity();
 
     void setRawVoltage(double volts);
 
-    virtual double getNextMotorVoltage(double currentRPM) = 0;
+    virtual double getNextMotorVoltage(double currentRPM) {return 0;}
 
 
 };

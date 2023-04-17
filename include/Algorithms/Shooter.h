@@ -30,8 +30,8 @@ public:
     double tickIntakeShootingSpeed(Robot& robot) {
 
         double diff = robot.flywheel->getTargetVelocity() - robot.flywheel->getCurrentVelocity();
-        // printf("%d, %f, %f, %f, %f, %f \n", state, diff, robot.flywheel->getTargetVelocity(), robot.flywheel->getCurrentVelocity(),
-        // robot.flywheel->motors.get_actual_velocities()[0], robot.flywheel->motors.get_actual_velocities()[1]);
+        printf("%d, %f, %f, %f, %f, %f \n", state, diff, robot.flywheel->getTargetVelocity(), robot.flywheel->getCurrentVelocity(),
+        robot.flywheel->motors.get_actual_velocities()[0], robot.flywheel->motors.get_actual_velocities()[1]);
 
         if (state == 0 && diff > 175) { // flywheel slowed down. Means we just finished shooting a disc
             discNum++;
@@ -40,7 +40,7 @@ public:
             state = 0;
         }
 
-        if (discNum == maxDisk) return 10;
+        //if (discNum == maxDisk) return 10;
 
         if (state == 1) { // if velocity is low after shooting disc, stop flywheel
             return 0;

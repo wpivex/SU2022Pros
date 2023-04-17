@@ -2,6 +2,8 @@
 #include "Subsystems/Localizer/Odometry.h"
 #include "Subsystems/Localizer/IMULocalizer.h"
 #include "Subsystems/Flywheel/TBHFlywheel.h"
+#include "Subsystems/Flywheel/VoltageFlywheel.h"
+
 #include "pros/motors.h"
 
 Robot getRobot15(bool isSkills) {
@@ -26,8 +28,8 @@ Robot getRobot15(bool isSkills) {
 
     
 
-    robot.flywheel.reset(new TBHFlywheel(
-        {10, -4}, // ports
+    robot.flywheel.reset(new VoltageFlywheel(
+        {6, -4}, // ports
         { // volt to rpm data
             {1615, 5},
             {1966, 6},
