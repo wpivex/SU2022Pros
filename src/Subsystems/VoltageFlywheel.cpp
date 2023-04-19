@@ -7,5 +7,5 @@ VoltageFlywheel::VoltageFlywheel(std::initializer_list<int8_t> flywheelMotors, s
 {}
 
 double VoltageFlywheel::getNextMotorVoltage(double currentRPM) {
-    return rpmToVolt(data, currentRPM);
+    return rpmToVolt(data, targetRPM);
 }
