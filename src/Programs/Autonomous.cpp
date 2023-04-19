@@ -144,7 +144,7 @@ void testAuton(Robot& robot) {
 
     while (true) {
         pros::delay(4000);
-        shoot(robot, 3);
+        shoot(robot, 0);
     }
 
     
