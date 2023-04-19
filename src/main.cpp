@@ -24,7 +24,7 @@ bool isSkills = true;
 #ifdef TEST_TUNE_PID
     TuningDriver driver(robot, std::make_unique<ForwardTest>());
 #else
-    CompetitionDriver driver(robot, TANK_DRIVE, 2400); 
+    CompetitionDriver driver(robot, ARCADE_DRIVE, 2400); 
 #endif
 
 //#define RUN_TEST
