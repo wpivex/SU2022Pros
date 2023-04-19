@@ -138,7 +138,15 @@ void twoTileSkills(Robot& robot) {// GENERATED C++ CODE FROM PathGen 3.4.3
 
 void testAuton(Robot& robot) {
     
-    #include "TestAuton.txt"
+    setShootDistance(robot, 112.2384815584748, -103, false); // Preemptively set speed for next shot
+    setEffort(*robot.intake, 1); // Start running intake immediately
+    robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
+
+    while (true) {
+        pros::delay(4000);
+        shoot(robot, 3);
+    }
+
     
     
 }

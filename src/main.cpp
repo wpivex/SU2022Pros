@@ -24,11 +24,11 @@ bool isSkills = true;
 #ifdef TEST_TUNE_PID
     TuningDriver driver(robot, std::make_unique<ForwardTest>());
 #else
-    CompetitionDriver driver(robot, ARCADE_DRIVE, 2400); 
+    CompetitionDriver driver(robot, ARCADE_DRIVE, 2400);
 #endif
 
-//#define RUN_TEST
-//#define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
+#define RUN_TEST
+#define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
 //#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
 
 using namespace pros;
