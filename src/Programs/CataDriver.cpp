@@ -10,18 +10,26 @@ void CataDriver::initDriver() {
 
 void CataDriver::handleSecondaryActions() {
 
-    // Cata. L2 spins forward, releasing stops
-    if (controller.pressing(DIGITAL_L2)) {
+    bool isLimitSwitchOn = robot.limitSwitch->get_value();
+
+    if (controller.pressed(DIGITAL_L1)) {
         setEffort(*robot.cata, 1);
-    } else {
+    }
+
+    if (!wasLimitSwitchOn && isLimitSwitchOn) {
         setEffort(*robot.cata, 0);
     }
 
-    // Roller mech controls
-    if (controller.pressing(DIGITAL_L1)) {
-        setEffort(*robot.roller, -1);
+    if (isFirstTick) {
+        setEffort(*robot.cata, 1);
+        isFirstTick = false;
     }
-    else if (controller.pressing(DIGITAL_L2)) {
+    
+    wasLimitSwitchOn = isLimitSwitchOn;
+
+
+    // Roller mech controls
+    if (controller.pressing(DIGITAL_L2)) {
         setEffort(*robot.roller, 1);
     }
     else {

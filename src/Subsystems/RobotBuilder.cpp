@@ -122,6 +122,8 @@ Robot getRobot18(bool isSkills) {
     robot.cata.reset(new pros::MotorGroup({16, -17}));
     robot.cata->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
 
+    robot.limitSwitch.reset(new pros::ADIDigitalIn('A'));
+
     robot.intake.reset(new pros::MotorGroup({-19, 20}));
     robot.intake->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
 
