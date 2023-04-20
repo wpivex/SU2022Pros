@@ -11,39 +11,19 @@ class CompetitionDriver : public Driver {
 
 public:
 
-    CompetitionDriver(Robot& robot, DRIVE_TYPE driveType, int defaultFlywheelSpeed):
+    CompetitionDriver(Robot& robot, DRIVE_TYPE driveType):
         Driver(robot),
-        drive(driveType),
-        shootAlternator(3, 11, 7), // 70ms on / 70ms off
-        DEFAULT_SPEED(defaultFlywheelSpeed),
-        queue(100)
-    {
-        speed = DEFAULT_SPEED;
-    }
+        drive(driveType)
+    {}
 
     void runDriver() override;
         
 private:
 
-    const int DEFAULT_SPEED;
-
     void handleDrivetrain();
-    void handleSecondaryActions();
+    virtual void initDriver() {}
+    virtual void handleSecondaryActions() {}
 
     DRIVE_TYPE drive;
-
-    Alternator shootAlternator;
-
-    Shooter shooter;
-
-    RingQueue queue;
-
-    bool indexerOn;
-    bool flapUp = true;
-    int indexerTimer, indexerOffTimer;
-    
-    int speed;
-
-    double shootSpeed = 1;
 
 };

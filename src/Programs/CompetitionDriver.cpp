@@ -6,15 +6,7 @@
 
 void CompetitionDriver::runDriver() {
     pros::lcd::initialize();
-    // Reinitialize flap position
-    robot.shooterFlap->set_value(flapUp);
     robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
-
-    if (true && robot.flywheel) {
-        pros::Task taskFlywheel([&] {
-            robot.flywheel->maintainVelocityTask();
-        });
-    }
 
     // if (true && robot.localizer) {
     //     pros::Task taskOdometry([&] {
@@ -23,16 +15,6 @@ void CompetitionDriver::runDriver() {
     // }
 
     while (true) {
-
-        double curr = robot.flywheel->getCurrentVelocity();
-        queue.push(curr);
-
-        pros::lcd::clear();
-        pros::lcd::print(0, "Target: %f", robot.flywheel->getTargetVelocity());
-        pros::lcd::print(1, "Current: %f", curr);
-        pros::lcd::print(2, "SD: %f", queue.standardDeviation());
-        pros::lcd::print(3, "Voltage: %f", robot.flywheel->getTargetVoltage());
-        pros::lcd::print(4, "Intake speed: %f", shootSpeed);
 
         // Handle drivetrain locomotion from joysticks (tank, arcade, etc.)
         handleDrivetrain();
@@ -66,70 +48,5 @@ void CompetitionDriver::handleDrivetrain() {
     } else {
         robot.drive->setEffort(leftY, rightY);
     }
-
-}
-
-void CompetitionDriver::handleSecondaryActions() {
-
-    // Flywheel Speed Controls
-    if (controller.pressed(DIGITAL_UP)) {
-        if (speed < 3600) speed = fmin(speed + 100, 3600);
-    }
-    else if (controller.pressed(DIGITAL_DOWN)) {
-        if (speed > 0) speed = fmax(speed - 100, 0);
-    }
-    if(controller.pressed(DIGITAL_RIGHT)) {
-        // Set speed back to default speed
-        speed = DEFAULT_SPEED;
-    }
-
-    // Roller mech controls
-    if (controller.pressing(DIGITAL_L1)) {
-        setEffort(*robot.roller, -1);
-    }
-    else if (controller.pressing(DIGITAL_L2)) {
-        setEffort(*robot.roller, 1);
-    }
-    else{
-        setEffort(*robot.roller, 0);
-    }
-
-    // Indexer controls
-    if (controller.pressed(DIGITAL_R2)) {
-        robot.indexer->set_value(false);
-        indexerOn = true;
-        indexerTimer = pros::millis();
-    }
-    else if (controller.released(DIGITAL_R2)) {
-        robot.indexer->set_value(true);
-        indexerOn = false;
-        indexerOffTimer = pros::millis();
-    } 
-    else if (controller.pressed(DIGITAL_R1)) {
-        //shooter.reset();
-    }
-
-    // Flywheel flap toggle
-    if (controller.pressed(DIGITAL_X)) {
-        flapUp = !flapUp;
-        robot.shooterFlap->set_value(flapUp);
-    }
-
-    // Running the indexer via the intake
-    if (indexerOn && pros::millis() - 250 > indexerTimer || (!indexerOn && pros::millis() - 300 < indexerOffTimer)) {
-        setEffort(*robot.intake, 1);
-    } else if (controller.pressing(DIGITAL_R1)) {
-        setEffort(*robot.intake, -1);
-    } else {
-        robot.intake->brake();
-    }
-
-    // Endgame mech. Activate if B pressed
-    if (controller.pressed(DIGITAL_B)) {
-        robot.endgame->set_value(true);
-    }
-
-    // Flywheel set speed
-    robot.flywheel->setVelocity(speed);
 
 }

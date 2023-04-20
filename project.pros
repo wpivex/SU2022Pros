@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "voltage",
+    "project_name": "auton",
     "target": "v5",
     "templates": {
       "kernel": {

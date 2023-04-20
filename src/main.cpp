@@ -3,6 +3,8 @@
 #include "Subsystems/RobotBuilder.h"
 #include "Programs/Driver.h"
 #include "Programs/CompetitionDriver.h"
+#include "Programs/FlywheelDriver.h"
+#include "Programs/CataDriver.h"
 #include "Programs/TuningDriver.h"
 #include "Programs/Autonomous.h"
 #include "TuneFlywheel.h"
@@ -10,24 +12,24 @@
 #include "Programs/TestFunction/ForwardTest.h"
 
 #define IS_FIFTEEN // uncomment for 15, comment for 18
-bool isSkills = true;
+bool isSkills = false;
 //#define TEST_TUNE_PID // uncomment to adjust pid using TuningDriver class. Should comment out RUN_AUTON
 
 #ifdef IS_FIFTEEN
-    //#define IS_THREE_TILE
+    #define IS_THREE_TILE
     Robot robot = getRobot15(isSkills);
 #else
     #define IS_TWO_TILE
     Robot robot = getRobot18(isSkills);
 #endif
 
-#ifdef TEST_TUNE_PID
-    TuningDriver driver(robot, std::make_unique<ForwardTest>());
+#ifdef IS_FIFTEEN
+FlywheelDriver driver(robot, TANK_DRIVE, 2400);
 #else
-    CompetitionDriver driver(robot, ARCADE_DRIVE, 2400);
+CataDriver driver(robot, TANK_DRIVE);
 #endif
 
-#define RUN_TEST
+//#define RUN_TEST
 #define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
 //#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
 
