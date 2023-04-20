@@ -17,6 +17,8 @@ public:
     std::unique_ptr<pros::MotorGroup> intake;
     std::unique_ptr<pros::ADIDigitalOut> indexer;
 
+    std::unique_ptr<pros::MotorGroup> cata;
+
     std::unique_ptr<pros::Motor> roller;
     std::unique_ptr<pros::ADIDigitalOut> shooterFlap;
 

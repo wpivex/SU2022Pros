@@ -11,7 +11,7 @@
 #include "Programs/TestFunction/TurnTest.h"
 #include "Programs/TestFunction/ForwardTest.h"
 
-#define IS_FIFTEEN // uncomment for 15, comment for 18
+//#define IS_FIFTEEN // uncomment for 15, comment for 18
 bool isSkills = false;
 //#define TEST_TUNE_PID // uncomment to adjust pid using TuningDriver class. Should comment out RUN_AUTON
 
@@ -30,7 +30,7 @@ CataDriver driver(robot, TANK_DRIVE);
 #endif
 
 //#define RUN_TEST
-#define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
+//#define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
 //#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
 
 using namespace pros;
@@ -46,9 +46,9 @@ void initialize() {
     pros::lcd::initialize();
     pros::lcd::register_btn1_cb (ready);
 
-    robot.shooterFlap->set_value(true); // start flap up
+    
+    if (robot.shooterFlap) robot.shooterFlap->set_value(true); // start flap up
 
-	
 	if (robot.localizer) robot.localizer->init();
     // robot.localizer->setHeading(getRadians(0));
 

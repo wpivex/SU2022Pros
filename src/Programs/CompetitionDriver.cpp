@@ -8,6 +8,8 @@ void CompetitionDriver::runDriver() {
     pros::lcd::initialize();
     robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
 
+    initDriver();
+
     // if (true && robot.localizer) {
     //     pros::Task taskOdometry([&] {
     //         robot.localizer->updatePositionTask();

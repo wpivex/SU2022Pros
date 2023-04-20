@@ -5,10 +5,17 @@
 #include "pros/rtos.hpp"
 
 void CataDriver::initDriver() {
-    
+
 }
 
 void CataDriver::handleSecondaryActions() {
+
+    // Cata. L2 spins forward, releasing stops
+    if (controller.pressing(DIGITAL_L2)) {
+        setEffort(*robot.cata, 1);
+    } else {
+        setEffort(*robot.cata, 0);
+    }
 
     // Roller mech controls
     if (controller.pressing(DIGITAL_L1)) {
@@ -30,7 +37,7 @@ void CataDriver::handleSecondaryActions() {
         setEffort(*robot.intake, -1);
     }
     else {
-        setEffort(*robot.roller, 0);
+        setEffort(*robot.intake, 0);
     }
 
     // Endgame mech. Activate if B pressed

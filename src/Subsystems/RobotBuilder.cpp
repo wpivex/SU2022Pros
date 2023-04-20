@@ -105,20 +105,22 @@ Robot getRobot18(bool isSkills) {
     Robot robot;
 
     robot.drive.reset(new Drive(
-        {-1, -2, 3, 4}, // left motor ports
-        {-11, -12, 13, 14}, // right motor ports
+        {11, 12, -13, -14}, // left motor ports
+        {1, 2, -3, -4}, // right motor ports 
         pros::E_MOTOR_GEAR_600, // internal gear ratio
         3.0/4.0, // external gear ratio
         2.74, // wheel diameter in inches
         14.25//15.2 // track width in inches
     ));
 
-    robot.localizer.reset(new IMULocalizer(
-        *robot.drive, // reference to drive object
-        8, // imu port A
-        9 // imu port B
-    ));
+    // robot.localizer.reset(new IMULocalizer(
+    //     *robot.drive, // reference to drive object
+    //     8, // imu port A
+    //     9 // imu port B
+    // ));
 
+    robot.cata.reset(new pros::MotorGroup({16, -17}));
+    robot.cata->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
 
     robot.intake.reset(new pros::MotorGroup({-19, 20}));
     robot.intake->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
