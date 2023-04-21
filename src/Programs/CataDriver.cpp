@@ -10,6 +10,7 @@ void CataDriver::initDriver() {
 
 void CataDriver::handleSecondaryActions() {
 
+    // When L1 pressed, cata runs until rising edge of limit switch
     bool isLimitSwitchOn = robot.limitSwitch->get_value();
 
     if (controller.pressed(DIGITAL_L1)) {

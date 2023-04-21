@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "match cata",
+    "project_name": "match flywheel",
     "target": "v5",
     "templates": {
       "kernel": {
