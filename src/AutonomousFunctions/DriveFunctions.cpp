@@ -54,6 +54,9 @@ double goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading
 
         double left = baseVelocity - deltaVelocity;
         double right = baseVelocity + deltaVelocity;
+
+        printf("%.2f %.2f\n", left, right);
+
         robot.drive->setEffort(left, right);
 
         pros::delay(10);

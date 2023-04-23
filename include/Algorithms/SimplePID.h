@@ -24,7 +24,7 @@ class SimplePID {
 
 public:
 
-  SimplePID(PIDParameters params): K(params) {}
+  SimplePID(PIDParameters params, bool limitAcceleration = true): K(params), limitAccel(limitAcceleration) {}
   virtual double tick(double error);
   void setNewParam(double kp, double ki, double kd);
   double getCurrentError();
@@ -36,5 +36,6 @@ protected:
   double prevOutput = 0;
   
   PIDParameters K;
+  bool limitAccel;
 
 };

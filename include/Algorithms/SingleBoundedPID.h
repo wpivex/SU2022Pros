@@ -10,8 +10,8 @@ class SingleBoundedPID : public EndablePID {
 
 public:
 
-    SingleBoundedPID(PIDParameters params):
-        EndablePID(params)
+    SingleBoundedPID(PIDParameters params, bool limitAcceleration = true):
+        EndablePID(params, limitAcceleration)
     {}
     bool isCompleted() override;
 

@@ -13,9 +13,12 @@
 #include "pros/llemu.hpp"
 #include "pros/rtos.hpp"
 
-#define GFU_DIST(maxSpeed) SingleBoundedPID({0.1, 0, 0, 0.12, maxSpeed})
+// for cata momentum
+#define GFU_DIST_FAST(maxSpeed) DoubleBoundedPID({0.17, 0, 0.017, 0.12, maxSpeed}, 0.075, 3, false)
 
+// for normal forwards
 #define GFU_DIST_PRECISE(maxSpeed) DoubleBoundedPID({0.123, 0, 0.027, 0.12, clamp(maxSpeed,-0.8,0.8), 0.03}, 0.075, 3)
+
 
 #define GFU_TURN SimplePID({1, 1.5, 0, 0.0, 1})
 #define GTU_TURN DoubleBoundedPID({1.25, 0.00, 0.095, 0.15, 1}, getRadians(1.5), 1)
@@ -116,7 +119,7 @@ void shoot(Robot& robot, int diskNum) {
 // Should call as a separate task
 void runCataWithDelay(Robot& robot, double seconds) {
     // delay
-    int32_t delay = seconds / 1000.0;
+    int32_t delay = seconds * 1000.0;
     pros::delay(delay);
 
     // start cata

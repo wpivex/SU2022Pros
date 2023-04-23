@@ -10,8 +10,8 @@ class DoubleBoundedPID : public EndablePID {
 
 public:
 
-    DoubleBoundedPID(PIDParameters params, double errorTolerance, int timesWithinTolerance):
-        EndablePID(params),
+    DoubleBoundedPID(PIDParameters params, double errorTolerance, int timesWithinTolerance, bool limitAcceleration = true):
+        EndablePID(params, limitAcceleration),
         tolerance(errorTolerance),
         timesNeeded(timesWithinTolerance)
     {}
