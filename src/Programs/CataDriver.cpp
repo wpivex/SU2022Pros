@@ -14,9 +14,6 @@ void CataDriver::handleSecondaryActions() {
     // When L1 pressed, cata runs until rising edge of limit switch
     bool isLimitSwitchOn = robot.limitSwitch->get_value();
 
-    pros::lcd::clear();
-    pros::lcd::print(0, "Limit switch: %s", isLimitSwitchOn ? "on" : "off");
-
     if (controller.pressed(DIGITAL_L1)) {
         timeAfterButtonPress = pros::millis();
         setEffort(*robot.cata, 1);

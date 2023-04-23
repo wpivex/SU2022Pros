@@ -1,2 +1,8 @@
-pros::Task([&] {runCataWithDelay(robot, 0.25); });
-goForwardU(robot, GFU_DIST_FAST(1), NO_CORRECTION, 24, getRadians(0.0));
+robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
+robot.intake->set_voltage_limit(0);
+robot.roller->set_voltage_limit(0);
+
+pros::Task([&] {runCataWithDelay(robot, 0.34); });
+goForwardFast(robot, GFU_DIST_FAST(1), NO_CORRECTION, 26, 4, getRadians(0.0));
+robot.intake->set_voltage_limit(12);
+robot.roller->set_voltage_limit(12);

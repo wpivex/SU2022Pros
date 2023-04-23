@@ -17,6 +17,8 @@ Drive::Drive(std::initializer_list<int8_t> left, std::initializer_list<int8_t> r
 
 // bounded -1 to 1
 void Drive::setEffort(double left, double right) {
+    pros::lcd::clear();
+    pros::lcd::print(0, "%.2f %.2f", left, right);
     leftMotors.move_voltage(left * 12000); // take in millivolts
     rightMotors.move_voltage(right * 12000);
 }

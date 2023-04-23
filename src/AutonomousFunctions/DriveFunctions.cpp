@@ -31,6 +31,15 @@ void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, double timeSeconds, d
     robot.drive->stop();
 }
 
+void goForwardFast(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, double fastDistance, double slowdownDistance, double targetHeading) {
+    robot.drive->resetDistance();
+    robot.drive->setEffort(1,1);
+    while (robot.drive->getDistance() < fastDistance) pros::delay(10);
+    
+    double targetDistance = slowdownDistance + (fastDistance - robot.drive->getDistance());
+    goForwardU(robot, std::move(pidDistance), std::move(pidHeading), targetDistance, targetHeading);
+}
+
 // Go forwards some distance while maintaining heading
 // Return error
 double goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, double distance, double targetHeading) {

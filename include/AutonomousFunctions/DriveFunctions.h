@@ -10,6 +10,7 @@
 void goForwardTimedU(Robot& robot, SimplePID&& pidHeading, double timeSeconds, double targetEffort, double targetHeading = MAINTAIN_CURRENT_HEADING);
 
 // Go forwards some distance while maintaining heading
+void goForwardFast(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, double fastDistance, double slowdownDistance, double targetHeading);
 double goForwardU(Robot& robot, EndablePID&& pidDistance, SimplePID&& pidHeading, double distance, double targetHeading = MAINTAIN_CURRENT_HEADING);
 
 // Turn to some given heading
