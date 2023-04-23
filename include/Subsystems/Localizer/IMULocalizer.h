@@ -31,8 +31,6 @@ public:
         qB(5)
     {}
 
-    virtual double getX() override; // inches
-    virtual double getY() override; // inches
     virtual double getHeading() override; // radians
     
     virtual void updatePositionTask() override; // blocking task used to update (x, y, heading)

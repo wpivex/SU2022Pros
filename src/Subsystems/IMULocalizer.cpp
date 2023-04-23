@@ -3,14 +3,6 @@
 #include <stdexcept>
 
 
-double IMULocalizer::getX() { // inches
-    return 0;
-}
-
-double IMULocalizer::getY() { // inches
-    return 0;
-}
-
 double IMULocalizer::getHeading() {
 
     return getRawHeading();

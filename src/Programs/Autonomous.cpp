@@ -112,6 +112,26 @@ void shoot(Robot& robot, int diskNum) {
     pros::Task([&] {delayResetIndexer(robot); });
 }
 
+// Run cata after delay. delay in ms
+// Should call as a separate task
+void runCataWithDelay(Robot& robot, double seconds) {
+    // delay
+    int32_t delay = seconds / 1000.0;
+    pros::delay(delay);
+
+    // start cata
+    setEffort(*robot.cata, 1);
+
+    // buffer while cata is shooting before reading rising edge of limit switch
+    pros::delay(800);
+
+    // wait until limit switch on
+    while (!robot.limitSwitch->get_value()) pros::delay(10);
+
+    // stop cata
+    setEffort(*robot.cata, 0);
+}
+
 void threeTileAuton(Robot& robot) {
 
     #include "ThreeTileAuton.txt"

@@ -6,6 +6,7 @@
 
 void CataDriver::initDriver() {
 
+    timeAfterButtonPress = pros::millis();
 }
 
 void CataDriver::handleSecondaryActions() {
@@ -13,17 +14,16 @@ void CataDriver::handleSecondaryActions() {
     // When L1 pressed, cata runs until rising edge of limit switch
     bool isLimitSwitchOn = robot.limitSwitch->get_value();
 
+    pros::lcd::clear();
+    pros::lcd::print(0, "Limit switch: %s", isLimitSwitchOn ? "on" : "off");
+
     if (controller.pressed(DIGITAL_L1)) {
+        timeAfterButtonPress = pros::millis();
         setEffort(*robot.cata, 1);
     }
 
-    if (!wasLimitSwitchOn && isLimitSwitchOn) {
+    if (isLimitSwitchOn && pros::millis() - timeAfterButtonPress > 800) {
         setEffort(*robot.cata, 0);
-    }
-
-    if (isFirstTick) {
-        setEffort(*robot.cata, 1);
-        isFirstTick = false;
     }
     
     wasLimitSwitchOn = isLimitSwitchOn;
@@ -38,8 +38,8 @@ void CataDriver::handleSecondaryActions() {
     }
 
     // R1 to intake. R2 to outtake. If both off, turn off intake
-    // Roller mech controls
-    if (controller.pressing(DIGITAL_R1)) {
+    // Intake mech controls
+    if (controller.pressing(DIGITAL_R1) && isLimitSwitchOn) {
         setEffort(*robot.intake, 1);
     }
     else if (controller.pressing(DIGITAL_R2)) {

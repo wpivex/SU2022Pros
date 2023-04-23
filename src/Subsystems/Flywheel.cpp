@@ -3,8 +3,6 @@
 
 
 void Flywheel::setVelocity(double velocity) {
-    pros::lcd::clear();
-    pros::lcd::print(0, "Flywheel target velocity: %.2f", velocity);
     targetRPM = velocity;
     if (velocity == 0) hasSetStopped = false;
 
@@ -16,7 +14,7 @@ double Flywheel::getTargetVelocity() {
 }
 
 double Flywheel::getCurrentVelocity() {
-    return average(motors.get_actual_velocities()) * ratio;
+    return motors.get_actual_velocities()[0] * ratio;
 }
 
 bool Flywheel::atTargetVelocity() {

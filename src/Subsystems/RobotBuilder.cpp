@@ -1,6 +1,7 @@
 #include "Subsystems/RobotBuilder.h"
 #include "Subsystems/Localizer/Odometry.h"
 #include "Subsystems/Localizer/IMULocalizer.h"
+#include "Subsystems/Localizer/Localizer.h"
 #include "Subsystems/Flywheel/TBHFlywheel.h"
 #include "Subsystems/Flywheel/VoltageFlywheel.h"
 
@@ -118,6 +119,9 @@ Robot getRobot18(bool isSkills) {
     //     8, // imu port A
     //     9 // imu port B
     // ));
+
+    // default no localizer
+    robot.localizer.reset(new Localizer());
 
     robot.cata.reset(new pros::MotorGroup({16, -17}));
     robot.cata->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);

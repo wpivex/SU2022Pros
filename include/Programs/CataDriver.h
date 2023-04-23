@@ -13,7 +13,8 @@ public:
 private:
 
     bool wasLimitSwitchOn = false;
-    bool isFirstTick = true;
+
+    int timeAfterButtonPress;
 
     void initDriver() override;
     void handleSecondaryActions() override;

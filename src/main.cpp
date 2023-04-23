@@ -11,7 +11,7 @@
 #include "Programs/TestFunction/TurnTest.h"
 #include "Programs/TestFunction/ForwardTest.h"
 
-#define IS_FIFTEEN // uncomment for 15, comment for 18
+//#define IS_FIFTEEN // uncomment for 15, comment for 18
 bool isSkills = false;
 //#define TEST_TUNE_PID // uncomment to adjust pid using TuningDriver class. Should comment out RUN_AUTON
 
@@ -30,7 +30,7 @@ CataDriver driver(robot, TANK_DRIVE);
 #endif
 
 //#define RUN_TEST
-//#define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
+#define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
 //#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
 
 using namespace pros;
@@ -49,13 +49,14 @@ void initialize() {
     
     if (robot.shooterFlap) robot.shooterFlap->set_value(true); // start flap up
 
-	if (robot.localizer) robot.localizer->init();
-    // robot.localizer->setHeading(getRadians(0));
+	robot.localizer->init();
 
     #ifdef RUN_AUTON
     #ifndef TUNE_FLYWHEEL
     while (!centerButtonReady) {
+
         pros::lcd::print(3, "Heading (deg): %f", robot.localizer->getHeading() * 180 / 3.1415);
+        
         pros::delay(10);
     }
     #endif
@@ -72,7 +73,7 @@ void competition_initialize() {}
 
 void autonomous() {  
 
-    robot.shooterFlap->set_value(false); // flap down  
+    if (robot.shooterFlap) robot.shooterFlap->set_value(false); // flap down  
 
     if (true && robot.flywheel) {
         pros::Task taskFlywheel([&] {

@@ -17,6 +17,10 @@ void FlywheelDriver::initDriver() {
 
 void FlywheelDriver::handleSecondaryActions() {
 
+    pros::lcd::clear();
+    pros::lcd::print(0, "Flywheel target velocity: %.2f", robot.flywheel->getTargetVelocity());
+    pros::lcd::print(1, "Flywheel actual velocity: %.2f", robot.flywheel->getCurrentVelocity());
+
     // Flywheel Speed Controls
     if (controller.pressed(DIGITAL_UP)) {
         if (speed < 3600) speed = fmin(speed + 100, 3600);
