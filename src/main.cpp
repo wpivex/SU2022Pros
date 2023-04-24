@@ -30,7 +30,7 @@ CataDriver driver(robot, TANK_DRIVE);
 #endif
 
 //#define RUN_TEST
-//#define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
+// #define RUN_AUTON // uncomment to run auton, comment to run teleop / actual comp
 //#define TUNE_FLYWHEEL // uncomment to run flywheel tuning program intsead, comment to disable this
 
 using namespace pros;
