@@ -13,6 +13,7 @@ public:
 private:
 
     bool wasLimitSwitchOn = false;
+    bool canIntake = true;
 
     int timeAfterButtonPress;
 

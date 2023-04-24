@@ -15,11 +15,13 @@ void CataDriver::handleSecondaryActions() {
     bool isLimitSwitchOn = robot.limitSwitch->get_value();
 
     if (controller.pressed(DIGITAL_L1)) {
+        canIntake = false;
         timeAfterButtonPress = pros::millis();
         setEffort(*robot.cata, 1);
     }
 
     if (isLimitSwitchOn && pros::millis() - timeAfterButtonPress > 800) {
+        canIntake = true;
         setEffort(*robot.cata, 0);
     }
     
@@ -36,7 +38,7 @@ void CataDriver::handleSecondaryActions() {
 
     // R1 to intake. R2 to outtake. If both off, turn off intake
     // Intake mech controls
-    if (controller.pressing(DIGITAL_R1) && isLimitSwitchOn) {
+    if (controller.pressing(DIGITAL_R1) && canIntake) {
         setEffort(*robot.intake, 1);
     }
     else if (controller.pressing(DIGITAL_R2)) {
