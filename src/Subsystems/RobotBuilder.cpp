@@ -114,14 +114,11 @@ Robot getRobot18(bool isSkills) {
         14.25//15.2 // track width in inches
     ));
 
-    // robot.localizer.reset(new IMULocalizer(
-    //     *robot.drive, // reference to drive object
-    //     8, // imu port A
-    //     9 // imu port B
-    // ));
-
-    // default no localizer
-    robot.localizer.reset(new Localizer());
+    robot.localizer.reset(new IMULocalizer(
+        *robot.drive, // reference to drive object
+        8, // imu port A
+        9 // imu port B
+    ));
 
     robot.cata.reset(new pros::MotorGroup({16, -17}));
     robot.cata->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);

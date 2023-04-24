@@ -117,10 +117,7 @@ void shoot(Robot& robot, int diskNum) {
 
 // Run cata after delay. delay in ms
 // Should call as a separate task
-void runCataWithDelay(Robot& robot, double seconds) {
-    // delay
-    int32_t delay = seconds * 1000.0;
-    pros::delay(delay);
+void shootCata(Robot& robot) {
 
     // start cata
     setEffort(*robot.cata, 1);
