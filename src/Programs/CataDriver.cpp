@@ -38,10 +38,10 @@ void CataDriver::handleSecondaryActions() {
 
     // R1 to intake. R2 to outtake. If both off, turn off intake
     // Intake mech controls
-    if (controller.pressing(DIGITAL_R1) && canIntake) {
+    if (controller.pressing(DIGITAL_R2) && canIntake) {
         setEffort(*robot.intake, 1);
     }
-    else if (controller.pressing(DIGITAL_R2)) {
+    else if (controller.pressing(DIGITAL_R1)) {
         setEffort(*robot.intake, -1);
     }
     else {
