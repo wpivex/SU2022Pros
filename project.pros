@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "cata teleop",
+    "project_name": "flywheel teleop",
     "target": "v5",
     "templates": {
       "kernel": {
