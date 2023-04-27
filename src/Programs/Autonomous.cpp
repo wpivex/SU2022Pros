@@ -134,7 +134,7 @@ void shootCataNonblocking(Robot& robot) {
 }
 
 void shootCata(Robot& robot) {
-    shootCataNonblocking(robot);
+    pros::Task([&] {shootCataNonblocking(robot); });
     pros::delay(500);
 }
 
