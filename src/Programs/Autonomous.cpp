@@ -120,6 +120,7 @@ void shoot(Robot& robot, int diskNum) {
 void shootCata(Robot& robot) {
 
     // start cata
+    setEffort(*robot.intake, -1);
     setEffort(*robot.cata, 1);
 
     // buffer while cata is shooting before reading rising edge of limit switch
@@ -130,6 +131,7 @@ void shootCata(Robot& robot) {
 
     // stop cata
     setEffort(*robot.cata, 0);
+    setEffort(*robot.intake, 1);
 }
 
 void threeTileAuton(Robot& robot) {
