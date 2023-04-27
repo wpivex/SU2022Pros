@@ -79,7 +79,7 @@ void shoot(Robot& robot, int diskNum) {
     pros::delay(500);
 
     // wait for spinup
-    if (!robot.flywheel->atTargetVelocity()) {
+    if (false && !robot.flywheel->atTargetVelocity()) {
 
         constexpr uint32_t TIMEOUT_MS = 5000; // maximum time to wait for spinup to proper velocity
 
@@ -116,7 +116,7 @@ void shoot(Robot& robot, int diskNum) {
 
 // Run cata after delay. delay in ms
 // Should call as a separate task
-void shootCata(Robot& robot) {
+void shootCataNonblocking(Robot& robot) {
 
     // start cata
     setEffort(*robot.intake, -1);
@@ -131,6 +131,11 @@ void shootCata(Robot& robot) {
     // stop cata
     setEffort(*robot.cata, 0);
     setEffort(*robot.intake, 1);
+}
+
+void shootCata(Robot& robot) {
+    shootCataNonblocking(robot);
+    pros::delay(500);
 }
 
 void threeTileAuton(Robot& robot) {
