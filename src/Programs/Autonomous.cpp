@@ -65,11 +65,8 @@ void moveRollerTime(Robot& robot, int timeMs, double speed) {
     robot.roller->brake();
 }
 
-void setShootDistance(Robot& robot, double distanceToGoal, double rpmCorrection, bool flapUp) {
-    double rpm;
-    if (flapUp) rpm = voltToRpm(robot.flywheel->rpmDistanceUp, distanceToGoal);
-    else rpm = voltToRpm(robot.flywheel->rpmDistanceDown, distanceToGoal);
-    robot.flywheel->setVelocity(rpm + rpmCorrection);
+void setShootDistance(Robot& robot, double rpm, bool flapUp) {
+    robot.flywheel->setVelocity(rpm);
 }
 
 // shoot a 3-burst round. First two rounds are short burst (110ms with 220ms break), third is longer (300ms)
