@@ -66,7 +66,9 @@ void moveRollerTime(Robot& robot, int timeMs, double speed) {
 }
 
 void setShootDistance(Robot& robot, double rpm, bool flapUp) {
-    robot.flywheel->setVelocity(rpm);
+    //robot.flywheel->setVelocity(rpm);
+    double volts = rpm / 4000.0 * 12.0;
+    robot.flywheel->setRawVoltage(volts);
 }
 
 // shoot a 3-burst round. First two rounds are short burst (110ms with 220ms break), third is longer (300ms)
@@ -157,14 +159,7 @@ void twoTileSkills(Robot& robot) {// GENERATED C++ CODE FROM PathGen 3.4.3
 
 void testAuton(Robot& robot) {
     
-    setShootDistance(robot, 112.2384815584748, -103, false); // Preemptively set speed for next shot
-    setEffort(*robot.intake, 1); // Start running intake immediately
-    robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
-
-    while (true) {
-        pros::delay(4000);
-        shoot(robot, 0);
-    }
+    
 
     
     

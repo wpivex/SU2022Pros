@@ -1,8 +1,0 @@
-setShootDistance(robot, 94.68991468504056, 282, false); // Preemptively set speed for next shot
-setEffort(*robot.intake, 1); // Start running intake immediately
-robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
-
-while (true) {
-    pros::delay(3000);
-    shoot(robot, 0);
-}
