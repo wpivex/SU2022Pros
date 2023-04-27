@@ -6,6 +6,6 @@ VoltageFlywheel::VoltageFlywheel(std::initializer_list<int8_t> flywheelMotors, s
     gain(gainConstant)
 {}
 
-double VoltageFlywheel::getNextMotorVoltage(double currentRPM) {
-    return rpmToVolt(data, targetRPM);
+void VoltageFlywheel::maintainVelocityTask() {
+
 }

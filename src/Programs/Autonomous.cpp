@@ -66,7 +66,9 @@ void moveRollerTime(Robot& robot, int timeMs, double speed) {
 }
 
 void setShootDistance(Robot& robot, double rpm, bool flapUp) {
-    robot.flywheel->setVelocity(rpm);
+    //robot.flywheel->setVelocity(rpm);
+    double volts = rpm / 4000.0 * 12.0;
+    robot.flywheel->setRawVoltage(volts);
 }
 
 // shoot a 3-burst round. First two rounds are short burst (110ms with 220ms break), third is longer (300ms)
@@ -77,7 +79,7 @@ void shoot(Robot& robot, int diskNum) {
     pros::delay(500);
 
     // wait for spinup
-    if (!robot.flywheel->atTargetVelocity()) {
+    if (false && !robot.flywheel->atTargetVelocity()) {
 
         constexpr uint32_t TIMEOUT_MS = 5000; // maximum time to wait for spinup to proper velocity
 
@@ -114,7 +116,7 @@ void shoot(Robot& robot, int diskNum) {
 
 // Run cata after delay. delay in ms
 // Should call as a separate task
-void shootCata(Robot& robot) {
+void shootCataNonblocking(Robot& robot) {
 
     // start cata
     setEffort(*robot.intake, -1);
@@ -129,6 +131,11 @@ void shootCata(Robot& robot) {
     // stop cata
     setEffort(*robot.cata, 0);
     setEffort(*robot.intake, 1);
+}
+
+void shootCata(Robot& robot) {
+    pros::Task([&] {shootCataNonblocking(robot); });
+    pros::delay(500);
 }
 
 void threeTileAuton(Robot& robot) {
@@ -157,14 +164,7 @@ void twoTileSkills(Robot& robot) {// GENERATED C++ CODE FROM PathGen 3.4.3
 
 void testAuton(Robot& robot) {
     
-    setShootDistance(robot, 112.2384815584748, -103, false); // Preemptively set speed for next shot
-    setEffort(*robot.intake, 1); // Start running intake immediately
-    robot.drive->setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
-
-    while (true) {
-        pros::delay(4000);
-        shoot(robot, 0);
-    }
+    
 
     
     
