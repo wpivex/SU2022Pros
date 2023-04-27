@@ -6,6 +6,6 @@ VoltageFlywheel::VoltageFlywheel(std::initializer_list<int8_t> flywheelMotors, s
     gain(gainConstant)
 {}
 
-void Flywheel::maintainVelocityTask() {
+void VoltageFlywheel::maintainVelocityTask() {
 
 }
