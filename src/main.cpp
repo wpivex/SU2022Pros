@@ -11,7 +11,7 @@
 #include "Programs/TestFunction/TurnTest.h"
 #include "Programs/TestFunction/ForwardTest.h"
 
-// #define IS_FIFTEEN // uncomment for 15, comment for 18
+#define IS_FIFTEEN // uncomment for 15, comment for 18
 bool isSkills = false;
 //#define TEST_TUNE_PID // uncomment to adjust pid using TuningDriver class. Should comment out RUN_AUTON
 
