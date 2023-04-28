@@ -1,11 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-<<<<<<< HEAD
-    "project_name": "flywheel auaton",
-=======
-    "project_name": "MATCH",
->>>>>>> f7792de939eb5cc0b98453cdb1114ea9eb6d9708
+    "project_name": "flywheel MATCH",
     "target": "v5",
     "templates": {
       "kernel": {
