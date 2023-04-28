@@ -7,12 +7,20 @@
 void CataDriver::initDriver() {
 
     timeAfterButtonPress = pros::millis();
+    valve.set_value(true);
 }
 
 void CataDriver::handleSecondaryActions() {
 
     // When L1 pressed, cata runs until rising edge of limit switch
     bool isLimitSwitchOn = robot.limitSwitch->get_value();
+
+    if (controller.pressed(DIGITAL_DOWN)) {
+        valve.set_value(true);
+    }
+    if (controller.pressed(DIGITAL_UP)) {
+        valve.set_value(false);
+    }
 
     if (controller.pressed(DIGITAL_L1)) {
         canIntake = false;
@@ -30,7 +38,7 @@ void CataDriver::handleSecondaryActions() {
 
     // Roller mech controls
     if (controller.pressing(DIGITAL_L2)) {
-        setEffort(*robot.roller, 1);
+        setEffort(*robot.roller, -1);
     }
     else {
         setEffort(*robot.roller, 0);

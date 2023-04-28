@@ -132,7 +132,7 @@ Robot getRobot18(bool isSkills) {
     robot.roller->set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
 
 
-    robot.endgame.reset(new pros::ADIDigitalOut('B'));
+    robot.endgame.reset(new pros::ADIDigitalOut('C'));
 
     return robot;
 
