@@ -33,7 +33,7 @@ Robot getRobot15(bool isSkills) {
 
     
 
-    robot.flywheel.reset(new VoltageFlywheel(
+    robot.flywheel.reset(new TBHFlywheel(
         {-4, 8}, // ports
         { // volt to rpm data
             {1615, 5},
@@ -132,7 +132,7 @@ Robot getRobot18(bool isSkills) {
     robot.roller->set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
 
 
-    robot.endgame.reset(new pros::ADIDigitalOut('B'));
+    robot.endgame.reset(new pros::ADIDigitalOut('C'));
 
     return robot;
 
