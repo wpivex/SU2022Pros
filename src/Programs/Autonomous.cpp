@@ -66,9 +66,9 @@ void moveRollerTime(Robot& robot, int timeMs, double speed) {
 }
 
 void setShootDistance(Robot& robot, double rpm, bool flapUp) {
-    //robot.flywheel->setVelocity(rpm);
-    double volts = rpm / 4000.0 * 12.0;
-    robot.flywheel->setRawVoltage(volts);
+    robot.flywheel->setVelocity(rpm);
+    //double volts = rpm / 4000.0 * 12.0;
+    //robot.flywheel->setRawVoltage(volts);
 }
 
 // shoot a 3-burst round. First two rounds are short burst (110ms with 220ms break), third is longer (300ms)
@@ -79,7 +79,7 @@ void shoot(Robot& robot, int diskNum) {
     pros::delay(500);
 
     // wait for spinup
-    if (false && !robot.flywheel->atTargetVelocity()) {
+    if (!robot.flywheel->atTargetVelocity()) {
 
         constexpr uint32_t TIMEOUT_MS = 5000; // maximum time to wait for spinup to proper velocity
 
