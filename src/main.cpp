@@ -41,10 +41,19 @@ void ready() {
     centerButtonReady = true;
 }
 
+void lowerCata() {
+
+    // no cata to lower
+    if (!robot.cata) return;
+
+    shootCataNonblocking(robot);
+}
+
 void initialize() {
 
     pros::lcd::initialize();
     pros::lcd::register_btn1_cb (ready);
+    pros::lcd::register_btn0_cb(lowerCata);
 
     
     if (robot.shooterFlap) robot.shooterFlap->set_value(true); // start flap up
